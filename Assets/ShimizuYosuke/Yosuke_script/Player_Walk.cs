@@ -16,20 +16,33 @@ public class Player_Walk : MonoBehaviour
     [Header("プレイヤーの移動スピード")]
     [SerializeField] float fPlayerWalk = 2.0f;
 
-    void Awake()
-    {
-        Application.targetFrameRate = 60; //60FPSに設定
-    }
+    Vector3 pos;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        pos = this.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         /**WASDでプレイヤーを動かします**/
+        if (Input.GetKey(KeyCode.W))
+        {
+            this.transform.position += new Vector3(0,0,fPlayerWalk);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            this.transform.position -= new Vector3(fPlayerWalk, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            this.transform.position -= new Vector3(0, 0, fPlayerWalk);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            this.transform.position += new Vector3(fPlayerWalk, 0, 0);
+        }
     }
 }
