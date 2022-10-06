@@ -85,8 +85,9 @@ public class CBow : MonoBehaviour
             case STATE_ARROW.ARROW_CHARGE:
                 g_state = STATE_ARROW.ARROW_CHARGE;
                 // 矢を武器の子オブジェクトとして出す
-                objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.Euler(-90.0f, 0.0f, 0.0f));
+                objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
                 objArrow.transform.parent = this.transform;
+                objArrow.transform.localRotation = Quaternion.Euler(-90.0f,0.0f,0.0f);
                 break;
 
             // 発射状態
