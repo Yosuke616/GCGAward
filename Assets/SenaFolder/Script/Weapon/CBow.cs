@@ -51,7 +51,7 @@ public class CBow : MonoBehaviour
         {
             // 左クリックが離されたらチャージ解除
             if (Input.GetMouseButtonUp(0))
-                //ChangeState(STATE_ARROW.ARROW_NORMAL);      // 通常状態に変更する
+                ChangeState(STATE_ARROW.ARROW_NORMAL);      // 通常状態に変更する
             
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
@@ -85,7 +85,6 @@ public class CBow : MonoBehaviour
             case STATE_ARROW.ARROW_CHARGE:
                 g_state = STATE_ARROW.ARROW_CHARGE;
                 // 矢を武器の子オブジェクトとして出す
-                //objArrow = Instantiate(PrefabArrow, spawner.transform.position, rote);
                 objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
                 objArrow.transform.parent = this.transform;
                 objArrow.transform.localRotation = Quaternion.Euler(-90.0f,0.0f,0.0f);

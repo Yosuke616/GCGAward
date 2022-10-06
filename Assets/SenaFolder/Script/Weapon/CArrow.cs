@@ -6,7 +6,7 @@ public class CArrow : MonoBehaviour
 {
     #region variable
     private Rigidbody rb;           // 矢の剛体
-    private Vector3 arrowForce = new Vector3(0.0f,0.0f,0.0f);     // 矢を放つ力
+    private float arrowForce = 0.0f;     // 矢を放つ力
     private GameObject objBow;
     private CBow scBow;             // 弓のスクリプト
     #endregion
@@ -34,9 +34,10 @@ public class CArrow : MonoBehaviour
     public void Shot(int chargeTime)
     {
         rb.useGravity = true;
-        arrowForce.z = chargeTime * 1000.0f;
-        rb.AddForce(arrowForce);        // 矢を発射する
-        Debug.Log("arrowForce" + arrowForce.z);
+        arrowForce = chargeTime * 10.0f;
+        Vector3 direction = -transform.up;
+        rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // 矢を発射する
+        Debug.Log("arrowForce" + arrowForce);
     }
     #endregion
 }
