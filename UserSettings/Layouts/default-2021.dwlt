@@ -290,6 +290,7 @@ MonoBehaviour:
   - {fileID: 13}
   - {fileID: 5}
   - {fileID: 2}
+
   m_Position:
     serializedVersion: 2
     x: 0
@@ -845,6 +846,7 @@ MonoBehaviour:
     m_Target: 9.759657
     speed: 2
     m_Value: 10.219536
+
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -921,7 +923,6 @@ MonoBehaviour:
     m_HBaseRangeMin: -768
     m_HBaseRangeMax: 768
     m_VBaseRangeMin: -432
-    m_VBaseRangeMax: 432
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -931,6 +932,7 @@ MonoBehaviour:
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
+
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
