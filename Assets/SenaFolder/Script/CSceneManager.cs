@@ -5,15 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class CSceneManager : MonoBehaviour
 {
-    [SerializeField] private CSceneName.SCENENAME LoadSceneNum;
+    //[SerializeField] private CSceneName.SCENENAME LoadSceneNum;
+    [SerializeField] private string LoadScene;
     // Start is called before the first frame update
     void Start()
     {
-        switch(LoadSceneNum)
-        {
-            //case CSceneName.SCENENAME.TITLESCENE:
-            //    LoadS
-        }
+       
     }
 
     // Update is called once per frame
@@ -22,7 +19,7 @@ public class CSceneManager : MonoBehaviour
         // Enterキー→キー遷移
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            //SceneManager.LoadScene(LoadScene);
+            SceneManager.LoadScene(LoadScene);
         }
     }
 }
