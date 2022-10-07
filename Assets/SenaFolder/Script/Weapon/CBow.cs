@@ -20,6 +20,7 @@ public class CBow : MonoBehaviour
     [SerializeField] private GameObject PrefabArrow;       // 矢のオブジェクト
     [SerializeField] private GameObject spawner;
     [SerializeField] private float maxChargeTime;
+    [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
     #endregion
     #region variable
     private STATE_BOW g_state;
@@ -34,7 +35,7 @@ public class CBow : MonoBehaviour
     {
         g_state = STATE_BOW.BOW_NORMAL;
         fChargeTime = 0;
-
+        TellMaxChargeTime();        // スライダーに最大チャージ時間を伝える
         // カーソルのサイドのオブジェクトを全て取得する
         objCursur = GameObject.FindGameObjectsWithTag("CursurSide");
         for (int i = 0; i < objCursur.Length; ++i)
@@ -54,6 +55,7 @@ public class CBow : MonoBehaviour
         {
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
+            scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -119,6 +121,7 @@ public class CBow : MonoBehaviour
             // 最大チャージ状態
             case STATE_BOW.BOW_CHARGEMAX:
                 g_state = STATE_BOW.BOW_CHARGEMAX;
+                Debug.Log("ChargeMax");
                 break;
         }
     }
@@ -142,6 +145,7 @@ public class CBow : MonoBehaviour
             // チャージ状態
             case STATE_BOW.BOW_CHARGE:
                 fChargeTime += Time.deltaTime;
+                TellChargeTime();       // チャージ時間をスライダーに伝える
                 // maxChargeTime以上チャージすると最大チャージ状態にする
                 if (fChargeTime > maxChargeTime)
                 {
@@ -159,6 +163,30 @@ public class CBow : MonoBehaviour
                 fChargeTime = maxChargeTime;
                 break;
         }
+    }
+    #endregion
+
+    /*
+    * @brief チャージ時間を伝える
+    * @details 毎フレームチャージ時間をチャージスライダーに伝える
+    */
+    #region tell charge time
+    private void TellChargeTime()
+    {
+        scChargeSlider.GetChargeTime(fChargeTime);
+    }
+    #endregion
+
+    /*
+    * @brief 最大チャージ時間を伝える
+    * @return float 最大チャージ時間
+    * @sa CChargeSlider::Start()
+    * @details 最大チャージ時間をチャージスライダーに伝える
+    */
+    #region tell max charge time
+    private void TellMaxChargeTime()
+    {
+        scChargeSlider.GetMaxChargeTime(maxChargeTime);
     }
     #endregion
 }

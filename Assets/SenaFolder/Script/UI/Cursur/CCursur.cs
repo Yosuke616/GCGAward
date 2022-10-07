@@ -117,7 +117,7 @@ public class CCursur : MonoBehaviour
                 break;
 
             case KIND_CURSURMOVE.IDLE:
-                kCursurMove = KIND_CURSURMOVE.IDLE;      // å≥Ç…ñﬂÇ∑èÛë‘Ç…Ç∑ÇÈ
+                kCursurMove = KIND_CURSURMOVE.IDLE;      // ë“ã@èÛë‘Ç…Ç∑ÇÈ
                 // âΩÇ‡ÇµÇ»Ç¢
                 break;
         }
