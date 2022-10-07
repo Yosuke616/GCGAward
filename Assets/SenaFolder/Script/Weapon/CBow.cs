@@ -24,7 +24,7 @@ public class CBow : MonoBehaviour
     private STATE_BOW g_state;
     private GameObject objArrow;
     private float fChargeTime;
-    private CCursur objCursur;          // カーソル
+    private CCursur scCursur;          // カーソル
     #endregion
 
     // Start is called before the first frame update
@@ -33,7 +33,8 @@ public class CBow : MonoBehaviour
     {
         g_state = STATE_BOW.BOW_NORMAL;
         fChargeTime = 0;
-        objCursur = GameObject.FindWithTag("CursurSide").GetComponent<CCursur>();
+        scCursur = GameObject.FindWithTag("CursurSide").GetComponent<CCursur>();
+        scCursur.SetChargeMaxTime(maxChargeTime);
     }
     #endregion
 
@@ -47,7 +48,7 @@ public class CBow : MonoBehaviour
         #region charge action
         if (Input.GetMouseButtonDown(0))
         {
-            objCursur.setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
+            scCursur.setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -59,14 +60,14 @@ public class CBow : MonoBehaviour
             // 左クリックが離されたらチャージ解除
             if (Input.GetMouseButtonUp(0))
             {
-                objCursur.setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+                scCursur.setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
                 ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
             }
 
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
-                objCursur.setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+                scCursur.setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
             }
         }
@@ -137,7 +138,7 @@ public class CBow : MonoBehaviour
                 // maxChargeTime以上チャージすると最大チャージ状態にする
                 if (fChargeTime > maxChargeTime)
                 {
-                    objCursur.setCursur(CCursur.KIND_CURSURMOVE.STOP);      // カーソルを停止する
+                    scCursur.setCursur(CCursur.KIND_CURSURMOVE.STOP);      // カーソルを停止する
                     ChangeState(STATE_BOW.BOW_CHARGEMAX);
                 }
                 break;

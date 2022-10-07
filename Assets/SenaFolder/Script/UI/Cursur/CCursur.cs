@@ -24,13 +24,18 @@ public class CCursur : MonoBehaviour
     #region valiable
     private Vector2 fDistance;
     private bool bMove;     // 移動が必要かどうか
+    private float fChargeCnt;
+    private KIND_CURSURMOVE kCursurMove;
     #endregion
     // Start is called before the first frame update
+    #region init
     void Start()
     {
         bMove = false;      // 移動しないようにする
+        kCursurMove = KIND_CURSURMOVE.IDLE;     // 待機状態にする
         // カーソルの中心点との座標を比較して自身の位置を把握する
         calcPosition();
+
         #region debug log
         //if (fDistance.x < 0)
         //    Debug.Log("left");
@@ -43,11 +48,26 @@ public class CCursur : MonoBehaviour
         #endregion
 
     }
-
+    #endregion
     // Update is called once per frame
     void Update()
     {
-
+        switch(kCursurMove)
+        {
+            // 動いてる時
+            case KIND_CURSURMOVE.MOVE:
+                MoveCursur();
+                break;
+            // 停止している時
+            case KIND_CURSURMOVE.STOP:
+                break;
+            // 元に戻している時
+            case KIND_CURSURMOVE.RESET:
+                break;
+            // 待機している時
+            case KIND_CURSURMOVE.IDLE:
+                break;
+        }
     }
 
     /*
@@ -70,6 +90,7 @@ public class CCursur : MonoBehaviour
     /*
     * @brief カーソルを移動するかどうか指示を出す
     * @sa CBow::Update()
+    * @detail 指示が出た時一度だけ呼ばれる
     */
     #region notificate bow state
     public void setCursur(KIND_CURSURMOVE cursurMove)
@@ -77,21 +98,21 @@ public class CCursur : MonoBehaviour
         switch(cursurMove)
         {
             case KIND_CURSURMOVE.MOVE:
-                // カーソルを動かす
-                MoveCursur();
+                kCursurMove = KIND_CURSURMOVE.MOVE;     // 動いている状態にする
                 break;
 
             case KIND_CURSURMOVE.STOP:
-                // カーソルをその場で止める
-                StopCursur();
+                kCursurMove = KIND_CURSURMOVE.STOP;     // 停止状態にする
+                StopCursur();       // カーソルをその場で止める
                 break;
 
             case KIND_CURSURMOVE.RESET:
-                // カーソルを戻す
-                ResetCursur();
+                kCursurMove = KIND_CURSURMOVE.RESET;     // 元に戻す状態にする
+                ResetCursur();      // カーソルを戻す
                 break;
 
             case KIND_CURSURMOVE.IDLE:
+                kCursurMove = KIND_CURSURMOVE.IDLE;      // 元に戻す状態にする
                 // 何もしない
                 break;
         }
@@ -107,6 +128,18 @@ public class CCursur : MonoBehaviour
     private void MoveCursur()
     {
         Debug.Log("MoveCursur");
+        if (fDistance.x != 0.0f)
+        {
+            Vector3 pos = transform.position;
+            pos.x -= (fDistance.x / fChargeCnt) * Time.deltaTime;
+            transform.position = pos;
+        }
+        else if (fDistance.y != 0.0f)
+        {
+            Vector3 pos = transform.position;
+            pos.y -= (fDistance.y / fChargeCnt) * Time.deltaTime;
+            transform.position = pos;
+        }
     }
     #endregion
 
@@ -131,6 +164,18 @@ public class CCursur : MonoBehaviour
     private void ResetCursur()
     {
         Debug.Log("ResetCursur");
+    }
+    #endregion
+
+    /*
+   * @brief 最大チャージ時間の取得
+   * @sa CBow::Start();
+   * @detail 
+   */
+    #region set charge max time
+    public void SetChargeMaxTime(float time)
+    {
+        fChargeCnt = time;
     }
     #endregion
 
