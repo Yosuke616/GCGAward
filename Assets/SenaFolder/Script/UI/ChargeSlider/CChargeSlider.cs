@@ -97,7 +97,7 @@ public class CChargeSlider : MonoBehaviour
     #region move slider
     private void MoveSlider()
     {
-        Debug.Log("MoveSlider");
+        //Debug.Log("MoveSlider");
         objChargeSlider.value = fShowValue / fMaxValue;
     }
     #endregion
@@ -110,7 +110,7 @@ public class CChargeSlider : MonoBehaviour
     #region stop slider
     private void StopSlider()
     {
-        Debug.Log("StopSlider");
+        //Debug.Log("StopSlider");
     }
     #endregion
 
@@ -122,7 +122,8 @@ public class CChargeSlider : MonoBehaviour
     #region reset slider
     private void ResetSlider()
     {
-        Debug.Log("ResetSlider");
+        //Debug.Log("ResetSlider");
+        objChargeSlider.value = 0.0f;
     }
     #endregion
 

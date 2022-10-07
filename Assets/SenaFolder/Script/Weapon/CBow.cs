@@ -55,7 +55,7 @@ public class CBow : MonoBehaviour
         {
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
-            scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);
+            scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -69,6 +69,7 @@ public class CBow : MonoBehaviour
             {
                 for (int i = 0; i < objCursur.Length; ++i)
                     objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.RESET);       // スライダーを元に戻す
                 ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
             }
 
@@ -77,6 +78,7 @@ public class CBow : MonoBehaviour
             {
                 for (int i = 0; i < objCursur.Length; ++i)
                     objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.RESET);       // スライダーを元に戻す
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
             }
         }
@@ -122,7 +124,8 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_CHARGEMAX:
                 g_state = STATE_BOW.BOW_CHARGEMAX;
                 for (int i = 0; i < objCursur.Length; ++i)
-                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを動かす
+                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを止める
+                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.STOP);       // スライダーを止める
                 Debug.Log("ChargeMax");
                 break;
         }

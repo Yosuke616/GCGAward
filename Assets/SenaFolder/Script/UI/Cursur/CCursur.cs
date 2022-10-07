@@ -156,7 +156,7 @@ public class CCursur : MonoBehaviour
 #region stop cursur
 private void StopCursur()
     {
-        Debug.Log("StopCursur");
+        //Debug.Log("StopCursur");
     }
     #endregion
 
