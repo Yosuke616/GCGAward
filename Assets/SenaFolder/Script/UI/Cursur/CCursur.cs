@@ -132,7 +132,7 @@ public class CCursur : MonoBehaviour
     #region move cursur
     private void MoveCursur()
     {
-        Debug.Log("MoveCursur");
+        //Debug.Log("MoveCursur");
         
         Vector3 pos = transform.position;   // À•Wæ“¾
 
@@ -168,7 +168,7 @@ private void StopCursur()
     #region reset cursur
     private void ResetCursur()
     {
-        Debug.Log("ResetCursur");
+        //Debug.Log("ResetCursur");
         fTime += Time.deltaTime;
         Vector3 pos = transform.position;   // À•Wæ“¾
 

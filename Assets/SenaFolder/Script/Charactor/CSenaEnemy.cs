@@ -5,12 +5,18 @@ using UnityEngine;
 public class CSenaEnemy : MonoBehaviour
 {
     #region serialize field
-    //[SerializeField] private Material[] matSwitch = new Material[2];
+    [SerializeField] private GameObject sceneManager;
+    [SerializeField] private int nAddScore;
+    #endregion
+
+    // 変数宣言
+    #region variable
+    private CScore scScore;     // スコアの情報格納用
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-        
+        scScore = sceneManager.GetComponent<CScore>();      // スコアの情報を取得する
     }
 
     // Update is called once per frame
@@ -25,6 +31,7 @@ public class CSenaEnemy : MonoBehaviour
         if(collision.gameObject.tag == "Arrow")
         {
             Debug.Log("<color=green>EnemyHit</color>");
+            scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
             Destroy(gameObject);      // 自身を消滅させる
         }

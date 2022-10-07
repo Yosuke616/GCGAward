@@ -39,7 +39,7 @@ public class CArrow : MonoBehaviour
         arrowForce = chargeTime * fFlyDistance;
         Vector3 direction = -transform.up;
         rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // –î‚ð”­ŽË‚·‚é
-        Debug.Log("arrowForce" + arrowForce);
+        //Debug.Log("arrowForce" + arrowForce);
     }
     #endregion
 }
