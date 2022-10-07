@@ -15,13 +15,19 @@ public class CChargeSlider : MonoBehaviour
         MOVE,       // 動いている状態
         STOP,       // 停止状態
         RESET,      // 元に戻している状態
+        MAXCHARGE,  // 最大チャージ状態
     }
     #endregion
 
     #region serialize field
     [Header("スライダーのリセットにかける時間")]
     [SerializeField] private float fResetTime;      // スライダーのリセットにかける時間
-    [SerializeField] private Slider objChargeSlider;
+    [SerializeField] private GameObject objChargeSlider;
+    [SerializeField] private Image sliderImage;
+    [Header("通常時のスライダーの色")]
+    [SerializeField] private Color normalColor;     // 通常時のスライダーの色
+    [Header("最大チャージ時のスライダーの色")]
+    [SerializeField] private Color maxChargeColor;     // 最大チャージ時のスライダーの色
     #endregion
 
     // 変数宣言
@@ -29,11 +35,14 @@ public class CChargeSlider : MonoBehaviour
     private KIND_CHRGSLIDERMOVE kSliderMove;
     private float fShowValue;
     private float fMaxValue;
+    private Slider scSlider;
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-        objChargeSlider.value = 0.0f;
+        scSlider = objChargeSlider.GetComponent<Slider>();
+        scSlider.value = 0.0f;
+        sliderImage.color = normalColor;
     }
 
     // Update is called once per frame
@@ -49,10 +58,13 @@ public class CChargeSlider : MonoBehaviour
                 break;
 
             case KIND_CHRGSLIDERMOVE.RESET:
-                ResetSlider();       // スライダーを元に戻す
                 break;
 
             case KIND_CHRGSLIDERMOVE.IDLE:
+                // 何もしない
+                break;
+            
+            case KIND_CHRGSLIDERMOVE.MAXCHARGE:
                 // 何もしない
                 break;
         }
@@ -79,11 +91,17 @@ public class CChargeSlider : MonoBehaviour
 
             case KIND_CHRGSLIDERMOVE.RESET:
                 kSliderMove = KIND_CHRGSLIDERMOVE.RESET;     // 元に戻す状態にする
+                ResetSlider();       // スライダーを元に戻す
                 break;
 
             case KIND_CHRGSLIDERMOVE.IDLE:
                 kSliderMove = KIND_CHRGSLIDERMOVE.IDLE;      // 待機状態にする
                 // 何もしない
+                break;
+
+            case KIND_CHRGSLIDERMOVE.MAXCHARGE:
+                kSliderMove = KIND_CHRGSLIDERMOVE.MAXCHARGE;      // 待機状態にする
+                sliderImage.color = maxChargeColor;
                 break;
         }
     }
@@ -98,7 +116,7 @@ public class CChargeSlider : MonoBehaviour
     private void MoveSlider()
     {
         //Debug.Log("MoveSlider");
-        objChargeSlider.value = fShowValue / fMaxValue;
+        scSlider.value = fShowValue / fMaxValue;
     }
     #endregion
 
@@ -123,7 +141,8 @@ public class CChargeSlider : MonoBehaviour
     private void ResetSlider()
     {
         //Debug.Log("ResetSlider");
-        objChargeSlider.value = 0.0f;
+        scSlider.value = 0.0f;
+        sliderImage.color = normalColor;
     }
     #endregion
 

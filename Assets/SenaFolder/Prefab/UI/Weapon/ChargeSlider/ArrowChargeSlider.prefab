@@ -179,6 +179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ec8f5008580c64c86bff85dba74cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fResetTime: 0
+  objChargeSlider: {fileID: 4631959097829188221}
+  sliderImage: {fileID: 4631959099272871425}
+  normalColor: {r: 0.067211986, g: 1, b: 0.050943315, a: 0}
+  maxChargeColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4631959099222985575
 GameObject:
   m_ObjectHideFlags: 0

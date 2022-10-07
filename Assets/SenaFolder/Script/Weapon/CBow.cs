@@ -125,7 +125,7 @@ public class CBow : MonoBehaviour
                 g_state = STATE_BOW.BOW_CHARGEMAX;
                 for (int i = 0; i < objCursur.Length; ++i)
                     objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを止める
-                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.STOP);       // スライダーを止める
+                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MAXCHARGE);       // スライダーを止める
                 Debug.Log("ChargeMax");
                 break;
         }
