@@ -10,6 +10,10 @@ public class CArrow : MonoBehaviour
     private GameObject objBow;
     #endregion
 
+    #region serialize field
+    [SerializeField] private float fFlyDistance;        // –î‚Ì”ò‹——£
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +36,7 @@ public class CArrow : MonoBehaviour
     public void Shot(int chargeTime)
     {
         rb.useGravity = true;
-        arrowForce = chargeTime * 10.0f;
+        arrowForce = chargeTime * fFlyDistance;
         Vector3 direction = -transform.up;
         rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // –î‚ð”­ŽË‚·‚é
         Debug.Log("arrowForce" + arrowForce);
