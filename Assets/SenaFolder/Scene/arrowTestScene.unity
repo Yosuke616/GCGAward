@@ -503,23 +503,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &351119935 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4631959097829188221, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
-  m_PrefabInstance: {fileID: 4631959098174392386}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &351119936 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4631959097829188098, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
   m_PrefabInstance: {fileID: 4631959098174392386}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &351119938
+--- !u!114 &351119937 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4631959097829188099, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
+  m_PrefabInstance: {fileID: 4631959098174392386}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351119935}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &351119939 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7564111781456934928, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
+  m_PrefabInstance: {fileID: 4631959098174392386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90ec8f5008580c64c86bff85dba74cab, type: 3}
@@ -981,6 +986,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
+      propertyPath: scChargeSlider
+      value: 
+      objectReference: {fileID: 351119939}
     - target: {fileID: 2453681382243010167, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1794,6 +1803,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7564111781456934928, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
+      propertyPath: objChargeSlider
+      value: 
+      objectReference: {fileID: 351119937}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
 --- !u!1001 &5010081210766895540
