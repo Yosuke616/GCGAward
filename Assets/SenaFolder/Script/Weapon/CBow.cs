@@ -53,7 +53,7 @@ public class CBow : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             for (int i = 0; i < objCursur.Length; ++i)
-                objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを元に戻す
+                objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -65,15 +65,16 @@ public class CBow : MonoBehaviour
             // 左クリックが離されたらチャージ解除
             if (Input.GetMouseButtonUp(0))
             {
-                //for (int i = 0; i < scCursur.Length; ++i)
-                //    scCursur[i].setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+                for (int i = 0; i < objCursur.Length; ++i)
+                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
                 ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
             }
 
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
-                //scCursur.setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+                for (int i = 0; i < objCursur.Length; ++i)
+                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
             }
         }
