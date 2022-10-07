@@ -121,6 +121,8 @@ public class CBow : MonoBehaviour
             // 最大チャージ状態
             case STATE_BOW.BOW_CHARGEMAX:
                 g_state = STATE_BOW.BOW_CHARGEMAX;
+                for (int i = 0; i < objCursur.Length; ++i)
+                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを動かす
                 Debug.Log("ChargeMax");
                 break;
         }
