@@ -41,7 +41,7 @@ public class TPSCameraTargetY : MonoBehaviour
         float sinY = Mathf.Sin(MouseMoveY);
         float cosY = Mathf.Cos(MouseMoveY);
         
-        this.transform.position = new Vector3(CameraTargetX.transform.position.x, Player.transform.position.y + 1.0f+CameraRange*cosY, Player.transform.position.z + CameraRange * sinY);
+        //this.transform.position = new Vector3(CameraTargetX.transform.position.x, Player.transform.position.y + 1.0f+CameraRange*cosY, Player.transform.position.z + CameraRange * sinY);
 
     }
 }
