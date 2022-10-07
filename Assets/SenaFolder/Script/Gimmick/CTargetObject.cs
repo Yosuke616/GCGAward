@@ -22,6 +22,6 @@ public class CTargetObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Arrow")
-        Debug.Log("<color=red>Hit</color>");
+        Debug.Log("<color=red>GimmickHit</color>");
     }
 }

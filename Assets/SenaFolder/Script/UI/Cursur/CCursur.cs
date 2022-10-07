@@ -117,7 +117,7 @@ public class CCursur : MonoBehaviour
                 break;
 
             case KIND_CURSURMOVE.IDLE:
-                kCursurMove = KIND_CURSURMOVE.IDLE;      // å≥Ç…ñﬂÇ∑èÛë‘Ç…Ç∑ÇÈ
+                kCursurMove = KIND_CURSURMOVE.IDLE;      // ë“ã@èÛë‘Ç…Ç∑ÇÈ
                 // âΩÇ‡ÇµÇ»Ç¢
                 break;
         }
@@ -132,7 +132,7 @@ public class CCursur : MonoBehaviour
     #region move cursur
     private void MoveCursur()
     {
-        Debug.Log("MoveCursur");
+        //Debug.Log("MoveCursur");
         
         Vector3 pos = transform.position;   // ç¿ïWéÊìæ
 
@@ -156,7 +156,7 @@ public class CCursur : MonoBehaviour
 #region stop cursur
 private void StopCursur()
     {
-        Debug.Log("StopCursur");
+        //Debug.Log("StopCursur");
     }
     #endregion
 
@@ -168,7 +168,7 @@ private void StopCursur()
     #region reset cursur
     private void ResetCursur()
     {
-        Debug.Log("ResetCursur");
+        //Debug.Log("ResetCursur");
         fTime += Time.deltaTime;
         Vector3 pos = transform.position;   // ç¿ïWéÊìæ
 
