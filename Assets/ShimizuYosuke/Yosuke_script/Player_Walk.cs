@@ -11,22 +11,37 @@ using UnityEngine;
 
 public class Player_Walk : MonoBehaviour
 {
+    //プレイヤーのステータス
+    public enum PLAYER_STATE {
+        IDEL_STATE,
+        WALK_STATE,
+        RUN_STATE,
+        JUMP_STATE,
+
+        MAX_STATE
+    }
+
 
     /** @brief プレイヤーの移動速度*/
-    [Header("プレイヤーの移動スピード")]
+    [Header("プレイヤーのステータス")]
     [SerializeField] float fPlayerWalk = 2.0f;
-    [Header("プレイヤーのジャンプの大きさ")]
     [SerializeField] float fJumpPower = 6.0f;
+    [SerializeField] private float PlayerRot = 1.0f;
+
 
     //プレイヤーの座標を設定するための変数
     private Rigidbody rb;
-    private CapsuleCollider cp;
 
     //ジャンプ二度出来ないようにするフラグ
     //trueでジャンプ出来ない　falseでジャンプできる状態
     private bool bJumpFlg;
-    //地面と接触しているかの判定
-    private bool bCollGround;
+
+    //プレイヤーの状態
+    private PLAYER_STATE eState;
+  
+    //どれくらい回転しているかを保存する
+    private float leftRot;
+    private float rightRot;
 
     // Animator コンポーネント
     private Animator animator;
@@ -34,8 +49,12 @@ public class Player_Walk : MonoBehaviour
     // 設定したフラグの名前
     private const string key_isRun = "isRun";
     private const string key_isJump = "isJump";
+    private const string key_isWalk = "isWalk";
 
-
+    [SerializeField] private Vector3 velocity;              // 移動方向
+    [SerializeField] private float moveSpeed = 5.0f;        // 移動速度
+    [SerializeField] private float applySpeed = 0.2f;       // 回転の適用速度
+    [SerializeField] private FollowCamera refCamera;  // カメラの水平回転を参照する用
     private void Awake()
     {
         //60fps
@@ -46,69 +65,195 @@ public class Player_Walk : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        cp = this.GetComponent<CapsuleCollider>();
 
-        bCollGround = true;
         bJumpFlg = false;
         // 自分に設定されているAnimatorコンポーネントを習得する
         this.animator = GetComponent<Animator>();
+
+        eState = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /**WASDでプレイヤーを動かします**/
+        //何も押していないときは待機
+        if (!Input.anyKey)
+        {
+            eState = 0;
+            this.animator.SetBool(key_isRun, false);
+            this.animator.SetBool(key_isWalk, false);
+            this.animator.SetBool(key_isJump, false);
+        }
+
+        //-------------WASD------------------走る
+        // WASD入力から、XZ平面(水平な地面)を移動する方向(velocity)を得ます
+        velocity = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            rb.AddForce(0,0, fPlayerWalk);
-            
-            // WaitからRunに遷移する
-            this.animator.SetBool(key_isRun, true);
+            velocity.z += 0.1f;
+            eState = PLAYER_STATE.WALK_STATE;
+            this.animator.SetBool(key_isWalk, true);
+            this.animator.SetBool(key_isRun, false);
+            this.animator.SetBool(key_isJump, false);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(-fPlayerWalk, 0, 0);
-            // WaitからRunに遷移する
-            this.animator.SetBool(key_isRun, true);
+            velocity.x -= 0.1f;
+            eState = PLAYER_STATE.WALK_STATE;
+            this.animator.SetBool(key_isWalk, true);
+            this.animator.SetBool(key_isRun, false);
+            this.animator.SetBool(key_isJump, false);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.AddForce(0, 0, -fPlayerWalk);
-
-            // WaitからRunに遷移する
-            this.animator.SetBool(key_isRun, true);
+            velocity.z -= 0.1f;
+            eState = PLAYER_STATE.WALK_STATE;
+            this.animator.SetBool(key_isWalk, true);
+            this.animator.SetBool(key_isRun, false);
+            this.animator.SetBool(key_isJump, false);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(fPlayerWalk, 0, 0);
-
-            // WaitからRunに遷移する
-            this.animator.SetBool(key_isRun, true);
-        }
-        if(!Input.anyKey){
-            // RunからWaitに遷移する
+            velocity.x += 0.1f;
+            eState = PLAYER_STATE.WALK_STATE;
+            this.animator.SetBool(key_isWalk, true);
             this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isJump,false);
+            this.animator.SetBool(key_isJump, false);
         }
 
+        if (eState == PLAYER_STATE.WALK_STATE)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                eState = PLAYER_STATE.RUN_STATE;
+                this.animator.SetBool(key_isRun, true);
+                this.animator.SetBool(key_isWalk, false);
+                this.animator.SetBool(key_isJump, false);
+            }
+        }
+
+
+        if (eState == PLAYER_STATE.RUN_STATE)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                velocity.z += 10;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                velocity.x -= 10;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                velocity.z -= 10;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                velocity.x += 10;
+            }
+        }
+
+        //===============================================================================================================================
+        // 速度ベクトルの長さを1秒でmoveSpeedだけ進むように調整します
+        velocity = velocity.normalized * moveSpeed * Time.deltaTime;
+        // いずれかの方向に移動している場合
+        if (velocity.magnitude > 0)
+        {
+            // プレイヤーの回転(transform.rotation)の更新
+            // 無回転状態のプレイヤーのZ+方向(後頭部)を、
+            // カメラの水平回転(refCamera.hRotation)で回した移動の反対方向(-velocity)に回す回転に段々近づけます
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                                                  Quaternion.LookRotation(refCamera.hRotation * velocity),
+                                                  applySpeed);
+
+            // プレイヤーの位置(transform.position)の更新
+            // カメラの水平回転(refCamera.hRotation)で回した移動方向(velocity)を足し込みます
+            transform.position += refCamera.hRotation * velocity;
+        }
+        //===============================================================================================================================
+
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //左回転
+        if (Input.GetKey(KeyCode.Q))
+        {
+            leftRot += 0.01f;
+
+            if (leftRot < 1.0f)
+            {
+                this.transform.eulerAngles -= new Vector3(0, PlayerRot, 0);
+            }
+        }
+        else
+        {
+            if (!Input.GetKey(KeyCode.A))
+            {
+                leftRot = 0.0f;
+            }
+        }
+
+        //右回転
+        if (Input.GetKey(KeyCode.E))
+        {
+            rightRot += 0.01f;
+
+            if (rightRot < 1.0f)
+            {
+                this.transform.eulerAngles += new Vector3(0, PlayerRot, 0);
+            }
+        }
+        else
+        {
+            if (!Input.GetKey(KeyCode.D))
+            {
+                rightRot = 0.0f;
+            }
+        }
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         // Wait or Run からJumpに切り替える処理
         // スペースキーを押下している
-        if (Input.GetKey(KeyCode.Space) && !bJumpFlg && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+        if (Input.GetKey(KeyCode.Space) && !bJumpFlg)
         {
-            // Wait or RunからJumpに遷移する
-            this.animator.SetBool(key_isJump, true);
             bJumpFlg = true;
             //プレイヤーに上ベクトルの力を加える
-            rb.AddForce(0,fJumpPower,0);
+            rb.AddForce(0, fJumpPower, 0);
+            eState = PLAYER_STATE.JUMP_STATE;
+            this.animator.SetBool(key_isJump, true);
+            this.animator.SetBool(key_isRun, false);
+            this.animator.SetBool(key_isWalk, false);
         }
+
+        //アニメーションを変更する
+        //switch (eState)
+        //{
+        //    case 0:
+        //        this.animator.SetBool(key_isRun, false);
+        //        this.animator.SetBool(key_isWalk, false);
+        //        this.animator.SetBool(key_isJump, false);
+        //        break;
+        //    case PLAYER_STATE.WALK_STATE:
+        //        this.animator.SetBool(key_isWalk, true);
+        //        this.animator.SetBool(key_isRun, false);
+        //        this.animator.SetBool(key_isJump, false);
+        //        break;
+        //    case PLAYER_STATE.RUN_STATE:
+        //        this.animator.SetBool(key_isRun, true);
+        //        this.animator.SetBool(key_isWalk, false);
+        //        this.animator.SetBool(key_isJump, false);
+        //        break;
+        //    case PLAYER_STATE.JUMP_STATE:
+        //        this.animator.SetBool(key_isJump, true);
+        //        this.animator.SetBool(key_isRun, false);
+        //        this.animator.SetBool(key_isWalk, false);
+        //        break;
+        //}
+
     }
 
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == ("Ground"))
         {
-            Debug.Log("Rosalina");
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
                 bJumpFlg = false;
