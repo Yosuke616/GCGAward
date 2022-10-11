@@ -113,10 +113,7 @@ public class CBow : MonoBehaviour
             // チャージ状態
             case STATE_BOW.BOW_CHARGE:
                 g_state = STATE_BOW.BOW_CHARGE;
-                // 矢を武器の子オブジェクトとして出す
-                objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
-                objArrow.transform.parent = this.transform;
-                objArrow.transform.localRotation = Quaternion.Euler(-90.0f,0.0f,0.0f);
+                CreateArrow();      // 矢を生成する
                 break;
 
             // 発射状態
@@ -187,6 +184,19 @@ public class CBow : MonoBehaviour
     #endregion
 
     /*
+    * @brief 矢を生成する
+    * @details 矢を弓の子オブジェクトとして生成する
+    */
+    #region create arrow
+    private void CreateArrow()
+    {
+        // 矢を武器の子オブジェクトとして出す
+        objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
+        objArrow.transform.parent = this.transform;
+        objArrow.transform.localRotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
+    }
+    #endregion
+    /*
     * @brief チャージ時間を伝える
     * @details 毎フレームチャージ時間をチャージスライダーに伝える
     */
@@ -206,7 +216,7 @@ public class CBow : MonoBehaviour
     #region tell max charge time
     private void TellMaxChargeTime()
     {
-        scChargeSlider.GetMaxChargeTime(maxChargeTime);
+        scChargeSlider.GetMaxChargeNum(maxChargeTime, nMaxChargeStep);
     }
     #endregion
 
@@ -214,6 +224,7 @@ public class CBow : MonoBehaviour
     * @brief チャージ状態をリセットする
     * @details チャージ状態を解除した時にチャージ時間やチャージステップを初期化する
     */
+    #region reset charge
     private void ResetCharge()
     {
         for (int i = 0; i < objCursur.Length; ++i)
@@ -222,4 +233,5 @@ public class CBow : MonoBehaviour
         fChargeTime = 0.0f;     // チャージを0にする
         currentChargeStep = 0;  // チャージ段階を0に戻す
     }
+    #endregion
 }
