@@ -26,6 +26,7 @@ public class CBow : MonoBehaviour
     [SerializeField] private float fValChargeTime;
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
     #endregion
+    
     #region variable
     private STATE_BOW g_state;              // 弓の状態
     private GameObject objArrow;            // 弓オブジェクト
@@ -33,6 +34,7 @@ public class CBow : MonoBehaviour
     private GameObject[] objCursur;         // カーソル
     private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
     private float currentChargeStep;        // 現在のチャージ段階数
+    private bool isAdjust;                  // 使用するHPを調整したかどうか
     #endregion
 
     // Start is called before the first frame update
@@ -49,6 +51,8 @@ public class CBow : MonoBehaviour
         for (int i = 0; i < objCursur.Length; ++i)
             objCursur[i].GetComponent<CCursur>().SetChargeMaxTime(maxChargeTime);
         currentChargeStep = 0.0f;
+
+        isAdjust = false;       // 使用HP未調整状態にする
     }
     #endregion
 
@@ -232,6 +236,22 @@ public class CBow : MonoBehaviour
         scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.RESET);       // スライダーを元に戻す
         fChargeTime = 0.0f;     // チャージを0にする
         currentChargeStep = 0;  // チャージ段階を0に戻す
+    }
+    #endregion
+
+    /*
+    * @brief 使用するHPを調整する
+    * @details　対応のキーが押された場合、使用するHPの調整を行う
+    */
+    #region adjust hp
+    private void AdjustHP()
+    {
+        isAdjust = true;
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            Debug.Log("UseHPDec");
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            Debug.Log("UseHPAdd");
     }
     #endregion
 }
