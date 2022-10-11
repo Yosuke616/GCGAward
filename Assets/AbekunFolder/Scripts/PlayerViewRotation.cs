@@ -24,6 +24,16 @@ public class PlayerViewRotation : MonoBehaviour
     private float MouseMoveX = 0.0f;
     [SerializeField]
     private float MouseMoveY = 0.0f;
+    [SerializeField]
+    private float PlayerVectorX = 0.0f;
+    [SerializeField]
+    private float PlayerVectorZ = 0.0f;
+    [SerializeField]
+    private float sinX;
+    [SerializeField]
+    private float cosX;
+    //private float si;
+    private float cosY;
     private bool b_Charge = false; 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +55,6 @@ public class PlayerViewRotation : MonoBehaviour
         //{
         //    pi = 6.27f;
         //}
-
         if (MouseMoveY < 0.1f)
         {
             MouseMoveY = 0.1f;
@@ -62,22 +71,61 @@ public class PlayerViewRotation : MonoBehaviour
         {
             MouseMoveX = 0.0f;
         }
+        PlayerVectorX = -Player.transform.forward.x;//X
+        PlayerVectorZ = -Player.transform.forward.z;//Z
+        
         if (!b_Charge)
         {
             MouseMoveX += Input.GetAxis("Mouse X") * Sensi;
             MouseMoveY += Input.GetAxis("Mouse Y") * Sensi;
-            float sinX = Mathf.Sin(MouseMoveX);//X
-            float cosX = Mathf.Cos(MouseMoveX);//Z
-            float sinY = Mathf.Sin(MouseMoveY);//Z
-            float cosY = Mathf.Cos(MouseMoveY);//Y
             
-            this.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y + 10.0f, Player.transform.position.z) + (-Player.transform.forward * CameraRange);
 
+            sinX = Mathf.Sin(MouseMoveX+Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//X
+             cosX = Mathf.Cos(MouseMoveX+ Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//Z
+            //at sinY = Mathf.Sin(MouseMoveY);//Z
+             cosY = Mathf.Cos(MouseMoveY);//Y
+            
+            //this.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y + 10.0f, Player.transform.position.z) + (-Player.transform.forward * CameraRange);
 
+            //if (Input.GetMouseButton(1))
+            //{
+            //if (PlayerVectorX > sinX)
+            //{
+            //    sinX -= 0.01f;
+            //}
+            //if (PlayerVectorX > sinX)
+            //{
+            //    sinX += 0.01f;
+            //}
+            //if (PlayerVectorZ < cosX)
+            //{
+            //    cosX -= 0.01f;
+            //}
+            //if (PlayerVectorZ > cosX)
+            //{
+            //    cosX += 0.01f;
+            //}
+            if ((sinX == PlayerVectorX))
+                {
+                    
+                }
+                else {
+                    //sinX = sinX * 0.9f + PlayerVectorX * 0.9f;
+                }
+                if ((cosX == PlayerVectorZ))
+                {
+                    
+                }
+                else {
+                    //cosX = cosX * 0.9f + PlayerVectorZ * 0.9f;
+                }
 
-             //this.transform.position = new Vector3((Player.transform.position.x + CameraRange * sinX),
-             //                                           (Player.transform.position.y + 1.0f + CameraRange * cosY),
-             //                                           (Player.transform.position.z + CameraRange * cosX));
+                
+           // }
+
+            this.transform.position = new Vector3((Player.transform.position.x + CameraRange * sinX),
+                                                       (Player.transform.position.y + 1.0f + CameraRange * cosY),
+                                                       (Player.transform.position.z + CameraRange * cosX));
 
             //this.transform.position = -Player.transform.forward * (Player.transform.position.z + CameraRange * cosX);
             //this.transform.position = -Player.transform.right * (Player.transform.position.x + CameraRange * sinX);
@@ -87,17 +135,24 @@ public class PlayerViewRotation : MonoBehaviour
         }
             if (Input.GetMouseButtonDown(0))    //マウスの左クリックが押された
         {
-
+            MouseMoveX = 0;
+            MouseMoveY = 0;
             b_Charge = true;
         }
         if (Input.GetMouseButtonUp(0))  //マウスの左クリックが外れたとき
         {
-
+            MouseMoveX = 0;
+            MouseMoveY = 0;
+            //sinX = PlayerVectorX;
+            //cosX = PlayerVectorZ;
             b_Charge = false;
         }
         if (Input.GetMouseButtonDown(1) && b_Charge)    //マウスの右クリックが押された
         {
-
+            MouseMoveX = 0;
+            MouseMoveY = 0;
+            //sinX = PlayerVectorX;
+            //cosX = PlayerVectorZ;
             b_Charge = false;
         }
         

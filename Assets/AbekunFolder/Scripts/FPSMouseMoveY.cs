@@ -9,6 +9,7 @@ public class FPSMouseMoveY : MonoBehaviour
     [SerializeField]
     private float FPSSensi = 1.0f;
     //private float MouseMoveX = 0.0f;
+    [SerializeField]
     private float MouseMoveY = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,14 @@ public class FPSMouseMoveY : MonoBehaviour
         if (b_Charge)
         {
             MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
+            if(MouseMoveY>90)
+            {
+                MouseMoveY = 90;
+            }
+            if(MouseMoveY<-90)
+            {
+                MouseMoveY = -90;
+            }
             this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         }
         if (!b_Charge)
