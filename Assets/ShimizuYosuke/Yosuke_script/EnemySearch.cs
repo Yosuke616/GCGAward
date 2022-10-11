@@ -7,9 +7,15 @@ public class EnemySearch : MonoBehaviour
     //敵が追いかけていくための大賞
     [SerializeField] GameObject player;
 
-    //弾オブジェクト
+    //弾の発射場所
+    [Header("弾関係")]
+    [SerializeField] GameObject firingPoint;
     [SerializeField] GameObject bullet;
-    private float fBulletspeed = 10.0f;
+    [SerializeField] float speed = 20.0f;
+
+    [Header("次撃てるまでの時間")]
+    [SerializeField] int deltTime = 480;
+    int nTime;
 
     //レイを使用して視界を制御する
     private RaycastHit rayCastHit;
@@ -17,7 +23,7 @@ public class EnemySearch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        nTime = deltTime;
     }
 
     // Update is called once per frame
@@ -64,11 +70,22 @@ public class EnemySearch : MonoBehaviour
                         //移動させる
                         transform.Translate(p);
 
-                        //弾を発射するぜ
-                        var shot = Instantiate(bullet,this.transform.position, Quaternion.identity);
-                        shot.GetComponent<Rigidbody>().velocity = this.transform.forward.normalized * fBulletspeed;
-
-                        new WaitForSeconds(1.0f);
+                        nTime--;
+                        if (nTime < 0) {
+                            //弾を発射する
+                            Vector3 bulletPosition = firingPoint.transform.position;
+                            //上で取得した場所に弾を出現
+                            GameObject newBall = Instantiate(bullet,bulletPosition,this.transform.rotation);
+                            // 出現させたボールのforward(z軸方向)
+                            Vector3 directions = newBall.transform.forward;
+                            // 弾の発射方向にnewBallのz方向(ローカル座標)を入れ、弾オブジェクトのrigidbodyに衝撃力を加える
+                            newBall.GetComponent<Rigidbody>().AddForce(direction * speed, ForceMode.Impulse);
+                            // 出現させたボールの名前を"bullet"に変更
+                            newBall.name = bullet.name;
+                            // 出現させたボールを0.8秒後に消す
+                            Destroy(newBall, 2.0f);
+                            nTime = deltTime;
+                        }
                     }
                 }
 
