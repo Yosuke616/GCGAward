@@ -71,13 +71,13 @@ public class PlayerViewRotation : MonoBehaviour
             float sinY = Mathf.Sin(MouseMoveY);//Z
             float cosY = Mathf.Cos(MouseMoveY);//Y
             
-            //this.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y + 1.0f, Player.transform.position.z) + (-Player.transform.forward * CameraRange);
+            this.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y + 10.0f, Player.transform.position.z) + (-Player.transform.forward * CameraRange);
 
 
 
-                this.transform.position = new Vector3((Player.transform.position.x + CameraRange * sinX),
-                                                        (Player.transform.position.y + 1.0f + CameraRange * cosY),
-                                                        (Player.transform.position.z + CameraRange * cosX));
+             //this.transform.position = new Vector3((Player.transform.position.x + CameraRange * sinX),
+             //                                           (Player.transform.position.y + 1.0f + CameraRange * cosY),
+             //                                           (Player.transform.position.z + CameraRange * cosX));
 
             //this.transform.position = -Player.transform.forward * (Player.transform.position.z + CameraRange * cosX);
             //this.transform.position = -Player.transform.right * (Player.transform.position.x + CameraRange * sinX);

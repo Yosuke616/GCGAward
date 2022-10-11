@@ -26,16 +26,19 @@ public class FPSMouseMoveX : MonoBehaviour
         {
             
             b_Charge = true;
+            MouseMoveX = this.transform.eulerAngles.y;
         }
         if (Input.GetMouseButtonUp(0))  //マウスの左クリックが外れたとき
         {
             
             b_Charge = false;
+            
         }
         if (Input.GetMouseButtonDown(1) && b_Charge)    //マウスの右クリックが押された
         {
             
             b_Charge = false;
+            
         }
         MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
         //MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
