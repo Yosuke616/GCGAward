@@ -18,7 +18,7 @@ public class CScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(g_nScore);
+        //Debug.Log(g_nScore);
     }
 
     /*

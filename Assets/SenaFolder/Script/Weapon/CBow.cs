@@ -13,20 +13,26 @@ public class CBow : MonoBehaviour
         BOW_NORMAL,           // 通常状態
         BOW_SHOT,             // 発射されている状態
         BOW_CHARGEMAX,        // 最大チャージ状態
+        BOW_RESET,            // チャージリセット状態
     }
     #endregion
 
     #region serialize field
     [SerializeField] private GameObject PrefabArrow;       // 矢のオブジェクト
     [SerializeField] private GameObject spawner;
-    [SerializeField] private float maxChargeTime;
+    [Header("チャージ最大段階")]
+    [SerializeField] private int nMaxChargeStep;
+    [Header("チャージ時間(1段階)")]
+    [SerializeField] private float fValChargeTime;
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
     #endregion
     #region variable
-    private STATE_BOW g_state;
-    private GameObject objArrow;
-    private float fChargeTime;
-    private GameObject[] objCursur;          // カーソル
+    private STATE_BOW g_state;              // 弓の状態
+    private GameObject objArrow;            // 弓オブジェクト
+    private float fChargeTime;              // チャージボタンを押している時間 
+    private GameObject[] objCursur;         // カーソル
+    private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
+    private float currentChargeStep;        // 現在のチャージ段階数
     #endregion
 
     // Start is called before the first frame update
@@ -35,11 +41,14 @@ public class CBow : MonoBehaviour
     {
         g_state = STATE_BOW.BOW_NORMAL;
         fChargeTime = 0;
-        TellMaxChargeTime();        // スライダーに最大チャージ時間を伝える
         // カーソルのサイドのオブジェクトを全て取得する
         objCursur = GameObject.FindGameObjectsWithTag("CursurSide");
+        maxChargeTime = fValChargeTime * nMaxChargeStep;
+        TellMaxChargeTime();        // スライダーに最大チャージ時間を伝える
+
         for (int i = 0; i < objCursur.Length; ++i)
             objCursur[i].GetComponent<CCursur>().SetChargeMaxTime(maxChargeTime);
+        currentChargeStep = 0.0f;
     }
     #endregion
 
@@ -67,19 +76,15 @@ public class CBow : MonoBehaviour
             // 左クリックが離されたらチャージ解除
             if (Input.GetMouseButtonUp(0))
             {
-                for (int i = 0; i < objCursur.Length; ++i)
-                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
-                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.RESET);       // スライダーを元に戻す
+                ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
                 ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
             }
 
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
-                for (int i = 0; i < objCursur.Length; ++i)
-                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
-                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.RESET);       // スライダーを元に戻す
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
+                ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }
         }
         #endregion
@@ -102,7 +107,6 @@ public class CBow : MonoBehaviour
             // 通常状態
             case STATE_BOW.BOW_NORMAL:
                 g_state = STATE_BOW.BOW_NORMAL;
-                fChargeTime = 0.0f;     // チャージを0にする
                 Destroy(objArrow);      // 矢を消滅させる
                 break;
 
@@ -128,6 +132,11 @@ public class CBow : MonoBehaviour
                 scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MAXCHARGE);       // スライダーを止める
                 Debug.Log("ChargeMax");
                 break;
+
+            // チャージリセット状態
+            case STATE_BOW.BOW_RESET:
+                ResetCharge();      // チャージをリセットする
+                break;
         }
     }
     #endregion
@@ -141,7 +150,7 @@ public class CBow : MonoBehaviour
     #region update state
     private void UpdateState(STATE_BOW UpdateState)
     {
-        switch(UpdateState)
+        switch (UpdateState)
         {
             // 通常状態
             case STATE_BOW.BOW_NORMAL:
@@ -151,12 +160,14 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_CHARGE:
                 fChargeTime += Time.deltaTime;
                 TellChargeTime();       // チャージ時間をスライダーに伝える
-                // maxChargeTime以上チャージすると最大チャージ状態にする
-                if (fChargeTime > maxChargeTime)
-                {
-                    //scCursur.setCursur(CCursur.KIND_CURSURMOVE.STOP);      // カーソルを停止する
+                if (fChargeTime > (currentChargeStep + 1) * fValChargeTime)
+                    ++currentChargeStep;        // チャージを1段階上げる
+                
+                // 最大チャージ段階になったら
+                if (currentChargeStep >= nMaxChargeStep)
                     ChangeState(STATE_BOW.BOW_CHARGEMAX);
-                }
+                //Debug.Log("ChargeTime:" + fChargeTime.ToString("F1"));
+                //Debug.Log("ChargeStep:" + currentChargeStep);
                 break;
 
             // 発射状態
@@ -166,6 +177,10 @@ public class CBow : MonoBehaviour
             // 最大チャージ状態
             case STATE_BOW.BOW_CHARGEMAX:
                 fChargeTime = maxChargeTime;
+                break;
+
+            // チャージリセット状態
+            case STATE_BOW.BOW_RESET:
                 break;
         }
     }
@@ -194,4 +209,17 @@ public class CBow : MonoBehaviour
         scChargeSlider.GetMaxChargeTime(maxChargeTime);
     }
     #endregion
+
+    /*
+    * @brief チャージ状態をリセットする
+    * @details チャージ状態を解除した時にチャージ時間やチャージステップを初期化する
+    */
+    private void ResetCharge()
+    {
+        for (int i = 0; i < objCursur.Length; ++i)
+            objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.RESET);  // カーソルを元に戻す
+        scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.RESET);       // スライダーを元に戻す
+        fChargeTime = 0.0f;     // チャージを0にする
+        currentChargeStep = 0;  // チャージ段階を0に戻す
+    }
 }
