@@ -3,6 +3,13 @@ using UnityEngine.InputSystem;
 
 public class TestInputSystem : MonoBehaviour
 {
+    private GUIStyle style;
+    private void Start()
+    {
+        style = new GUIStyle();
+        style.fontSize = 50;
+
+    }
     void Update()
     {
         // ゲームパッドが接続されていないとnullになる。
@@ -22,14 +29,14 @@ public class TestInputSystem : MonoBehaviour
     {
         if (Gamepad.current == null) return;
 
-        GUILayout.Label($"leftStick: {Gamepad.current.leftStick.ReadValue()}");
-        GUILayout.Label($"buttonNorth: {Gamepad.current.buttonNorth.isPressed}");
-        GUILayout.Label($"buttonSouth: {Gamepad.current.buttonSouth.isPressed}");
-        GUILayout.Label($"buttonEast: {Gamepad.current.buttonEast.isPressed}");
-        GUILayout.Label($"buttonWest: {Gamepad.current.buttonWest.isPressed}");
-        GUILayout.Label($"leftShoulder: {Gamepad.current.leftShoulder.ReadValue()}");
-        GUILayout.Label($"leftTrigger: {Gamepad.current.leftTrigger.ReadValue()}");
-        GUILayout.Label($"rightShoulder: {Gamepad.current.rightShoulder.ReadValue()}");
-        GUILayout.Label($"rightTrigger: {Gamepad.current.rightTrigger.ReadValue()}");
+        GUILayout.Label($"leftStick: {Gamepad.current.leftStick.ReadValue()}",style);
+        GUILayout.Label($"buttonNorth: {Gamepad.current.buttonNorth.isPressed}", style);
+        GUILayout.Label($"buttonSouth: {Gamepad.current.buttonSouth.isPressed}", style);
+        GUILayout.Label($"buttonEast: {Gamepad.current.buttonEast.isPressed}", style);
+        GUILayout.Label($"buttonWest: {Gamepad.current.buttonWest.isPressed}", style);
+        GUILayout.Label($"leftShoulder: {Gamepad.current.leftShoulder.ReadValue()}", style);
+        GUILayout.Label($"leftTrigger: {Gamepad.current.leftTrigger.ReadValue()}", style);
+        GUILayout.Label($"rightShoulder: {Gamepad.current.rightShoulder.ReadValue()}", style);
+        GUILayout.Label($"rightTrigger: {Gamepad.current.rightTrigger.ReadValue()}", style);
     }
 }
