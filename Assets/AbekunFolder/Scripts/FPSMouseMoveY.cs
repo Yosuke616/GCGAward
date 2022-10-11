@@ -32,30 +32,37 @@ public class FPSMouseMoveY : MonoBehaviour
         {
 
             b_Charge = false;
+
         }
         if (Input.GetMouseButtonDown(1) && b_Charge)    //マウスの右クリックが押された
         {
 
             b_Charge = false;
+           
         }
         //MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
-        MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
+        
         if (b_Charge)
         {
+            MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
             this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         }
         if (!b_Charge)
         {
 
-            if (MouseMoveY <= 0)
+            if (MouseMoveY < -1)
             {
-                MouseMoveY++;
+                MouseMoveY ++;
+                this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
             }
-            else if (MouseMoveY >= 0)
+            else if (MouseMoveY > 1)
             {
                 MouseMoveY--;
+                this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
             }
-            this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
         }
     }
 }
