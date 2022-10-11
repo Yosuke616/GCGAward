@@ -53,7 +53,7 @@ public class CChargeSlider : MonoBehaviour
         rectTransform = gameObject.GetComponent<RectTransform>();
         sliderWidth = rectTransform.sizeDelta.x;
 
-        setStepLine();      // 段階を示す線を表示する
+        //setStepLine();      // 段階を示す線を表示する
     }
     #endregion
     // Update is called once per frame
