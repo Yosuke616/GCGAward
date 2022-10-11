@@ -16,24 +16,29 @@ public class CSenaPlayer : MonoBehaviour
     #region serialize field
     [Header("プレイヤーの最大HP")]
     [SerializeField] private int nMaxHp;        // プレイヤーのHPの最大値
-    [Header("HPバー1マスのHP")]
-    [SerializeField] private int nValHp;        // 1マスのHP量
+    [Header("HPバーの分割数")]
+    [SerializeField] private int nValNum;        // 1マスのHP量
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
-    [SerializeField] private GameObject[] objHPBar;
+    [SerializeField] private GameObject HPBarGroup;
     #endregion
 
     // 変数宣言
     #region variable
     private int nCurrentHp;     // 現在のHP
     PLAYERSTATE playerState;
+    private GameObject[] objHPBar;
     #endregion
     // Start is called before the first frame update
     void Start()
     {
         nCurrentHp = nMaxHp;     // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
+        objHPBar = new GameObject[nValNum];
         for (int num = 0; num < objHPBar.Length; ++num)
-            objHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValHp);
+        {
+            objHPBar[num] = HPBarGroup.transform.GetChild(num).gameObject;
+            objHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
+        }
         //SetHpUI();
     }
 
@@ -62,7 +67,8 @@ public class CSenaPlayer : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
                     AddHp(-1);
-                    objHPBar[0].GetComponent<CHPBar>().AddValue(-1);
+                    int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
+                    objHPBar[changeBarNum].GetComponent<CHPBar>().AddValue(-1);
                 }
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
