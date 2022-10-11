@@ -8,7 +8,10 @@ public class CArrow : MonoBehaviour
     private Rigidbody rb;           // 矢の剛体
     private float arrowForce = 0.0f;     // 矢を放つ力
     private GameObject objBow;
-    private CBow scBow;             // 弓のスクリプト
+    #endregion
+
+    #region serialize field
+    [SerializeField] private float fFlyDistance;        // 矢の飛距離
     #endregion
 
     // Start is called before the first frame update
@@ -17,7 +20,6 @@ public class CArrow : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // 弓のオブジェクトを取得
         objBow = GameObject.FindWithTag("Weapon");
-        scBow = objBow.GetComponent<CBow>();
     }
 
     // Update is called once per frame
@@ -34,10 +36,10 @@ public class CArrow : MonoBehaviour
     public void Shot(int chargeTime)
     {
         rb.useGravity = true;
-        arrowForce = chargeTime * 10.0f;
+        arrowForce = chargeTime * fFlyDistance;
         Vector3 direction = -transform.up;
         rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // 矢を発射する
-        Debug.Log("arrowForce" + arrowForce);
+        //Debug.Log("arrowForce" + arrowForce);
     }
     #endregion
 }

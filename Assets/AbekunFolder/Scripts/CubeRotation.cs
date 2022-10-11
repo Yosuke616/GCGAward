@@ -7,7 +7,7 @@ public class CubeRotation : MonoBehaviour
     [SerializeField] GameObject Player;
     [Header("’‹“_")]
 
-    [SerializeField] private float CameraRange = 5.0f;
+    //[SerializeField] private float CameraRange = 5.0f;
 
     [Header("‹“_ˆÚ“®Š´“x")]
     [SerializeField] private float Sensi = 1.0f;
