@@ -25,13 +25,13 @@ public class CHPBar : MonoBehaviour
     void Start()
     {
         hpBarImage.color = normalColor;
-        nCurrentValue = 1;
+        scHPSlider = GetComponent<Slider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("value" + nCurrentValue);
     }
 
     /*
@@ -45,6 +45,21 @@ public class CHPBar : MonoBehaviour
     {
         nNumber = num;      // 何番目のHPバーか
         nMaxValue = max;
+        nCurrentValue = max;
+    }
+    #endregion
+
+    /*
+     * @brief HPバーの数値設定
+     * @param num 設定する数値
+     * @sa CPlayer::Update
+     * @details 引数を足す
+   　*/
+    #region add value
+    public void AddValue(int num)
+    {
+        nCurrentValue += num;
+        scHPSlider.value = (float)nCurrentValue / (float)nMaxValue;
     }
     #endregion
 }

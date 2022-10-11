@@ -1039,6 +1039,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586811004}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &888428574 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2719142944273738104, guid: 18741733d919dcc499a4452ef9da3e33, type: 3}
+  m_PrefabInstance: {fileID: 374848766}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &905504255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1283,9 @@ MonoBehaviour:
   nMaxHp: 10
   nValHp: 2
   prefabHPBar: {fileID: 4631959098931133361}
+  objHPBar:
+  - {fileID: 4631959098931133361}
+  - {fileID: 888428574}
 --- !u!1001 &1228527655
 PrefabInstance:
   m_ObjectHideFlags: 0

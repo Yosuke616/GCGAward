@@ -32,6 +32,8 @@ public class CSenaPlayer : MonoBehaviour
     {
         nCurrentHp = nMaxHp;     // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
+        for (int num = 0; num < objHPBar.Length; ++num)
+            objHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValHp);
         //SetHpUI();
     }
 
@@ -39,6 +41,7 @@ public class CSenaPlayer : MonoBehaviour
     void Update()
     {
         UpdateState(playerState);
+       
         Debug.Log(nCurrentHp);
     }
 
@@ -57,7 +60,10 @@ public class CSenaPlayer : MonoBehaviour
             case PLAYERSTATE.PLAYER_ALIVE:
                 // Zキー→HPを減らす(デバッグ用)
                 if (Input.GetKeyDown(KeyCode.Z))
+                {
                     AddHp(-1);
+                    objHPBar[0].GetComponent<CHPBar>().AddValue(-1);
+                }
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
                     ChangeState(PLAYERSTATE.PLAYER_DEAD);
