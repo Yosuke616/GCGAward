@@ -54,7 +54,7 @@ public class Player_Walk : MonoBehaviour
     [SerializeField] private Vector3 velocity;              // 移動方向
     [SerializeField] private float moveSpeed = 5.0f;        // 移動速度
     [SerializeField] private float applySpeed = 0.2f;       // 回転の適用速度
-    [SerializeField] private FollowCamera refCamera;  // カメラの水平回転を参照する用
+    [SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
     private void Awake()
     {
         //60fps
@@ -85,6 +85,15 @@ public class Player_Walk : MonoBehaviour
             this.animator.SetBool(key_isJump, false);
         }
 
+        //シフトだけ押しているときはアニメーション消す
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            eState = 0;
+            this.animator.SetBool(key_isRun, false);
+            this.animator.SetBool(key_isWalk, false);
+            this.animator.SetBool(key_isJump, false);
+            Debug.Log(12345678);
+        }
+
         //-------------WASD------------------走る
         // WASD入力から、XZ平面(水平な地面)を移動する方向(velocity)を得ます
         velocity = Vector3.zero;
@@ -93,63 +102,60 @@ public class Player_Walk : MonoBehaviour
             velocity.z += 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
             this.animator.SetBool(key_isWalk, true);
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isJump, false);
         }
         if (Input.GetKey(KeyCode.A))
         {
             velocity.x -= 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
             this.animator.SetBool(key_isWalk, true);
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isJump, false);
         }
         if (Input.GetKey(KeyCode.S))
         {
             velocity.z -= 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
             this.animator.SetBool(key_isWalk, true);
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isJump, false);
         }
         if (Input.GetKey(KeyCode.D))
         {
             velocity.x += 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
             this.animator.SetBool(key_isWalk, true);
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isJump, false);
         }
 
         if (eState == PLAYER_STATE.WALK_STATE)
         {
+            moveSpeed = 5.0f;
+            this.animator.SetBool(key_isWalk, true);
+            this.animator.SetBool(key_isRun, false);
+
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 eState = PLAYER_STATE.RUN_STATE;
                 this.animator.SetBool(key_isRun, true);
-                this.animator.SetBool(key_isWalk, false);
-                this.animator.SetBool(key_isJump, false);
             }
         }
 
 
         if (eState == PLAYER_STATE.RUN_STATE)
         {
+            moveSpeed = 10.0f;
+
             if (Input.GetKey(KeyCode.W))
             {
-                velocity.z += 10;
+                velocity.z += 0.1f;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                velocity.x -= 10;
+                velocity.x -= 0.1f;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                velocity.z -= 10;
+                velocity.z -= 0.1f;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                velocity.x += 10;
+                velocity.x += 0.1f;
             }
         }
 
@@ -219,8 +225,6 @@ public class Player_Walk : MonoBehaviour
             rb.AddForce(0, fJumpPower, 0);
             eState = PLAYER_STATE.JUMP_STATE;
             this.animator.SetBool(key_isJump, true);
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isWalk, false);
         }
 
         //アニメーションを変更する
@@ -256,7 +260,12 @@ public class Player_Walk : MonoBehaviour
         {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
-                bJumpFlg = false;
+                if (bJumpFlg) {
+                    bJumpFlg = false;
+                    this.animator.SetBool(key_isRun, true);
+                    this.animator.SetBool(key_isRun, false);
+                    this.animator.SetBool(key_isWalk, false);
+                }
                 this.animator.SetBool(key_isJump, false);
             }
         }
