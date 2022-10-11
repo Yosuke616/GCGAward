@@ -16,13 +16,16 @@ public class CHPBar : MonoBehaviour
 
     #region variable
     private Slider scHPSlider;
-    private int nNumber;               // 何番目のHPバーか
+    private int nNumber;                // 何番目のHPバーか
+    private int nCurrentValue;          // 現在のスライダーの値
+    private int nMaxValue;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         hpBarImage.color = normalColor;
+        nCurrentValue = 1;
     }
 
     // Update is called once per frame
@@ -38,9 +41,10 @@ public class CHPBar : MonoBehaviour
      * @details 個々のHPバーに必要な設定を行う
    　*/
     #region set HPBar param
-    public void SetHpBarParam(int num)
+    public void SetHpBarParam(int num, int max)
     {
         nNumber = num;      // 何番目のHPバーか
+        nMaxValue = max;
     }
     #endregion
 }
