@@ -15,42 +15,71 @@ public class FPSMouseMoveY : MonoBehaviour
     [SerializeField]
     private float MouseMoveY = 0.0f;
     private float deadZone = 0.5f;
+    private bool controller = false;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        
+        controller = PlayerInputTest.GetControllerUse();
 
 
-
-        if (Input.GetMouseButtonDown(0)|| Gamepad.current.rightTrigger.ReadValue() > deadZone&&!b_AimMode)    //マウスの左クリックが押された
+        if (controller)
         {
-            b_AimMode = true;
-            b_Charge = true;
-        }
-        if (Input.GetMouseButtonUp(0)||Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode)  //マウスの左クリックが外れたとき
-        {
-            if (b_AimMode)
-                b_AimMode = false;
-            if (b_Charge)
+            if ((Input.GetMouseButtonDown(0)))//&&controller || Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode && !controller)    //マウスの左クリックが押された
+            {
+                b_AimMode = true;
+                b_Charge = true;
+            }
+            if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
+            {
+                if (b_AimMode)
+                    b_AimMode = false;
+                if (b_Charge)
+                    b_Charge = false;
+            }
+            if ((Input.GetMouseButtonDown(1)))// && controller || Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge && !controller)    //マウスの右クリックが押された
+            {
+
                 b_Charge = false;
-        }
-        if (Input.GetMouseButtonDown(1) && b_Charge || Gamepad.current.leftTrigger.ReadValue() > deadZone && b_Charge)    //マウスの右クリックが押された
-        {
 
-            b_Charge = false;
-           
+            }
+        }
+        else
+        {
+            
+            if ((Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode)    //マウスの左クリックが押された
+            {
+                b_AimMode = true;
+                b_Charge = true;
+            }
+            if ((Gamepad.current.rightTrigger.ReadValue() < deadZone)&&b_AimMode )  //マウスの左クリックが外れたとき
+            {
+                if (b_AimMode)
+                    b_AimMode = false;
+                if (b_Charge)
+                    b_Charge = false;
+            }
+            if ((Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge )    //マウスの右クリックが押された
+            {
+
+                b_Charge = false;
+
+            }
         }
         //MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
         
         if (b_Charge)
         {
+            if(controller)
             MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
+            if(!controller)
             MouseMoveY += Gamepad.current.rightStick.ReadValue().y * ControllerSensi;
             if (MouseMoveY>90)
             {
