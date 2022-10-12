@@ -1304,6 +1304,9 @@ MonoBehaviour:
   PlayerVectorZ: 0
   sinX: 0
   cosX: 0
+  DeadZone: 0.5
+  b_Charge: 0
+  b_AimMode: 0
 --- !u!4 &691320768
 Transform:
   m_ObjectHideFlags: 0
@@ -1608,6 +1611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FPSSensi: 5
+  ControllerSensi: 1
+  deadZone: 0.5
 --- !u!1 &1101347845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2509,6 +2514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FPSSensi: 5
+  ControllerSensi: 1
   MouseMoveY: 0
 --- !u!1 &2074509700
 GameObject:
@@ -2732,6 +2738,10 @@ PrefabInstance:
       propertyPath: TPSCamera
       value: 
       objectReference: {fileID: 59243822}
+    - target: {fileID: 2781452734751324841, guid: b69e4aa2b7b506543aa8dba05a1d3bd7, type: 3}
+      propertyPath: PlayerMove
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2781452734751324841, guid: b69e4aa2b7b506543aa8dba05a1d3bd7, type: 3}
       propertyPath: TRASECamera
       value: 
