@@ -24,6 +24,8 @@ public class CBow : MonoBehaviour
     [SerializeField, Range(1,10)] private int nMaxChargeStep = 1;
     [Header("チャージ時間(1段階)")]
     [SerializeField, Range(0.1f, 10.0f)] private float fValChargeTime = 0.5f;
+    [Header("生成する矢の大きさ(0.5fがちょうどいいかも)")]
+    [SerializeField, Range(0.1f, 1.0f)] private float arrowSize;
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
     #endregion
     
@@ -198,6 +200,7 @@ public class CBow : MonoBehaviour
         objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
         objArrow.transform.parent = this.transform;
         objArrow.transform.localRotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
+        objArrow.transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
     }
     #endregion
     /*
