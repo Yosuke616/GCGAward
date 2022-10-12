@@ -34,7 +34,7 @@ RectTransform:
   - {fileID: 3256069604587131560}
   - {fileID: 7883520703248674161}
   - {fileID: 3256069604189030087}
-  - {fileID: 3256069604004675943}
+  - {fileID: 5384357889583832530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -384,7 +384,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4631959097829188098, guid: 55311bd3c4c309345a5df5be1068b743, type: 3}
   m_PrefabInstance: {fileID: 3256069604172910451}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5968983350478485786
+--- !u!1001 &3837313515747517871
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -711,6 +711,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9221670778261010530, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
+      propertyPath: m_Spacing.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221670778261010530, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
+      propertyPath: m_CellSize.x
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 9221670778261010556, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
       propertyPath: m_Name
       value: HPBarGroup
@@ -781,7 +789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9221670778261010557, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 9221670778261010557, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -801,10 +809,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
---- !u!224 &3256069604004675943 stripped
+--- !u!224 &5384357889583832530 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9221670778261010557, guid: e2046a5c90b22e34aad53ab04afb8eab, type: 3}
-  m_PrefabInstance: {fileID: 5968983350478485786}
+  m_PrefabInstance: {fileID: 3837313515747517871}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7541418711754013564
 PrefabInstance:
