@@ -338,7 +338,7 @@ RectTransform:
   m_GameObject: {fileID: 179532360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.8679, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 882012982}
@@ -347,7 +347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -331, y: 180.2}
+  m_AnchoredPosition: {x: -237.7, y: 119.3}
   m_SizeDelta: {x: -699.99994, y: -349.99997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179532362
@@ -1155,7 +1155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 61.3
       objectReference: {fileID: 0}
     - target: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1217,7 +1217,7 @@ MonoBehaviour:
   normalColor: {r: 1, g: 0, b: 0, a: 0.6745098}
   maxChargeColor: {r: 1, g: 0, b: 0, a: 0.69411767}
   hpBarImage: {fileID: 1617938417}
-  fBarDelay: 1
+  fBarDelay: 0.2
   fBarStagingValue: 0.01
 --- !u!1 &905504255
 GameObject:
@@ -1458,7 +1458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nMaxHp: 10
   nValNum: 1
-  nAtkDecHp: 10
+  nAtkDecHp: 1
   nAdjustHp: 5
   prefabHPBar: {fileID: 0}
   HPBarGroup: {fileID: 624366153}
@@ -2141,7 +2141,7 @@ RectTransform:
   m_GameObject: {fileID: 2009365853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.8679, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 624366154}
@@ -2150,7 +2150,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -331, y: 180}
+  m_AnchoredPosition: {x: -237.70003, y: 180}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &2086298356 stripped

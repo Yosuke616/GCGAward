@@ -72,7 +72,7 @@ public class CBow : MonoBehaviour
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
-            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1);
+            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * objPlayer.GetComponent<CSenaPlayer>().nAtkDecHp);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -91,7 +91,7 @@ public class CBow : MonoBehaviour
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
-                objPlayer.GetComponent<CSenaPlayer>().SetHp(-1);
+                objPlayer.GetComponent<CSenaPlayer>().SetHp(-1 * objPlayer.GetComponent<CSenaPlayer>().nAtkDecHp);
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }

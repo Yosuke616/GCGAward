@@ -19,7 +19,7 @@ public class CSenaPlayer : MonoBehaviour
     [Header("HPバーの分割数")]
     [SerializeField] private int nValNum;        // 1マスのHP量
     [Header("一矢撃つごとに消費するHP量")]
-    [SerializeField] private int nAtkDecHp;      // 一矢でのHP消費量
+    [SerializeField] public int nAtkDecHp;      // 一矢でのHP消費量
     [Header("威力調整に使うHP量")]
     [SerializeField] private int nAdjustHp;      // 調整時のHP消費量
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
