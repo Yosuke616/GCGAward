@@ -26,6 +26,7 @@ public class CBow : MonoBehaviour
     [SerializeField, Range(0.1f, 10.0f)] private float fValChargeTime = 0.5f;
     [Header("生成する矢の大きさ(0.5fがちょうどいいかも)")]
     [SerializeField, Range(0.1f, 1.0f)] private float arrowSize;
+    [SerializeField] private GameObject objPlayer;          // プレイヤーオブジェクト
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
     #endregion
     
@@ -71,6 +72,7 @@ public class CBow : MonoBehaviour
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
+            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * objPlayer.GetComponent<CSenaPlayer>().nAtkDecHp);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -89,6 +91,7 @@ public class CBow : MonoBehaviour
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
+                objPlayer.GetComponent<CSenaPlayer>().SetHp(-1 * objPlayer.GetComponent<CSenaPlayer>().nAtkDecHp);
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }
@@ -124,6 +127,7 @@ public class CBow : MonoBehaviour
 
             // 発射状態
             case STATE_BOW.BOW_SHOT:
+                objPlayer.GetComponent<CSenaPlayer>().SetHpBar();
                 objArrow.GetComponent<CArrow>().Shot((int)fChargeTime);        // 矢を発射する
                 break;
 
@@ -138,6 +142,8 @@ public class CBow : MonoBehaviour
 
             // チャージリセット状態
             case STATE_BOW.BOW_RESET:
+                // 矢を発射していなければHPバーをリセットする
+                objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
                 ResetCharge();      // チャージをリセットする
                 break;
         }

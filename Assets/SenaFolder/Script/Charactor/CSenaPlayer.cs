@@ -19,7 +19,7 @@ public class CSenaPlayer : MonoBehaviour
     [Header("HPバーの分割数")]
     [SerializeField] private int nValNum;        // 1マスのHP量
     [Header("一矢撃つごとに消費するHP量")]
-    [SerializeField] private int nAtkDecHp;      // 一矢でのHP消費量
+    [SerializeField] public int nAtkDecHp;      // 一矢でのHP消費量
     [Header("威力調整に使うHP量")]
     [SerializeField] private int nAdjustHp;      // 調整時のHP消費量
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
@@ -75,10 +75,6 @@ public class CSenaPlayer : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
                     AddHp(-1);
-                    int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
-                    objHPBar[changeBarNum].GetComponent<CHPBar>().AddValue(-1);
-                    HPBarStaging.GetComponent<CHPBar>().AddValue(-1);
-                    cBGHPBar.changeBarValue();
                 }
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
@@ -143,6 +139,47 @@ public class CSenaPlayer : MonoBehaviour
    　*/
     #region add hp
     public void AddHp(int num)
+    {
+        //nCurrentHp += num;
+        //int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
+        objHPBar[0].GetComponent<CHPBar>().AddValue(num);
+        HPBarStaging.GetComponent<CHPBar>().AddValue(num);
+    }
+    #endregion
+
+    /*
+    * @brief HPバーのリセット
+    * @param num HPの加算量
+    * @sa ダメージをくらったとき
+    * @details HPにnumを加算する
+  　*/
+    #region reset hp bar
+    public void ResetHPBar()
+    {
+        objHPBar[0].GetComponent<CFrontHPBar>().ResetBarValue();
+    }
+    #endregion
+
+    #region set hp bar
+    public void SetHpBar()
+    {
+        cBGHPBar.changeBarValue();
+    }
+    #endregion
+
+    /*
+     * @brief HPの取得
+     * @return int プレイヤーのHP
+ 　  */
+    #region get hp
+    public int GetHp()
+    {
+        return nCurrentHp;
+    }
+    #endregion
+
+    #region set hp
+    public void SetHp(int num)
     {
         nCurrentHp += num;
     }

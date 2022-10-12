@@ -9,9 +9,34 @@ using UnityEditor;
 
 public class CFrontHPBar : CHPBar
 {
-   public override void AddValue(int num)
-    {
+    #region variable
+    private int nOldValue;
+    #endregion 
+   
+    /*
+     * @brief HPの加算
+     * @param num HPの加算量
+     * @sa ダメージをくらったとき
+     * @details HPにnumを加算する
+   　*/
+    #region add value
+    public override void AddValue(int num)
+   {
+        nOldValue = nCurrentValue;
         nCurrentValue += num;
         SetValue(nCurrentValue, nMaxValue);
+   }
+    #endregion
+
+    /*
+     * @brief バーの数値をリセットする
+     * @sa チャージ状態を解除したとき
+   　*/
+    #region reset bar value
+    public void ResetBarValue()
+    {
+        nCurrentValue = objPlayer.GetComponent<CSenaPlayer>().GetHp();
+        SetValue(nCurrentValue, nMaxValue);
     }
+    #endregion
 }
