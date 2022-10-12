@@ -141,10 +141,9 @@ public class CSenaPlayer : MonoBehaviour
     public void AddHp(int num)
     {
         //nCurrentHp += num;
-        int nDecHp = nCurrentHp - num;
-        int changeBarNum = nDecHp / (nMaxHp / nValNum);
-        //objHPBar[changeBarNum].GetComponent<CHPBar>().AddValue(num);
-        //HPBarStaging.GetComponent<CHPBar>().AddValue(num);
+        //int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
+        objHPBar[0].GetComponent<CHPBar>().AddValue(num);
+        HPBarStaging.GetComponent<CHPBar>().AddValue(num);
     }
     #endregion
 
@@ -180,14 +179,9 @@ public class CSenaPlayer : MonoBehaviour
     #endregion
 
     #region set hp
-    private void SetHp(int num)
+    public void SetHp(int num)
     {
-        nCurrentHp = num;
+        nCurrentHp += num;
     }
     #endregion
-
-    public void ChargeDecHp()
-    {
-
-    }
 }

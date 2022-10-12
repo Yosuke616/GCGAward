@@ -91,6 +91,7 @@ public class CBow : MonoBehaviour
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
+                objPlayer.GetComponent<CSenaPlayer>().SetHp(-1);
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }
