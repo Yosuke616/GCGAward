@@ -58,10 +58,9 @@ public class CHPBar : MonoBehaviour
      * @details ˆø”‚ğ‘«‚·
    @*/
     #region add value
-    public void AddValue(int num)
+    public virtual void AddValue(int num)
     {
         nCurrentValue += num;
-        SetValue(nCurrentValue, nMaxValue);
     }
     #endregion
     

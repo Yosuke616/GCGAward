@@ -9,5 +9,9 @@ using UnityEditor;
 
 public class CFrontHPBar : CHPBar
 {
-   
+   public override void AddValue(int num)
+    {
+        nCurrentValue += num;
+        SetValue(nCurrentValue, nMaxValue);
+    }
 }

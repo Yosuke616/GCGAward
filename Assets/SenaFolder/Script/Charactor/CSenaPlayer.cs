@@ -46,6 +46,8 @@ public class CSenaPlayer : MonoBehaviour
             objHPBar[num] = HPBarGroup.transform.GetChild(num).gameObject;
             objHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
         }
+        HPBarStaging.GetComponent<CHPBar>().SetHpBarParam(0, nMaxHp / nValNum);
+
         //SetHpUI();
     }
 
@@ -75,6 +77,7 @@ public class CSenaPlayer : MonoBehaviour
                     AddHp(-1);
                     int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
                     objHPBar[changeBarNum].GetComponent<CHPBar>().AddValue(-1);
+                    HPBarStaging.GetComponent<CHPBar>().AddValue(-1);
                     cBGHPBar.changeBarValue();
                 }
                 // HPÇ™0Ç…Ç»Ç¡ÇΩÇÁéÄñSèÛë‘Ç…ïœçXÇ∑ÇÈ
