@@ -1307,6 +1307,7 @@ MonoBehaviour:
   DeadZone: 0.5
   b_Charge: 0
   b_AimMode: 0
+  controller: 0
 --- !u!4 &691320768
 Transform:
   m_ObjectHideFlags: 0
@@ -1586,6 +1587,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cursur
       objectReference: {fileID: 0}
+    - target: {fileID: 5010081212279564779, guid: 4b0583312c5098c4db2a30579b26045b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b0583312c5098c4db2a30579b26045b, type: 3}
 --- !u!1 &1027814691 stripped
@@ -1613,6 +1618,7 @@ MonoBehaviour:
   FPSSensi: 5
   ControllerSensi: 1
   deadZone: 0.5
+  TPSTarget: {fileID: 0}
 --- !u!1 &1101347845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2045,6 +2051,10 @@ PrefabInstance:
     - target: {fileID: 2991144454822019867, guid: 250592d728febc2499714bb2449ffca0, type: 3}
       propertyPath: m_Name
       value: CursurSide
+      objectReference: {fileID: 0}
+    - target: {fileID: 2991144454822019867, guid: 250592d728febc2499714bb2449ffca0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 250592d728febc2499714bb2449ffca0, type: 3}

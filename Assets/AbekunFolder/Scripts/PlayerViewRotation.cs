@@ -42,17 +42,21 @@ public class PlayerViewRotation : MonoBehaviour
     private float cosY;
     [SerializeField]private bool b_Charge = false; 
     [SerializeField]private bool b_AimMode = false;
+    [SerializeField]
+    private bool controller ;
     // Start is called before the first frame update
     void Start()
     {
         //Vector3 Pos = new Vector3(0.0f, 0.0f, CameraRange);
         //this.transform.position = Pos;
-    
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+        controller = PlayerInputTest.GetControllerUse();
         ObjectPos = this.transform.position;
         //pi+=0.01f;
         //if(pi>=6.28)
@@ -83,11 +87,16 @@ public class PlayerViewRotation : MonoBehaviour
         PlayerVectorZ = -Player.transform.forward.z;//Z
         if (!b_Charge)
         {
-            MouseMoveX += Input.GetAxis("Mouse X") * Sensi;
-            MouseMoveY += Input.GetAxis("Mouse Y") * Sensi;
-            MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllSensi;
-            MouseMoveY += (Gamepad.current.rightStick.ReadValue().y * ControllSensi)/2;
-
+            if (controller)
+            {
+                MouseMoveX += Input.GetAxis("Mouse X") * Sensi;
+                MouseMoveY += Input.GetAxis("Mouse Y") * Sensi;
+            }
+            else
+            {
+                MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllSensi;
+                MouseMoveY += (Gamepad.current.rightStick.ReadValue().y * ControllSensi) / 2;
+            }
             sinX = Mathf.Sin(MouseMoveX+Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//X
              cosX = Mathf.Cos(MouseMoveX+ Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//Z
             //at sinY = Mathf.Sin(MouseMoveY);//Z
@@ -113,21 +122,7 @@ public class PlayerViewRotation : MonoBehaviour
             //{
             //    cosX += 0.01f;
             //}
-            if ((sinX == PlayerVectorX))
-                {
-                    
-                }
-                else {
-                    //sinX = sinX * 0.9f + PlayerVectorX * 0.9f;
-                }
-                if ((cosX == PlayerVectorZ))
-                {
-                    
-                }
-                else {
-                    //cosX = cosX * 0.9f + PlayerVectorZ * 0.9f;
-                }
-
+           
                 
            // }
 
@@ -141,36 +136,72 @@ public class PlayerViewRotation : MonoBehaviour
             //this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
 
         }
-        
-            if (Input.GetMouseButtonDown(0)|| Gamepad.current.rightTrigger.ReadValue() > DeadZone&&!b_AimMode)    //マウスの左クリックが押された
+        if (controller)
         {
-            MouseMoveX = 0;
-            MouseMoveY = 0.85f;
-            b_Charge = true;
-            b_AimMode = true;
-        }
-        if (Input.GetMouseButtonUp(0) || Gamepad.current.rightTrigger.ReadValue() < DeadZone&&b_AimMode)  //マウスの左クリックが外れたとき
-        {
-            
-            //sinX = PlayerVectorX;
-            //cosX = PlayerVectorZ;
-            if (b_AimMode)
-            b_AimMode = false;
-            if (b_Charge)
+
+
+            if ((Input.GetMouseButtonDown(0)))// && controller || Gamepad.current.rightTrigger.ReadValue() > DeadZone)&&!b_AimMode && !controller)    //マウスの左クリックが押された
             {
-                b_Charge = false;
                 MouseMoveX = 0;
                 MouseMoveY = 0.85f;
+                b_Charge = true;
+                b_AimMode = true;
+            }
+            if (Input.GetMouseButtonUp(0))//&& controller || Gamepad.current.rightTrigger.ReadValue() < DeadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
+            {
+
+                //sinX = PlayerVectorX;
+                //cosX = PlayerVectorZ;
+                if (b_AimMode)
+                    b_AimMode = false;
+                if (b_Charge)
+                {
+                    b_Charge = false;
+                    MouseMoveX = 0;
+                    MouseMoveY = 0.85f;
+                }
+            }
+            if ((Input.GetMouseButtonDown(1)))// && controller || Gamepad.current.leftTrigger.ReadValue() > DeadZone) && b_Charge && !controller)    //マウスの右クリックが押された
+            {
+                MouseMoveX = 0;
+                MouseMoveY = 0.85f;
+                //sinX = PlayerVectorX;
+                //cosX = PlayerVectorZ;
+                b_Charge = false;
+            }
+
+        }
+        else
+        {
+            if ((Gamepad.current.rightTrigger.ReadValue() > DeadZone)&&!b_AimMode)    //マウスの左クリックが押された
+            {
+                MouseMoveX = 0;
+                MouseMoveY = 0.85f;
+                b_Charge = true;
+                b_AimMode = true;
+            }
+            if (( Gamepad.current.rightTrigger.ReadValue() < DeadZone)&&b_AimMode)  //マウスの左クリックが外れたとき
+            {
+
+                //sinX = PlayerVectorX;
+                //cosX = PlayerVectorZ;
+                if (b_AimMode)
+                    b_AimMode = false;
+                if (b_Charge)
+                {
+                    b_Charge = false;
+                    MouseMoveX = 0;
+                    MouseMoveY = 0.85f;
+                }
+            }
+            if ((Gamepad.current.leftTrigger.ReadValue() > DeadZone) && b_Charge)    //マウスの右クリックが押された
+            {
+                MouseMoveX = 0;
+                MouseMoveY = 0.85f;
+                //sinX = PlayerVectorX;
+                //cosX = PlayerVectorZ;
+                b_Charge = false;
             }
         }
-        if (Input.GetMouseButtonDown(1) && b_Charge || Gamepad.current.leftTrigger.ReadValue() > DeadZone && b_Charge)    //マウスの右クリックが押された
-        {
-            MouseMoveX = 0;
-            MouseMoveY = 0.85f;
-            //sinX = PlayerVectorX;
-            //cosX = PlayerVectorZ;
-            b_Charge = false;
-        }
-        
     }
 }
