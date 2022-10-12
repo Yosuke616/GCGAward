@@ -22,7 +22,10 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera TRASECamera;    //TRASEカメラ
     [Header("コントローラーデッドゾーン")]
     [SerializeField] private float deadZone = 0.5f;
+    [SerializeField]
     private bool b_Charge = false;
+    [SerializeField]
+    private bool b_AimMode = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,19 +86,24 @@ public class PlayerInputTest : MonoBehaviour
         {
             this.transform.eulerAngles += new Vector3(0, PlayerRot, 0);
         }
-        if (Input.GetMouseButtonDown(0))    //マウスの左クリックが押された
+        
+        if (Input.GetMouseButtonDown(0) || Gamepad.current.rightTrigger.ReadValue() > deadZone && !b_AimMode)    //マウスの左クリックが押された
         {
             TPSCamera.Priority = 0;
             FPSCamera.Priority = 100;
             b_Charge = true;
+            b_AimMode = true;
         }
-        if (Input.GetMouseButtonUp(0))  //マウスの左クリックが外れたとき
+        if (Input.GetMouseButtonUp(0) || Gamepad.current.rightTrigger.ReadValue() < deadZone && b_AimMode)  //マウスの左クリックが外れたとき
         {
             TPSCamera.Priority = 100;
             FPSCamera.Priority = 0;
+            if(b_AimMode)
+            b_AimMode = false;
+            if(b_Charge)
             b_Charge = false;
         }
-        if (Input.GetMouseButtonDown(1)&&b_Charge)    //マウスの右クリックが押された
+        if (Input.GetMouseButtonDown(1)&&b_Charge || Gamepad.current.leftTrigger.ReadValue() > deadZone && b_Charge)    //マウスの右クリックが押された
         {
             TPSCamera.Priority = 100;
             FPSCamera.Priority = 0;

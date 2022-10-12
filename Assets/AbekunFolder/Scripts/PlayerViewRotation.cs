@@ -36,9 +36,12 @@ public class PlayerViewRotation : MonoBehaviour
     private float sinX;
     [SerializeField]
     private float cosX;
+    [SerializeField]
+    private float DeadZone = 0.5f;
     //private float si;
     private float cosY;
-    private bool b_Charge = false; 
+    [SerializeField]private bool b_Charge = false; 
+    [SerializeField]private bool b_AimMode = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -138,21 +141,29 @@ public class PlayerViewRotation : MonoBehaviour
             //this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
 
         }
-            if (Input.GetMouseButtonDown(0))    //マウスの左クリックが押された
+        
+            if (Input.GetMouseButtonDown(0)|| Gamepad.current.rightTrigger.ReadValue() > DeadZone&&!b_AimMode)    //マウスの左クリックが押された
         {
             MouseMoveX = 0;
             MouseMoveY = 0.85f;
             b_Charge = true;
+            b_AimMode = true;
         }
-        if (Input.GetMouseButtonUp(0))  //マウスの左クリックが外れたとき
+        if (Input.GetMouseButtonUp(0) || Gamepad.current.rightTrigger.ReadValue() < DeadZone&&b_AimMode)  //マウスの左クリックが外れたとき
         {
-            MouseMoveX = 0;
-            MouseMoveY = 0.85f;
+            
             //sinX = PlayerVectorX;
             //cosX = PlayerVectorZ;
-            b_Charge = false;
+            if (b_AimMode)
+            b_AimMode = false;
+            if (b_Charge)
+            {
+                b_Charge = false;
+                MouseMoveX = 0;
+                MouseMoveY = 0.85f;
+            }
         }
-        if (Input.GetMouseButtonDown(1) && b_Charge)    //マウスの右クリックが押された
+        if (Input.GetMouseButtonDown(1) && b_Charge || Gamepad.current.leftTrigger.ReadValue() > DeadZone && b_Charge)    //マウスの右クリックが押された
         {
             MouseMoveX = 0;
             MouseMoveY = 0.85f;
