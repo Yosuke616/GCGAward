@@ -8,6 +8,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Player_Walk : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class Player_Walk : MonoBehaviour
     [SerializeField] float fPlayerWalk = 2.0f;
     [SerializeField] float fJumpPower = 6.0f;
     [SerializeField] private float PlayerRot = 1.0f;
-
 
     //プレイヤーの座標を設定するための変数
     private Rigidbody rb;
