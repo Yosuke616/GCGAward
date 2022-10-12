@@ -15,7 +15,8 @@ public class CHPBar : MonoBehaviour
     #endregion
 
     #region variable
-    private Slider scHPSlider;
+    [System.NonSerialized]
+    public Slider scHPSlider;
     private int nNumber;                // 何番目のHPバーか
     [System.NonSerialized]
     public int nCurrentValue;          // 現在のスライダーの値
@@ -65,9 +66,9 @@ public class CHPBar : MonoBehaviour
     #endregion
     
     #region set value
-    public void SetValue(int num, int nMax)
+    public void SetValue(float num, int nMax)
     {
-        scHPSlider.value = (float)num / (float)nMax;
+        scHPSlider.value = num / (float)nMax;
     }
     #endregion
 }

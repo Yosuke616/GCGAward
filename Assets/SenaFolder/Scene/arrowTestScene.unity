@@ -347,7 +347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -331, y: 124.9}
+  m_AnchoredPosition: {x: -331, y: 180.2}
   m_SizeDelta: {x: -699.99994, y: -349.99997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179532362
@@ -1295,7 +1295,8 @@ MonoBehaviour:
   normalColor: {r: 1, g: 0, b: 0, a: 0.6745098}
   maxChargeColor: {r: 1, g: 0, b: 0, a: 0.69411767}
   hpBarImage: {fileID: 1617938417}
-  fHPBarDelay: 1
+  fBarDelay: 1
+  fBarStagingValue: 0.01
 --- !u!1 &905504255
 GameObject:
   m_ObjectHideFlags: 0
