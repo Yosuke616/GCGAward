@@ -7,7 +7,7 @@ public class TestInputSystem : MonoBehaviour
     private void Start()
     {
         style = new GUIStyle();
-        style.fontSize = 50;
+        style.fontSize = 20;
 
     }
     void Update()

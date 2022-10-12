@@ -130,7 +130,7 @@ public class CChargeSlider : MonoBehaviour
         //float startPosX = rectTransform.anchoredPosition.x - sliderWidth / 2;
         //GameObject[] objLines = new GameObject[nMaxStep];
         for (int i = 0; i < nMaxStep; ++i)
-         {
+        {
             GameObject objLine = Instantiate(objStepLine);
             objLine.GetComponent<RectTransform>().position = new Vector2(0.0f, 0.0f);
             //objLine.transform.SetParent(transform, true);
