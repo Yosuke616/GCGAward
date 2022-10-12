@@ -21,9 +21,9 @@ public class CBow : MonoBehaviour
     [SerializeField] private GameObject PrefabArrow;       // 矢のオブジェクト
     [SerializeField] private GameObject spawner;
     [Header("チャージ最大段階")]
-    [SerializeField] private int nMaxChargeStep;
+    [SerializeField, Range(1,10)] private int nMaxChargeStep = 1;
     [Header("チャージ時間(1段階)")]
-    [SerializeField] private float fValChargeTime;
+    [SerializeField, Range(0.1f, 10.0f)] private float fValChargeTime = 0.5f;
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
     #endregion
     
