@@ -75,10 +75,6 @@ public class CSenaPlayer : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
                     AddHp(-1);
-                    int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
-                    objHPBar[changeBarNum].GetComponent<CHPBar>().AddValue(-1);
-                    HPBarStaging.GetComponent<CHPBar>().AddValue(-1);
-                    cBGHPBar.changeBarValue();
                 }
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
@@ -144,7 +140,54 @@ public class CSenaPlayer : MonoBehaviour
     #region add hp
     public void AddHp(int num)
     {
-        nCurrentHp += num;
+        //nCurrentHp += num;
+        int nDecHp = nCurrentHp - num;
+        int changeBarNum = nDecHp / (nMaxHp / nValNum);
+        //objHPBar[changeBarNum].GetComponent<CHPBar>().AddValue(num);
+        //HPBarStaging.GetComponent<CHPBar>().AddValue(num);
     }
     #endregion
+
+    /*
+    * @brief HPバーのリセット
+    * @param num HPの加算量
+    * @sa ダメージをくらったとき
+    * @details HPにnumを加算する
+  　*/
+    #region reset hp bar
+    public void ResetHPBar()
+    {
+        objHPBar[0].GetComponent<CFrontHPBar>().ResetBarValue();
+    }
+    #endregion
+
+    #region set hp bar
+    public void SetHpBar()
+    {
+        cBGHPBar.changeBarValue();
+    }
+    #endregion
+
+    /*
+     * @brief HPの取得
+     * @return int プレイヤーのHP
+ 　  */
+    #region get hp
+    public int GetHp()
+    {
+        return nCurrentHp;
+    }
+    #endregion
+
+    #region set hp
+    private void SetHp(int num)
+    {
+        nCurrentHp = num;
+    }
+    #endregion
+
+    public void ChargeDecHp()
+    {
+
+    }
 }

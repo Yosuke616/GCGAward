@@ -22,6 +22,8 @@ public class CHPBar : MonoBehaviour
     public int nCurrentValue;          // 現在のスライダーの値
     [System.NonSerialized]
     public int nMaxValue;
+    [System.NonSerialized]
+    public GameObject objPlayer;
     #endregion
 
     // Start is called before the first frame update
@@ -29,6 +31,7 @@ public class CHPBar : MonoBehaviour
     {
         hpBarImage.color = normalColor;
         scHPSlider = GetComponent<Slider>();
+        objPlayer = GetPlayer();
     }
 
     // Update is called once per frame
@@ -37,6 +40,17 @@ public class CHPBar : MonoBehaviour
         Debug.Log("value" + nCurrentValue);
     }
 
+    /*
+    * @brief Playerオブジェクトを取得する
+    * @return GameObject プレイヤーオブジェクト
+  　*/
+    #region get player
+    public virtual GameObject GetPlayer()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        return player;
+    }
+    #endregion
     /*
      * @brief HPバーの個別設定
      * @param setNumber 何番目のHPバーか
