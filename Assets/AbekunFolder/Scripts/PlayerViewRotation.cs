@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 /**
  * @file        PlayerViewRotation.cs
  * @author      Abe_Kokoro
@@ -10,6 +11,7 @@ using UnityEngine;
 
 public class PlayerViewRotation : MonoBehaviour
 {
+
     [SerializeField] GameObject Player;
     [Header("注視点")]
    
@@ -17,6 +19,8 @@ public class PlayerViewRotation : MonoBehaviour
 
     [Header("視点移動感度")]
     [SerializeField] private float Sensi = 1.0f;
+    [Header("コントロール視点移動感度")]
+    [SerializeField] private float ControllSensi = 1.0f;
     [Header("デバッグ用")]
     [SerializeField] Vector3 ObjectPos;
     //[SerializeField]private float pi = 0.0f;
@@ -40,6 +44,7 @@ public class PlayerViewRotation : MonoBehaviour
     {
         //Vector3 Pos = new Vector3(0.0f, 0.0f, CameraRange);
         //this.transform.position = Pos;
+    
     }
 
     // Update is called once per frame
@@ -55,9 +60,9 @@ public class PlayerViewRotation : MonoBehaviour
         //{
         //    pi = 6.27f;
         //}
-        if (MouseMoveY < 0.1f)
+        if (MouseMoveY < 0)
         {
-            MouseMoveY = 0.1f;
+            MouseMoveY = 0.01f;
         }
         if (MouseMoveY >= 3.14f)
         {
@@ -73,12 +78,12 @@ public class PlayerViewRotation : MonoBehaviour
         }
         PlayerVectorX = -Player.transform.forward.x;//X
         PlayerVectorZ = -Player.transform.forward.z;//Z
-        
         if (!b_Charge)
         {
             MouseMoveX += Input.GetAxis("Mouse X") * Sensi;
             MouseMoveY += Input.GetAxis("Mouse Y") * Sensi;
-            
+            MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllSensi;
+            MouseMoveY += (Gamepad.current.rightStick.ReadValue().y * ControllSensi)/2;
 
             sinX = Mathf.Sin(MouseMoveX+Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//X
              cosX = Mathf.Cos(MouseMoveX+ Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//Z
@@ -136,13 +141,13 @@ public class PlayerViewRotation : MonoBehaviour
             if (Input.GetMouseButtonDown(0))    //マウスの左クリックが押された
         {
             MouseMoveX = 0;
-            MouseMoveY = 0;
+            MouseMoveY = 0.85f;
             b_Charge = true;
         }
         if (Input.GetMouseButtonUp(0))  //マウスの左クリックが外れたとき
         {
             MouseMoveX = 0;
-            MouseMoveY = 0;
+            MouseMoveY = 0.85f;
             //sinX = PlayerVectorX;
             //cosX = PlayerVectorZ;
             b_Charge = false;
@@ -150,7 +155,7 @@ public class PlayerViewRotation : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && b_Charge)    //マウスの右クリックが押された
         {
             MouseMoveX = 0;
-            MouseMoveY = 0;
+            MouseMoveY = 0.85f;
             //sinX = PlayerVectorX;
             //cosX = PlayerVectorZ;
             b_Charge = false;

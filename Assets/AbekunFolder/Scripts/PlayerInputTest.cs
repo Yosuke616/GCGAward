@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 public class PlayerInputTest : MonoBehaviour
 {
     
@@ -19,6 +20,8 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera FPSCamera;    //FPSカメラ
     [SerializeField] CinemachineVirtualCamera TPSCamera;    //TPSカメラ
     [SerializeField] CinemachineVirtualCamera TRASECamera;    //TRASEカメラ
+    [Header("コントローラーデッドゾーン")]
+    [SerializeField] private float deadZone = 0.5f;
     private bool b_Charge = false;
     // Start is called before the first frame update
     void Start()
@@ -32,7 +35,25 @@ public class PlayerInputTest : MonoBehaviour
         Vector3 pos = this.transform.position;
         Quaternion myRotation = this.transform.rotation;
         //myRotation = Quaternion.identity;
-
+        
+        if(Gamepad.current.leftStick.ReadValue().x >deadZone)//右
+        {
+            this.transform.position += transform.right * PlayerMove * Time.deltaTime;
+        }
+        if (Gamepad.current.leftStick.ReadValue().x < -deadZone)//左
+        {
+            this.transform.position -= transform.right * PlayerMove * Time.deltaTime;
+        }
+        if(Gamepad.current.leftStick.ReadValue().y>deadZone)//前
+        {
+            this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+        }
+        if (Gamepad.current.leftStick.ReadValue().y < -deadZone)//後
+        {
+            this.transform.position -= transform.forward * PlayerMove * Time.deltaTime;
+        }
+        
+        
         if (Input.GetKey(KeyCode.W))
         {
             //this.transform.position += new Vector3(0, 0, PlayerMove);
