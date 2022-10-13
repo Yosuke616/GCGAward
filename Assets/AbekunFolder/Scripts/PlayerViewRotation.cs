@@ -44,6 +44,8 @@ public class PlayerViewRotation : MonoBehaviour
     [SerializeField]private bool b_AimMode = false;
     [SerializeField]
     private bool controller ;
+    private static float TPSVectorX;
+    private static float TPSVectorZ;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +57,7 @@ public class PlayerViewRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        
         controller = PlayerInputTest.GetControllerUse();
         ObjectPos = this.transform.position;
         //pi+=0.01f;
@@ -97,8 +99,10 @@ public class PlayerViewRotation : MonoBehaviour
                 MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllSensi;
                 MouseMoveY += (Gamepad.current.rightStick.ReadValue().y * ControllSensi) / 2;
             }
-            sinX = Mathf.Sin(MouseMoveX+Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//X
-             cosX = Mathf.Cos(MouseMoveX+ Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//Z
+           
+                sinX = Mathf.Sin(MouseMoveX + Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//X
+                cosX = Mathf.Cos(MouseMoveX + Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//Z
+            
             //at sinY = Mathf.Sin(MouseMoveY);//Z
              cosY = Mathf.Cos(MouseMoveY);//Y
             
@@ -203,5 +207,15 @@ public class PlayerViewRotation : MonoBehaviour
                 b_Charge = false;
             }
         }
+        TPSVectorX = sinX;
+        TPSVectorZ = cosX;
+    }
+    public static float GetTPSVectorX()
+    {
+        return TPSVectorX;
+    }
+    public static float GetTPSVectorZ()
+    {
+        return TPSVectorZ;
     }
 }

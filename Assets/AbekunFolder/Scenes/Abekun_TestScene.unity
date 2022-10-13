@@ -1618,7 +1618,10 @@ MonoBehaviour:
   FPSSensi: 5
   ControllerSensi: 1
   deadZone: 0.5
-  TPSTarget: {fileID: 0}
+  TPSTarget: {fileID: 59243821}
+  MouseMoveX: 0
+  TPSVectorX: 0
+  TPSVectorZ: 0
 --- !u!1 &1101347845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,6 +2529,7 @@ MonoBehaviour:
   FPSSensi: 5
   ControllerSensi: 1
   MouseMoveY: 0
+  TPSTarget: {fileID: 59243821}
 --- !u!1 &2074509700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +2760,10 @@ PrefabInstance:
       propertyPath: TRASECamera
       value: 
       objectReference: {fileID: 1584627913}
+    - target: {fileID: 2781452734751324841, guid: b69e4aa2b7b506543aa8dba05a1d3bd7, type: 3}
+      propertyPath: b_Controller
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2781452735078009341, guid: b69e4aa2b7b506543aa8dba05a1d3bd7, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.2682154
