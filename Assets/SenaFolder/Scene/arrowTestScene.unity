@@ -1633,6 +1633,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
+      propertyPath: PrefabArrow
+      value: 
+      objectReference: {fileID: 6289028262741822726, guid: 9b084664bd2232d46b15a41f88a80898, type: 3}
+    - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
       propertyPath: maxChargeTime
       value: 5
       objectReference: {fileID: 0}
