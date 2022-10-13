@@ -81,7 +81,8 @@ public class CBow : MonoBehaviour
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
-            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * nAtkDecHp);
+            int useHP = nAtkDecHp + nAdjustHp * nCurrentStep;
+            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * useHP);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -280,15 +281,23 @@ public class CBow : MonoBehaviour
         if (add)
         {
             ++nCurrentStep;
+            // 上限値の設定
             if (nCurrentStep > maxDecStep)
                 nCurrentStep = maxDecStep;
+            // 削れるHPを増やす
+            //else
+                //objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * nAdjustHp);
         }
         // 段階数を減らす
         else
         {
             --nCurrentStep;
+            // 下限値の設定
             if (nCurrentStep < 0)
                 nCurrentStep = 0;
+            // 削れるHPを減らす
+            //else
+                //objPlayer.GetComponent<CSenaPlayer>().AddHp(nAdjustHp);
         }
     }
     #endregion
