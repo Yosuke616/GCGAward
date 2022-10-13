@@ -30,30 +30,23 @@ public class CArrowDecUIManager : MonoBehaviour
     void Update()
     {
         int nCurrentStep = objWeapon.GetComponent<CBow>().GetStep();
-        // 段階数が変更されたら色を変更する
-        if (nCurrentStep != g_nOldStep)
+        // 段階数が増えているとき
+        if (nCurrentStep > g_nOldStep)
         {
-            if (nCurrentStep == 0)
-            {
-                objectsDecUI[g_nOldStep - 1].GetComponent<CArrowDecUI>().setSwitch(false);
-                g_nOldStep = nCurrentStep;
-            }
-            else if(g_nOldStep == 0)
-            {
+            // 現在の段階数が0の時は何も光らせない
+            if (nCurrentStep != 0)
                 objectsDecUI[nCurrentStep - 1].GetComponent<CArrowDecUI>().setSwitch(true);
-                g_nOldStep = nCurrentStep;
-            }
-            else
-            {
-                objectsDecUI[nCurrentStep - 1].GetComponent<CArrowDecUI>().setSwitch(true);
-                objectsDecUI[g_nOldStep - 1].GetComponent<CArrowDecUI>().setSwitch(false);
-                g_nOldStep = nCurrentStep;
-            }
+            g_nOldStep = nCurrentStep;          // 現在の段階数を退避させる
         }
-        else
+        // 段階数が減っているとき
+        else if (nCurrentStep < g_nOldStep)
         {
-            int i = 0;
+            // 前回の段階数が0の時は変更するものがないのでスルーする
+            if(g_nOldStep != 0)
+                objectsDecUI[g_nOldStep - 1].GetComponent<CArrowDecUI>().setSwitch(false);
+            g_nOldStep = nCurrentStep;           // 現在の段階数を退避させる
         }
+
     }
 
     /*
