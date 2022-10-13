@@ -18,10 +18,7 @@ public class CSenaPlayer : MonoBehaviour
     [SerializeField,Range(1,100)] private int nMaxHp;        // プレイヤーのHPの最大値
     [Header("HPバーの分割数")]
     [SerializeField] private int nValNum;        // 1マスのHP量
-    [Header("一矢撃つごとに消費するHP量")]
-    [SerializeField] public int nAtkDecHp;      // 一矢でのHP消費量
-    [Header("威力調整に使うHP量")]
-    [SerializeField] private int nAdjustHp;      // 調整時のHP消費量
+    
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject HPBarGroup;
     [SerializeField] private GameObject HPBarStaging;
@@ -72,10 +69,10 @@ public class CSenaPlayer : MonoBehaviour
             // 生存状態の時
             case PLAYERSTATE.PLAYER_ALIVE:
                 // Zキー→HPを減らす(デバッグ用)
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    AddHp(-1);
-                }
+                //if (Input.GetKeyDown(KeyCode.Z))
+                //{
+                //    AddHp(-1);
+                //}
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
                     ChangeState(PLAYERSTATE.PLAYER_DEAD);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -28,8 +29,14 @@ public class CBow : MonoBehaviour
     [SerializeField, Range(0.1f, 1.0f)] private float arrowSize;
     [SerializeField] private GameObject objPlayer;          // プレイヤーオブジェクト
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
+    [Header("一矢撃つごとに消費するHP量")]
+    [SerializeField] public int nAtkDecHp;      // 一矢でのHP消費量
+    [Header("威力調整に使うHP量")]
+    [SerializeField] private int nAdjustHp;      // 調整時のHP消費量
+    [Header("最大調整段階数")]
+    [SerializeField] private int maxDecStep;
     #endregion
-    
+
     #region variable
     private STATE_BOW g_state;              // 弓の状態
     private GameObject objArrow;            // 弓オブジェクト
@@ -38,6 +45,7 @@ public class CBow : MonoBehaviour
     private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
     private float currentChargeStep;        // 現在のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
+    private int nCurrentStep;               // 現在の威力段階数
     #endregion
 
     // Start is called before the first frame update
@@ -54,6 +62,7 @@ public class CBow : MonoBehaviour
         for (int i = 0; i < objCursur.Length; ++i)
             objCursur[i].GetComponent<CCursur>().SetChargeMaxTime(maxChargeTime);
         currentChargeStep = 0.0f;
+        nCurrentStep = 0;       // 威力段階数の初期化
 
         isAdjust = false;       // 使用HP未調整状態にする
     }
@@ -72,7 +81,7 @@ public class CBow : MonoBehaviour
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
-            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * objPlayer.GetComponent<CSenaPlayer>().nAtkDecHp);
+            objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * nAtkDecHp);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -91,7 +100,7 @@ public class CBow : MonoBehaviour
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
-                objPlayer.GetComponent<CSenaPlayer>().SetHp(-1 * objPlayer.GetComponent<CSenaPlayer>().nAtkDecHp);
+                objPlayer.GetComponent<CSenaPlayer>().SetHp(-1 * nAtkDecHp);
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }
@@ -99,6 +108,16 @@ public class CBow : MonoBehaviour
         #endregion
         //Debug.Log(g_state);
         //Debug.Log("Charge" + (int)fChargeTime);
+        
+        // 消費するHP量の調整
+        #region adjust dec hp step
+        if (Input.GetKeyDown(KeyCode.Q))
+            AdjustUseHP(false);
+        if (Input.GetKeyDown(KeyCode.E))
+            AdjustUseHP(true);
+
+        Debug.Log("Step:" + nCurrentStep);
+        #endregion
     }
     #endregion
 
@@ -250,17 +269,49 @@ public class CBow : MonoBehaviour
 
     /*
     * @brief 使用するHPを調整する
+    * @param bool 調整の段階数を増やすかどうか(true → 増やす/ false →　減らす)
     * @details　対応のキーが押された場合、使用するHPの調整を行う
     */
-    #region adjust hp
-    private void AdjustHP()
+    #region adjust use hp
+    private void AdjustUseHP(bool add)
     {
         isAdjust = true;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-            Debug.Log("UseHPDec");
+        // 段階数を増やす
+        if (add)
+        {
+            ++nCurrentStep;
+            if (nCurrentStep > maxDecStep)
+                nCurrentStep = maxDecStep;
+        }
+        // 段階数を減らす
+        else
+        {
+            --nCurrentStep;
+            if (nCurrentStep < 0)
+                nCurrentStep = 0;
+        }
+    }
+    #endregion
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            Debug.Log("UseHPAdd");
+    /*
+    * @brief 威力調整段階数の情報を渡す
+    * @return int 威力調整段階数
+    */
+    #region get step
+    public int GetStep()
+    {
+        return nCurrentStep;
+    }
+    #endregion
+
+    /*
+    * @brief 最大威力調整段階数の情報を渡す
+    * @return int 最大威力調整段階数
+    */
+    #region get max step
+    public int GetMaxStep()
+    {
+        return maxDecStep;
     }
     #endregion
 }

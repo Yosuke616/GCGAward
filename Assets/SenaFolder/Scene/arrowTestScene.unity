@@ -406,6 +406,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrowDecHPUI (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.b
+      value: 0.0047169924
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.g
+      value: 0.8583757
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
 --- !u!224 &68294782 stripped
@@ -1562,8 +1594,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nMaxHp: 10
   nValNum: 1
-  nAtkDecHp: 1
-  nAdjustHp: 5
   prefabHPBar: {fileID: 0}
   HPBarGroup: {fileID: 624366153}
   HPBarStaging: {fileID: 882012983}
@@ -1587,9 +1617,21 @@ PrefabInstance:
       value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
+      propertyPath: nAdjustHp
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
+      propertyPath: nAtkDecHp
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
       propertyPath: objPlayer
       value: 
       objectReference: {fileID: 1027814691}
+    - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
+      propertyPath: maxDecStep
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2453681382243010166, guid: f0a072e42f68bcd4da28b360fa16fa4b, type: 3}
       propertyPath: maxChargeTime
       value: 5
@@ -2156,6 +2198,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrowDecHPUI (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.b
+      value: 0.0047169924
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.g
+      value: 0.8583757
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
 --- !u!224 &1682871968 stripped
@@ -2175,6 +2249,7 @@ GameObject:
   - component: {fileID: 1844244653}
   - component: {fileID: 1844244652}
   - component: {fileID: 1844244654}
+  - component: {fileID: 1844244655}
   m_Layer: 5
   m_Name: ArrowDecHPUIGroup
   m_TagString: Untagged
@@ -2267,6 +2342,18 @@ MonoBehaviour:
   m_Spacing: {x: 100, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1844244655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844244650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b5801322e319b4e93b8f2e42fbea36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1901409503
 GameObject:
   m_ObjectHideFlags: 3
@@ -2567,6 +2654,38 @@ PrefabInstance:
     - target: {fileID: 1707074599162317095, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
       propertyPath: m_Name
       value: ArrowDecHPUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.b
+      value: 0.0047169924
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.g
+      value: 0.8583757
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOn.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851280266668184962, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
+      propertyPath: colorOff.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec3bb61c181864c4a9066fd72a988682, type: 3}
