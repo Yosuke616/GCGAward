@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 public class FPSMouseMoveY : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -16,6 +17,10 @@ public class FPSMouseMoveY : MonoBehaviour
     private float MouseMoveY = 0.0f;
     private float deadZone = 0.5f;
     private bool controller = false;
+    [SerializeField]
+    CinemachineVirtualCamera TPSVirtualCamera;
+    [SerializeField]
+    private float active = 0.0f; 
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +41,8 @@ public class FPSMouseMoveY : MonoBehaviour
             {
                 b_AimMode = true;
                 b_Charge = true;
+                //MouseMoveY = TPSTarget.transform.eulerAngles.x;
+
             }
             if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
             {
@@ -77,10 +84,11 @@ public class FPSMouseMoveY : MonoBehaviour
         
         if (b_Charge)
         {
-            if(controller)
-            MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
+            
+            if (controller)
+            MouseMoveY -= Input.GetAxis("Mouse Y") * FPSSensi;
             if(!controller)
-            MouseMoveY += Gamepad.current.rightStick.ReadValue().y * ControllerSensi;
+            MouseMoveY -= Gamepad.current.rightStick.ReadValue().y * ControllerSensi;
             if (MouseMoveY>90)
             {
                 MouseMoveY = 90;
@@ -89,24 +97,34 @@ public class FPSMouseMoveY : MonoBehaviour
             {
                 MouseMoveY = -90;
             }
-            this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         }
+        //this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         if (!b_Charge)
         {
-
-            if (MouseMoveY < -1)
+            MouseMoveY = 0;
+            CinemachineBrain brain = CinemachineCore.Instance.FindPotentialTargetBrain(TPSVirtualCamera);
+            var blendtime = brain.ActiveBlend;
+            active = blendtime.BlendWeight;
+            if (blendtime.BlendWeight >0.999f)
             {
-                MouseMoveY ++;
-                this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                    this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
+            
+            
+            //if (MouseMoveY < -1)
+            //{
+            //    MouseMoveY++;
+            //    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+            //}
+            //else if (MouseMoveY > 1)
+            //{
+            //    MouseMoveY--;
+            //    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+            //}
             }
-            else if (MouseMoveY > 1)
-            {
-                MouseMoveY--;
-                this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
-
-            }
-
         }
     }
 }
