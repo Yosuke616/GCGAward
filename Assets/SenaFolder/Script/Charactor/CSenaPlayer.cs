@@ -29,7 +29,7 @@ public class CSenaPlayer : MonoBehaviour
     #region variable
     private int nCurrentHp;     // 現在のHP
     PLAYERSTATE playerState;
-    private GameObject[] objHPBar;
+    private GameObject[] objFrontHPBar;
     private CBGHPBar cBGHPBar;
     #endregion
     // Start is called before the first frame update
@@ -38,12 +38,12 @@ public class CSenaPlayer : MonoBehaviour
     {
         nCurrentHp = nMaxHp;     // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
-        objHPBar = new GameObject[nValNum];
+        objFrontHPBar = new GameObject[nValNum];
         cBGHPBar = HPBarStaging.GetComponent<CBGHPBar>();
-        for (int num = 0; num < objHPBar.Length; ++num)
+        for (int num = 0; num < objFrontHPBar.Length; ++num)
         {
-            objHPBar[num] = HPBarGroup.transform.GetChild(num).gameObject;
-            objHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
+            objFrontHPBar[num] = HPBarGroup.transform.GetChild(num).gameObject;
+            objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
         }
         HPBarStaging.GetComponent<CHPBar>().SetHpBarParam(0, nMaxHp / nValNum);
 
@@ -52,10 +52,11 @@ public class CSenaPlayer : MonoBehaviour
     #endregion
 
     // Update is called once per frame
+    #region update
     void Update()
     {
         UpdateState(playerState);
-        //Debug.Log(nCurrentHp);
+        Debug.Log(nCurrentHp);
 
         if (Input.GetKeyDown(KeyCode.K))
             nCurrentHp = 0;
@@ -63,6 +64,36 @@ public class CSenaPlayer : MonoBehaviour
         if (nCurrentHp <= 0)
             Debug.Log("Dead");
     }
+    #endregion
+
+    /*
+    * @brief 弓がチャージされたときに実行する処理
+    * @param nDecHP HPの消費量
+    * @sa 弓がチャージされたとき
+    * @details 消費されるHPに応じてFrontHPBarの数値を変更する
+ 　  */
+    #region dec front bar
+    public void DecFrontBar(int nDecHP)
+    {
+        // FrontHPBarの値を減らす
+        objFrontHPBar[0].GetComponent<CHPBar>().AddValue(nDecHP);
+    }
+    #endregion
+
+    /*
+    * @brief 弓が発射されたときに実行する処理
+    * @param nDecHP HPの消費量
+    * @sa 弓が発射されたとき
+    * @details 実際のHPを減らす
+ 　  */
+    #region dec bg bar
+    public void DecBGBar(int nDecHP)
+    {
+        // HPを減らす
+        HPBarStaging.GetComponent<CHPBar>().AddValue(nDecHP);
+        nCurrentHp += nDecHP;
+    }
+    #endregion
 
     /*
      * @brief 状態の更新(毎フレーム実行される)
@@ -148,10 +179,8 @@ public class CSenaPlayer : MonoBehaviour
     #region add hp
     public void AddHp(int num)
     {
-        //nCurrentHp += num;
-        //int changeBarNum = nCurrentHp / (nMaxHp / nValNum);
-        objHPBar[0].GetComponent<CHPBar>().AddValue(num);
-        HPBarStaging.GetComponent<CHPBar>().AddValue(num);
+        DecFrontBar(num);
+        DecBGBar(num);
     }
     #endregion
 
@@ -164,7 +193,7 @@ public class CSenaPlayer : MonoBehaviour
     #region reset hp bar
     public void ResetHPBar()
     {
-        objHPBar[0].GetComponent<CFrontHPBar>().ResetBarValue();
+        objFrontHPBar[0].GetComponent<CFrontHPBar>().ResetBarValue();
     }
     #endregion
 
@@ -193,10 +222,13 @@ public class CSenaPlayer : MonoBehaviour
     }
     #endregion
 
+    #region destroy player
+
     private IEnumerator DestroyPlayer()
     {
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
     }
+    #endregion 
 
 }
