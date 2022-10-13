@@ -27,6 +27,7 @@ public class HeadShot : MonoBehaviour
         //è¡Ç∑
         if (enemy == null) {
             Destroy(this.gameObject);
+            return;
         }
 
         //èÌÇ…ìGÇ…í«è]Ç≥ÇπÇÈ
