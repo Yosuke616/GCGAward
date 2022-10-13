@@ -91,7 +91,6 @@ public class Player_Walk : MonoBehaviour
             this.animator.SetBool(key_isRun, false);
             this.animator.SetBool(key_isWalk, false);
             this.animator.SetBool(key_isJump, false);
-            Debug.Log(12345678);
         }
 
         //-------------WASD------------------‘–‚é
