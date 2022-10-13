@@ -46,6 +46,7 @@ public class CBow : MonoBehaviour
     private float currentChargeStep;        // 現在のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
     private int nCurrentStep;               // 現在の威力段階数
+    private int nAtkValue;                  // 矢の攻撃力
     #endregion
 
     // Start is called before the first frame update
