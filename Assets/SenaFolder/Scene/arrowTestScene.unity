@@ -1597,6 +1597,7 @@ MonoBehaviour:
   prefabHPBar: {fileID: 0}
   HPBarGroup: {fileID: 624366153}
   HPBarStaging: {fileID: 882012983}
+  DeadEffect: {fileID: 3103008268053656085, guid: 3b76da6612639af4ea91a2096e5c5806, type: 3}
 --- !u!1001 &1228527655
 PrefabInstance:
   m_ObjectHideFlags: 0

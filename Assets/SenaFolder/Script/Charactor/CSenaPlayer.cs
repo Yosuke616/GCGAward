@@ -22,6 +22,7 @@ public class CSenaPlayer : MonoBehaviour
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject HPBarGroup;
     [SerializeField] private GameObject HPBarStaging;
+    [SerializeField] private GameObject DeadEffect;
     #endregion
 
     // 変数宣言
@@ -32,6 +33,7 @@ public class CSenaPlayer : MonoBehaviour
     private CBGHPBar cBGHPBar;
     #endregion
     // Start is called before the first frame update
+    #region init
     void Start()
     {
         nCurrentHp = nMaxHp;     // HPの初期化
@@ -47,12 +49,19 @@ public class CSenaPlayer : MonoBehaviour
 
         //SetHpUI();
     }
+    #endregion
 
     // Update is called once per frame
     void Update()
     {
         UpdateState(playerState);
-        Debug.Log(nCurrentHp);
+        //Debug.Log(nCurrentHp);
+
+        if (Input.GetKeyDown(KeyCode.K))
+            nCurrentHp = 0;
+
+        if (nCurrentHp <= 0)
+            Debug.Log("Dead");
     }
 
     /*
@@ -103,6 +112,8 @@ public class CSenaPlayer : MonoBehaviour
             // 死亡状態の時
             case PLAYERSTATE.PLAYER_DEAD:
                 playerState = PLAYERSTATE.PLAYER_DEAD;
+                Instantiate(DeadEffect, transform.position, Quaternion.identity);
+                StartCoroutine("DestroyPlayer");
                 Debug.Log("<color=red>GAMEOVER</color>");
                 break;
         }
@@ -181,4 +192,11 @@ public class CSenaPlayer : MonoBehaviour
         nCurrentHp += num;
     }
     #endregion
+
+    private IEnumerator DestroyPlayer()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Destroy(gameObject);
+    }
+
 }
