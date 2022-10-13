@@ -20,16 +20,26 @@ public class EnemySearch : MonoBehaviour
     //レイを使用して視界を制御する
     private RaycastHit rayCastHit;
 
+    //スコアを加算する為のやつ
+    [SerializeField] private GameObject score;
+    private CountText scScore;     // スコアの情報格納用
+
+    //頭
+    [SerializeField] private GameObject head;
+
     // Start is called before the first frame update
     void Start()
     {
         nTime = deltTime;
+        scScore = score.GetComponent<CountText>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (head == null) {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -93,4 +103,19 @@ public class EnemySearch : MonoBehaviour
             //-----------------------------------------------------------------------------------------------------------------------
         }
     }
+
+    //タグで当たり判定を取る
+    private void OnCollisionEnter(Collision collision)
+    {
+        //矢が当たった場合、自身と矢を消滅させる
+        if (collision.gameObject.tag == "Arrow") {
+            //スコアを加算させる
+            scScore.AddScore(10000);
+
+            //オブジェクトを消滅させる
+            Destroy(collision.gameObject);      // 矢を消滅させる
+            Destroy(this.gameObject);      // 自身を消滅させる
+        }
+    }
+
 }

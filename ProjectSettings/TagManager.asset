@@ -8,6 +8,9 @@ TagManager:
   - Arrow
   - Ground
   - CursurSide
+  - Enemy
+  - Head
+  - Enemy_Start_Pos
   layers:
   - Default
   - TransparentFX
