@@ -39,7 +39,8 @@ public class CBow : MonoBehaviour
 
     #region variable
     private STATE_BOW g_state;              // 弓の状態
-    private GameObject objArrow;            // 弓オブジェクト
+    public const int nMaxArrow = 10;
+    private GameObject[] objArrow = new GameObject[nMaxArrow];            // 弓オブジェクト
     private float fChargeTime;              // チャージボタンを押している時間 
     private GameObject[] objCursur;         // カーソル
     private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
@@ -47,6 +48,7 @@ public class CBow : MonoBehaviour
     private bool isAdjust;                  // 使用するHPを調整したかどうか
     private int nCurrentStep;               // 現在の威力段階数
     private int nAtkValue;                  // 矢の攻撃力
+    private int nCurrentArrowSetNum = 0;        // 現在構えている矢の番号
     #endregion
 
     // Start is called before the first frame update
@@ -97,6 +99,7 @@ public class CBow : MonoBehaviour
             {
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
                 ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
+                Destroy(objArrow[nCurrentArrowSetNum].gameObject);
             }
 
             // チャージ中に右クリックが押されたら発射
@@ -137,7 +140,6 @@ public class CBow : MonoBehaviour
             // 通常状態
             case STATE_BOW.BOW_NORMAL:
                 g_state = STATE_BOW.BOW_NORMAL;
-                Destroy(objArrow);      // 矢を消滅させる
                 break;
 
             // チャージ状態
@@ -148,8 +150,9 @@ public class CBow : MonoBehaviour
 
             // 発射状態
             case STATE_BOW.BOW_SHOT:
+                g_state = STATE_BOW.BOW_SHOT;
                 objPlayer.GetComponent<CSenaPlayer>().SetHpBar();
-                objArrow.GetComponent<CArrow>().Shot((int)fChargeTime);        // 矢を発射する
+                objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime);        // 矢を発射する
                 break;
 
             // 最大チャージ状態
@@ -163,6 +166,7 @@ public class CBow : MonoBehaviour
 
             // チャージリセット状態
             case STATE_BOW.BOW_RESET:
+                g_state = STATE_BOW.BOW_RESET;
                 // 矢を発射していなければHPバーをリセットする
                 objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
                 ResetCharge();      // チャージをリセットする
@@ -223,11 +227,19 @@ public class CBow : MonoBehaviour
     #region create arrow
     private void CreateArrow()
     {
-        // 矢を武器の子オブジェクトとして出す
-        objArrow = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
-        objArrow.transform.parent = this.transform;
-        objArrow.transform.localRotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
-        objArrow.transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
+        for (int i = 0; i < nMaxArrow; ++i)
+        {
+            if (objArrow[i] == null)
+            {
+                // 矢を武器の子オブジェクトとして出す
+                objArrow[i] = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
+                objArrow[i].transform.parent = this.transform;
+                objArrow[i].transform.localRotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
+                objArrow[i].transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
+                nCurrentArrowSetNum = i;
+                i = nMaxArrow;
+            }
+        }
     }
     #endregion
     /*
