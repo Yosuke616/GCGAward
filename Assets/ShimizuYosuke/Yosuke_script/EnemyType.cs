@@ -17,6 +17,9 @@ public class EnemyType : MonoBehaviour
     [Header("3:歩く")]
     [SerializeField] private ENEMY_TYPE eType = 0;
 
+    [Header("HPの回復量")]
+    [SerializeField] private int nRecovery = 0;
+
     //敵が誰を追いかけるかの対象
     [SerializeField] GameObject player;
 
@@ -329,6 +332,10 @@ public class EnemyType : MonoBehaviour
         {
             //スコアを加算させる
             scScore.AddScore(10000);
+
+            //HPを回復させる
+            GameObject obj = GameObject.Find("unitychan");
+            obj.GetComponent<CSenaPlayer>().AddHp(nRecovery);
 
             //オブジェクトを消滅させる
             Destroy(collision.gameObject);      // 矢を消滅させる
