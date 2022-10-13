@@ -21,7 +21,7 @@ MonoBehaviour:
   soundResources: []
   modelResources:
   - path: arrow_effect.asset
-    asset: {fileID: 11400000, guid: 9f49808693624ae4899b722c713b64e7, type: 2}
+    asset: {fileID: 0}
   materialResources: []
   curveResources: []
   Scale: 1
