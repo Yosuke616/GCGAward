@@ -11,7 +11,7 @@ public class CDamageUI : MonoBehaviour
     [SerializeField] private Color textColor;
     [SerializeField] private GameObject objDamageUI;
     [Header("UI•\Ž¦ŽžŠÔ")]
-    [SerializeField] private int nLifeTime;     // UI‚ð•\Ž¦‚³‚¹‚éŽžŠÔ
+    [SerializeField] private float fLifeTime;     // UI‚ð•\Ž¦‚³‚¹‚éŽžŠÔ
     #endregion
 
     #region valiable
@@ -53,7 +53,7 @@ public class CDamageUI : MonoBehaviour
     #region destroy ui
     private IEnumerator DestroyUI(GameObject target)
     {
-        yield return new WaitForSeconds(nShowNum);
+        yield return new WaitForSeconds(fLifeTime);
         Destroy(target);
     }
     #endregion

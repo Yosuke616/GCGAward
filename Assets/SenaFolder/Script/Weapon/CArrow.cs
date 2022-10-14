@@ -9,6 +9,7 @@ public class CArrow : MonoBehaviour
     private float arrowForce = 0.0f;     // –î‚ğ•ú‚Â—Í
     private GameObject objBow;
     private int nArrowNum;          // ‰½”Ô–Ú‚Ì–î‚©
+    private int nArrowAtk;          // UŒ‚—Í
     #endregion
 
     #region serialize field
@@ -32,19 +33,22 @@ public class CArrow : MonoBehaviour
     /*
     * @brief –î‚ğ”­Ë‚·‚é
     * @param chargeTime ƒ`ƒƒ[ƒW‚³‚ê‚½ŠÔ
+    * @param nAtk UŒ‚—Í
     * @sa CBow::Update()
     */
     #region shoot
-    public void Shot(int chargeTime)
+    public void Shot(int chargeTime, int nAtk)
     {
         rb.useGravity = true;
         arrowForce = chargeTime * fFlyDistance;
+        nArrowAtk = nAtk;
         Vector3 direction = -transform.up;
         rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // –î‚ğ”­Ë‚·‚é
         //Debug.Log("arrowForce" + arrowForce);
     }
     #endregion
 
+    #region collision
     private void OnCollisionEnter(Collision collision)
     {
         // ’n–Ê‚ÉÕ“Ë‚µ‚½‚ç–î‚ğÁ–Å‚³‚¹‚é
@@ -53,7 +57,7 @@ public class CArrow : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    #endregion
     /*
     * @brief ‰½”Ô–Ú‚Ì–î‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
     * @param num w’è‚·‚é”Ô†
@@ -65,4 +69,17 @@ public class CArrow : MonoBehaviour
         nArrowNum = index;
     }
     #endregion
+
+    /*
+     * @brief UŒ‚—Í‚ğ“`‚¦‚é
+     * @return int UŒ‚—Í
+     * @sa –î‚ª“–‚½‚Á‚½
+   */
+    #region get arrow atk
+    public int GetArrowAtk()
+    {
+        return nArrowAtk;
+    }
+    #endregion
+
 }
