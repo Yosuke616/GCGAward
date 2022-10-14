@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using System;
 
 public class TitleScript : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class TitleScript : MonoBehaviour
     [Header("どの位の時間でボタン制御するか")]
     [SerializeField] private int DELTTIME = 10;
     private int nDeltTime;
+
+    //マウスクリック用のフラグ
+    private bool bMouse;
 
     //必要になってくるボタンを追加していく
     public enum TITLE_BUTTON {
@@ -43,6 +47,7 @@ public class TitleScript : MonoBehaviour
         //初めは始めるボタンを選択しておく
         eButton = TITLE_BUTTON.START_BUTTON;
         Pause_UI.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -54,6 +59,8 @@ public class TitleScript : MonoBehaviour
         }
 
         nDeltTime++;
+       
+        //ボタンでの処理
         //時間がある程度立つと移動するようにする
         if (nDeltTime > DELTTIME) {
             //ボタンの選択ができるようにする
@@ -100,7 +107,7 @@ public class TitleScript : MonoBehaviour
         }
 
         //ボタンが押されたときの処理
-        if (Input.GetKey(KeyCode.Return)) {
+        if (Input.GetKey(KeyCode.Return) || Input.GetMouseButtonDown(0)) {
             switch (eButton)
             {
                 case TITLE_BUTTON.START_BUTTON:
@@ -122,12 +129,9 @@ public class TitleScript : MonoBehaviour
 
     }
 
-    private void OnMouseEnter()
-    {
-        if (Start_Btn) {
-            Debug.Log(234567);
-
-        }
-        
+    //ボタンにセットさせる
+    public void SetButton(int nButton) {
+        TITLE_BUTTON btn = (TITLE_BUTTON)Enum.ToObject(typeof(TITLE_BUTTON),nButton);
+        eButton = btn;
     }
 }
