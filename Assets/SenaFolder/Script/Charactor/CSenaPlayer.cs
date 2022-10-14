@@ -31,7 +31,7 @@ public class CSenaPlayer : MonoBehaviour
     PLAYERSTATE playerState;
     private GameObject[] objFrontHPBar;
     private GameObject[] objBGHPBar;
-    //private CBGHPBar cBGHPBar;
+    private int nChangeHPBar;       // 変更するHPバーの番号(現在のHPから計算する)
     #endregion
     // Start is called before the first frame update
     #region init
@@ -39,18 +39,7 @@ public class CSenaPlayer : MonoBehaviour
     {
         nCurrentHp = nMaxHp;     // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
-        objFrontHPBar = new GameObject[nValNum];
-        objBGHPBar = new GameObject[nValNum];
-        //cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
-        for (int num = 0; num < nValNum; ++num)
-        {
-            objFrontHPBar[num] = HPFrontBarGroup.transform.GetChild(num).gameObject;
-            objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
-            objBGHPBar[num] = HPBGBarGroup.transform.GetChild(num).gameObject;
-            objBGHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
-        }
-
-        //SetHpUI();
+        SetHPBar();     // HPバーUIの情報を取得する
     }
     #endregion
 
@@ -70,6 +59,44 @@ public class CSenaPlayer : MonoBehaviour
     #endregion
 
     /*
+    * @brief 状態の更新(毎フレーム実行される)
+    * @param PLAYERSTATE プレイヤーの状態
+    * @sa CPlayer::Update
+    * @details プレイヤーの状態を取得し、状態に合わせた更新処理を実行する
+  　*/
+    #region update state
+    private void UpdateState(PLAYERSTATE state)
+    {
+        switch (state)
+        {
+            // 生存状態の時
+            case PLAYERSTATE.PLAYER_ALIVE:
+                // Zキー→HPを減らす(デバッグ用)
+                #region debug dec hp
+                //if (Input.GetKeyDown(KeyCode.Z))
+                //{
+                //    AddHp(-1);
+                //}
+                #endregion
+
+                // 変更するHPバーの番号の計算
+                // HPが満タンの時、番号が1つずれるため調整する
+                if (nCurrentHp == nMaxHp)
+                    nChangeHPBar = nCurrentHp / (nMaxHp / nValNum) - 1;     
+                else
+                    nChangeHPBar = nCurrentHp / (nMaxHp / nValNum);   
+                // HPが0になったら死亡状態に変更する
+                if (nCurrentHp <= 0)
+                    ChangeState(PLAYERSTATE.PLAYER_DEAD);
+                break;
+            // 死亡状態の時
+            case PLAYERSTATE.PLAYER_DEAD:
+                break;
+        }
+    }
+    #endregion
+
+    /*
     * @brief 弓がチャージされたときに実行する処理
     * @param nDecHP HPの消費量
     * @sa 弓がチャージされたとき
@@ -78,7 +105,16 @@ public class CSenaPlayer : MonoBehaviour
     #region set hp bar
     private void SetHPBar()
     {
-
+        objFrontHPBar = new GameObject[nValNum];
+        objBGHPBar = new GameObject[nValNum];
+        //cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
+        for (int num = 0; num < nValNum; ++num)
+        {
+            objFrontHPBar[num] = HPFrontBarGroup.transform.GetChild(num).gameObject;
+            objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
+            objBGHPBar[num] = HPBGBarGroup.transform.GetChild(num).gameObject;
+            objBGHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
+        }
     }
     #endregion
 
@@ -92,7 +128,7 @@ public class CSenaPlayer : MonoBehaviour
     public void DecFrontBar(int nDecHP)
     {
         // FrontHPBarの値を減らす
-        objFrontHPBar[0].GetComponent<CHPBar>().AddValue(nDecHP);
+        objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(nDecHP);
     }
     #endregion
 
@@ -106,39 +142,12 @@ public class CSenaPlayer : MonoBehaviour
     public void DecBGBar(int nDecHP)
     {
         // HPを減らす
-        objBGHPBar[0].GetComponent<CHPBar>().AddValue(nDecHP);
+        objBGHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(nDecHP);
         nCurrentHp += nDecHP;
     }
     #endregion
 
-    /*
-     * @brief 状態の更新(毎フレーム実行される)
-     * @param PLAYERSTATE プレイヤーの状態
-     * @sa CPlayer::Update
-     * @details プレイヤーの状態を取得し、状態に合わせた更新処理を実行する
-   　*/
-    #region update state
-    private void UpdateState(PLAYERSTATE state)
-    {
-        switch (state)
-        {
-            // 生存状態の時
-            case PLAYERSTATE.PLAYER_ALIVE:
-                // Zキー→HPを減らす(デバッグ用)
-                //if (Input.GetKeyDown(KeyCode.Z))
-                //{
-                //    AddHp(-1);
-                //}
-                // HPが0になったら死亡状態に変更する
-                if (nCurrentHp <= 0)
-                    ChangeState(PLAYERSTATE.PLAYER_DEAD);
-                break;
-            // 死亡状態の時
-            case PLAYERSTATE.PLAYER_DEAD:
-                break;
-        }
-    }
-    #endregion
+   
 
     /*
     * @brief 状態の更新(状態が変更されたときに1度だけ実行される)
@@ -192,14 +201,14 @@ public class CSenaPlayer : MonoBehaviour
     #region reset hp bar
     public void ResetHPBar()
     {
-        objFrontHPBar[0].GetComponent<CFrontHPBar>().ResetBarValue();
+        objFrontHPBar[nChangeHPBar].GetComponent<CFrontHPBar>().ResetBarValue();
     }
     #endregion
 
     #region set hp bar
     public void SetHpBar()
     {
-        objBGHPBar[0].GetComponent<CBGHPBar>().changeBarValue();
+        objBGHPBar[nChangeHPBar].GetComponent<CBGHPBar>().changeBarValue();
     }
     #endregion
 
