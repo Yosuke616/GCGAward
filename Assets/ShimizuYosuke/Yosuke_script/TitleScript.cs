@@ -31,6 +31,12 @@ public class TitleScript : MonoBehaviour
 
     private TITLE_BUTTON eButton;
 
+    private void Awake()
+    {
+        //60fps
+        Application.targetFrameRate = 60;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -114,5 +120,14 @@ public class TitleScript : MonoBehaviour
             }
         }
 
+    }
+
+    private void OnMouseEnter()
+    {
+        if (Start_Btn) {
+            Debug.Log(234567);
+
+        }
+        
     }
 }

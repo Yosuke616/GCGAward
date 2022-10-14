@@ -10,7 +10,13 @@ public class OptionScript : MonoBehaviour
     private int nDeltTime;
 
     //停止中に動かせるオブジェクト
-    [SerializeField] private GameObject Option_UI; 
+    [SerializeField] private GameObject Option_UI;
+
+    private void Awake()
+    {
+        //60fps
+        Application.targetFrameRate = 60;
+    }
 
     // Start is called before the first frame update
     void Start()
