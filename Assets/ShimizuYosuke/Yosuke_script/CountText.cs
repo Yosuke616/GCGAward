@@ -15,12 +15,15 @@ public class CountText : MonoBehaviour
     [SerializeField] GameObject player;
     private float old_player;
     private float Max_Z_Pos = 0;
+    private float ObjSize_Z;
 
     // Start is called before the first frame update
     void Start()
     {
         nScore = 0;
         old_player = player.transform.position.z;
+        ObjSize_Z = block.transform.localScale.z;
+        Debug.Log(ObjSize_Z);
     }
 
     // Update is called once per frame
@@ -37,7 +40,7 @@ public class CountText : MonoBehaviour
             //Å‘å’l‚æ‚è‘å‚«‚­‚È‚Á‚½‚ç‰ÁŽZ‚·‚é
             if (old_player > Max_Z_Pos) {
                 AddScore(10);
-                Max_Z_Pos = old_player;
+                Max_Z_Pos = old_player+ObjSize_Z/10;
             }
         }
 
