@@ -605,11 +605,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &363461359 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5579186422378606430, guid: 83329159792a6f245bd8094f626bdbd7, type: 3}
-  m_PrefabInstance: {fileID: 1583951899}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &377510515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,7 +1090,7 @@ MonoBehaviour:
   nValNum: 1
   prefabHPBar: {fileID: 0}
   HPFrontBarGroup: {fileID: 1624985659}
-  HPBGBar: {fileID: 363461359}
+  HPBGBarGroup: {fileID: 1548595011}
   DeadEffect: {fileID: 3103008268053656085, guid: 3b76da6612639af4ea91a2096e5c5806, type: 3}
 --- !u!1001 &1228527655
 PrefabInstance:
@@ -1426,6 +1421,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490302508}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1548595011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7552842669120816987, guid: 83329159792a6f245bd8094f626bdbd7, type: 3}
+  m_PrefabInstance: {fileID: 1583951899}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1560898018 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5786460617622129709, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}

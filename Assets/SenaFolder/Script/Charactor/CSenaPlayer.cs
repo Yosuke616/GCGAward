@@ -21,7 +21,7 @@ public class CSenaPlayer : MonoBehaviour
     
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject HPFrontBarGroup;
-    [SerializeField] private GameObject HPBGBar;
+    [SerializeField] private GameObject HPBGBarGroup;
     [SerializeField] private GameObject DeadEffect;
     #endregion
 
@@ -31,7 +31,7 @@ public class CSenaPlayer : MonoBehaviour
     PLAYERSTATE playerState;
     private GameObject[] objFrontHPBar;
     private GameObject[] objBGHPBar;
-    private CBGHPBar cBGHPBar;
+    //private CBGHPBar cBGHPBar;
     #endregion
     // Start is called before the first frame update
     #region init
@@ -40,13 +40,15 @@ public class CSenaPlayer : MonoBehaviour
         nCurrentHp = nMaxHp;     // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
         objFrontHPBar = new GameObject[nValNum];
-        cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
-        for (int num = 0; num < objFrontHPBar.Length; ++num)
+        objBGHPBar = new GameObject[nValNum];
+        //cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
+        for (int num = 0; num < nValNum; ++num)
         {
             objFrontHPBar[num] = HPFrontBarGroup.transform.GetChild(num).gameObject;
             objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
+            objBGHPBar[num] = HPBGBarGroup.transform.GetChild(num).gameObject;
+            objBGHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
         }
-        HPBGBar.GetComponent<CHPBar>().SetHpBarParam(0, nMaxHp / nValNum);
 
         //SetHpUI();
     }
@@ -104,7 +106,7 @@ public class CSenaPlayer : MonoBehaviour
     public void DecBGBar(int nDecHP)
     {
         // HPを減らす
-        HPBGBar.GetComponent<CHPBar>().AddValue(nDecHP);
+        objBGHPBar[0].GetComponent<CHPBar>().AddValue(nDecHP);
         nCurrentHp += nDecHP;
     }
     #endregion
@@ -197,7 +199,7 @@ public class CSenaPlayer : MonoBehaviour
     #region set hp bar
     public void SetHpBar()
     {
-        cBGHPBar.changeBarValue();
+        objBGHPBar[0].GetComponent<CBGHPBar>().changeBarValue();
     }
     #endregion
 
