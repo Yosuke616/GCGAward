@@ -3084,6 +3084,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: fResetTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: normalColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: normalColor.b
+      value: 0.8992183
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: normalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: normalColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: maxChargeColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086098367411469092, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
+      propertyPath: maxChargeColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5187333182009768560, guid: 3bdad5101034e784c8a5df3c6921d844, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

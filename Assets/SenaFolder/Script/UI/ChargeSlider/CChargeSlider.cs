@@ -20,8 +20,8 @@ public class CChargeSlider : MonoBehaviour
     #endregion
 
     #region serialize field
-    [Header("スライダーのリセットにかける時間")]
-    [SerializeField] private float fResetTime;           // スライダーのリセットにかける時間
+    //[Header("スライダーのリセットにかける時間")]
+    //[SerializeField] private float fResetTime;           // スライダーのリセットにかける時間
     [SerializeField] private GameObject objChargeSlider;
     [SerializeField] private Image sliderImage;
     [Header("通常時のスライダーの色")]
