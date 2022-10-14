@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CHPManager : MonoBehaviour
+public class CCharactorManager : MonoBehaviour
 {
     #region serialize field
     [Header("キャラクターの最大HP")]
@@ -11,6 +11,8 @@ public class CHPManager : MonoBehaviour
     [SerializeField] public GameObject HPBGBarGroup;
     [Header("HPバーの分割数")]
     [SerializeField] public int nValNum;        // 1マスのHP量
+    //[Header("攻撃力のデフォルト値")]
+    //[SerializeField] private int nDefAtk;       // 攻撃力の初期値
     #endregion
 
     #region variable
@@ -21,7 +23,29 @@ public class CHPManager : MonoBehaviour
     [System.NonSerialized]
     public GameObject[] objBGHPBar;
     private int nChangeHPBar;       // 変更するHPバーの番号(現在のHPから計算する)
+    [System.NonSerialized]
+    public int nCurrentAtk;                // 攻撃力
     #endregion
+
+    /*
+     * @brief HPの初期化
+　  */
+    #region init hp
+    public void InitHP()
+    {
+        nCurrentHp = nMaxHp;
+    }
+    #endregion
+
+    /*
+     * @brief 攻撃力の初期化
+　  */
+    #region init atk
+    public void InitAtk()
+    {
+        //nCurrentAtk = nDefAtk;
+    }
+    #endregion 
 
     #region set hp bar
     public void SetHPBar()
@@ -88,13 +112,6 @@ public class CHPManager : MonoBehaviour
     }
     #endregion
 
-    #region reset hp
-    public void InitHP()
-    {
-        nCurrentHp = nMaxHp;
-    }
-    #endregion 
-
     /*
      * @brief HPの変更
      * @param num HPの加算量
@@ -114,6 +131,18 @@ public class CHPManager : MonoBehaviour
     public void SetHpBarAnim()
     {
         objBGHPBar[nChangeHPBar].GetComponent<CBGHPBar>().changeBarValue();
+    }
+    #endregion
+
+    /*
+     * @brief 現在の攻撃力の情報を渡す
+     * @return int 攻撃力
+     * @sa 自身の攻撃が当たった時に相手の方で呼ばれる
+   　*/
+    #region get atk
+    public int GetAtk()
+    {
+        return nCurrentAtk;
     }
     #endregion
 }

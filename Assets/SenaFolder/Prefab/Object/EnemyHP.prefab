@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textColor: {r: 0, g: 0, b: 0, a: 0}
   objDamageUI: {fileID: 0}
-  nLifeTime: 1
+  fLifeTime: 0.5
 --- !u!1 &5581555250478998515
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,8 +99,8 @@ MonoBehaviour:
   HPFrontBarGroup: {fileID: 0}
   HPBGBarGroup: {fileID: 0}
   nValNum: 0
+  nDefAtk: 0
   sceneManager: {fileID: 0}
-  nAddScore: 0
   objDamageUI: {fileID: 0}
 --- !u!65 &6892358473380770562
 BoxCollider:

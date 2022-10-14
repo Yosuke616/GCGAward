@@ -35,6 +35,10 @@ public class CBow : MonoBehaviour
     [SerializeField] private int nAdjustHp;      // 調整時のHP消費量
     [Header("最大調整段階数")]
     [SerializeField] private int maxDecStep;
+    [Header("威力の段階を1上げるごとに増える攻撃力")]
+    [SerializeField] private int nAddAtk;
+    [Header("攻撃力の初期値")]
+    [SerializeField] private int nDefAtk;
     #endregion
 
     #region variable
@@ -47,7 +51,6 @@ public class CBow : MonoBehaviour
     private int currentChargeStep;        // 現在のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
     private int nCurrentAtkStep;               // 現在の威力段階数
-    private int nAtkValue;                  // 矢の攻撃力
     private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
     private int nUseHP = 0;                 // 矢を撃つのに使用するHP
     private bool isShot = false;            // 矢を撃ったかどうか
@@ -153,9 +156,10 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_SHOT:
                 g_state = STATE_BOW.BOW_SHOT;
                 isShot = true;
-                objPlayer.GetComponent<CHPManager>().SetHpBarAnim();
+                objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
                 objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nUseHP);
-                objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime);        // 矢を発射する
+                int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
+                objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue);        // 矢を発射する
                 break;
 
             // 最大チャージ状態
