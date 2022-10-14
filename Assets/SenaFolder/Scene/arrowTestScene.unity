@@ -1260,6 +1260,16 @@ MonoBehaviour:
   b_Charge: 0
   b_AimMode: 0
   b_Controller: 0
+  TPSTarget: {fileID: 0}
+  PlayerAngleY: 0
+  rotYDif: 0
+  playerEulerY: 0
+  TPSCameraEulerY: 0
+  PlayerMoveRot: 0
+  PlayerMoveFlg: 0
+  b_Left: 0
+  b_Right: 1
+  PlayerDirect: 0
 --- !u!114 &1027814698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2630,6 +2640,18 @@ PrefabInstance:
     - target: {fileID: 2690273394623776523, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830654392960658108, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: objDamageUI
+      value: 
+      objectReference: {fileID: 3502582446894916769, guid: 99d0a67d907218b46846066a18a7ec83, type: 3}
+    - target: {fileID: 2830654392960658108, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: textColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830654392960658108, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: textColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2966134314851736833, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
       propertyPath: m_AnchorMax.y
