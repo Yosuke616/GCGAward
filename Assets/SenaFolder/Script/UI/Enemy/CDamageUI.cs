@@ -38,7 +38,8 @@ public class CDamageUI : MonoBehaviour
     {
         nShowNum = DamageNum;
         GameObject obj = Instantiate(objDamageUI);
-        //obj.transform.GetChild(0).GetComponent<TextMeshPro>().text = string.Format("[0]",DamageNum);
+        //GameObject test = obj.transform.GetChild(0).;
+        obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = DamageNum.ToString();
     }
     #endregion
 }
