@@ -22,6 +22,7 @@ public class CSenaPlayer : CCharactorManager
     //[SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject DeadEffect;
     [SerializeField] private GameObject objWeapon;              // 武器オブジェクト
+    [SerializeField] private GameObject GameOverUI;
     #endregion
 
     // 変数宣言
@@ -68,10 +69,10 @@ public class CSenaPlayer : CCharactorManager
             case PLAYERSTATE.PLAYER_ALIVE:
                 // Zキー→HPを減らす(デバッグ用)
                 #region debug dec hp
-                //if (Input.GetKeyDown(KeyCode.Z))
-                //{
-                //    AddHp(-1);
-                //}
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    nCurrentHp = 0;
+                }
                 #endregion
                 // 変更するバーの番号の変更
                 CalcBarNum();
@@ -177,6 +178,7 @@ public class CSenaPlayer : CCharactorManager
     {
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
+        GameOverUI.SetActive(true);
     }
     #endregion
 
