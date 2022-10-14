@@ -122,7 +122,7 @@ public class CBow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             AdjustUseHP(true);
 
-        Debug.Log("Step:" + nCurrentStep);
+        //Debug.Log("Step:" + nCurrentStep);
         #endregion
     }
     #endregion

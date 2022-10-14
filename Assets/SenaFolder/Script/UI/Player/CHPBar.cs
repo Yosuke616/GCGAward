@@ -37,7 +37,7 @@ public class CHPBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("value" + nCurrentValue);
+        //Debug.Log("value" + nCurrentValue);
     }
 
     /*

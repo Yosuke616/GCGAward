@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class CSenaPlayer : MonoBehaviour
+#if UNITY_EDITOR
+[CustomEditor(typeof(CHPManager))]
+#endif
+
+public class CSenaPlayer : CHPManager
 {
     // プレイヤーの状態
     #region plater state
@@ -14,30 +19,25 @@ public class CSenaPlayer : MonoBehaviour
     #endregion
 
     #region serialize field
-    [Header("プレイヤーの最大HP")]
-    [SerializeField,Range(1,100)] private int nMaxHp;        // プレイヤーのHPの最大値
-    [Header("HPバーの分割数")]
-    [SerializeField] private int nValNum;        // 1マスのHP量
+  
+    
     
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
-    [SerializeField] private GameObject HPFrontBarGroup;
-    [SerializeField] private GameObject HPBGBarGroup;
+    
     [SerializeField] private GameObject DeadEffect;
     #endregion
 
     // 変数宣言
     #region variable
-    private int nCurrentHp;     // 現在のHP
     PLAYERSTATE playerState;
-    private GameObject[] objFrontHPBar;
-    private GameObject[] objBGHPBar;
+    
     private int nChangeHPBar;       // 変更するHPバーの番号(現在のHPから計算する)
     #endregion
     // Start is called before the first frame update
     #region init
     void Start()
     {
-        nCurrentHp = nMaxHp;     // HPの初期化
+        resetHP();      // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
         SetHPBar();     // HPバーUIの情報を取得する
     }
@@ -48,7 +48,7 @@ public class CSenaPlayer : MonoBehaviour
     void Update()
     {
         UpdateState(playerState);
-        Debug.Log(nCurrentHp);
+        //Debug.Log(nCurrentHp);
 
         if (Input.GetKeyDown(KeyCode.K))
             nCurrentHp = 0;
@@ -92,28 +92,6 @@ public class CSenaPlayer : MonoBehaviour
             // 死亡状態の時
             case PLAYERSTATE.PLAYER_DEAD:
                 break;
-        }
-    }
-    #endregion
-
-    /*
-    * @brief 弓がチャージされたときに実行する処理
-    * @param nDecHP HPの消費量
-    * @sa 弓がチャージされたとき
-    * @details 消費されるHPに応じてFrontHPBarの数値を変更する
- 　  */
-    #region set hp bar
-    private void SetHPBar()
-    {
-        objFrontHPBar = new GameObject[nValNum];
-        objBGHPBar = new GameObject[nValNum];
-        //cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
-        for (int num = 0; num < nValNum; ++num)
-        {
-            objFrontHPBar[num] = HPFrontBarGroup.transform.GetChild(num).gameObject;
-            objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
-            objBGHPBar[num] = HPBGBarGroup.transform.GetChild(num).gameObject;
-            objBGHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
         }
     }
     #endregion

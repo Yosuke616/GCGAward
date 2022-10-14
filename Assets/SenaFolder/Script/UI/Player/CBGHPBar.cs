@@ -55,7 +55,7 @@ public class CBGHPBar : CHPBar
     {
         // 指定した時間待つ
         yield return new WaitForSeconds(fBarDelay);
-        Debug.Log("stagingHPBar");
+        //Debug.Log("stagingHPBar");
         StagingBar(nCurrentValue, nMaxValue);       // セットしたい数値を入れる
     }
     #endregion
