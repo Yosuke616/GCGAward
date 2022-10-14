@@ -50,6 +50,7 @@ public class CBow : MonoBehaviour
     private int nAtkValue;                  // 矢の攻撃力
     private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
     private int nUseHP = 0;                 // 矢を撃つのに使用するHP
+    private bool isShot = false;            // 矢を撃ったかどうか
     #endregion
 
     // Start is called before the first frame update
@@ -106,8 +107,6 @@ public class CBow : MonoBehaviour
             // チャージ中に右クリックが押されたら発射
             if (Input.GetMouseButtonDown(1))
             {
-                objPlayer.GetComponent<CSenaPlayer>().DecBGBar(-1 * nUseHP);
-                //objPlayer.GetComponent<CSenaPlayer>().SetHp(-1 * nAtkDecHp);
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }
@@ -153,7 +152,9 @@ public class CBow : MonoBehaviour
             // 発射状態
             case STATE_BOW.BOW_SHOT:
                 g_state = STATE_BOW.BOW_SHOT;
+                isShot = true;
                 objPlayer.GetComponent<CSenaPlayer>().SetHpBar();
+                objPlayer.GetComponent<CSenaPlayer>().DecBGBar(-1 * nUseHP);
                 objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime);        // 矢を発射する
                 break;
 
@@ -170,7 +171,11 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_RESET:
                 g_state = STATE_BOW.BOW_RESET;
                 // 矢を発射していなければHPバーをリセットする
-                objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
+                if (!isShot)
+                    objPlayer.GetComponent<CSenaPlayer>().DecFrontBar(nUseHP);
+                else
+                    isShot = false;
+                //objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
                 ResetCharge();      // チャージをリセットする
                 break;
         }
