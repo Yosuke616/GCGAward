@@ -2782,6 +2782,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: objDamageUI
+      value: 
+      objectReference: {fileID: 5581555251082468993}
+    - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
       propertyPath: HPBGBarGroup
       value: 
       objectReference: {fileID: 1719527186}
@@ -3095,6 +3099,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+--- !u!1 &5581555251082468993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3767075911629230285, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+  m_PrefabInstance: {fileID: 5581555251082468992}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5786460618511803855
 PrefabInstance:
   m_ObjectHideFlags: 0

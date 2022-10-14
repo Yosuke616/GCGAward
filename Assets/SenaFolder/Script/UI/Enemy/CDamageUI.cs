@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class CDamageUI : MonoBehaviour
 {
@@ -35,7 +37,8 @@ public class CDamageUI : MonoBehaviour
     public void TellDamaged(int DamageNum)
     {
         nShowNum = DamageNum;
-        Instantiate(objDamageUI);
+        GameObject obj = Instantiate(objDamageUI);
+        //obj.transform.GetChild(0).GetComponent<TextMeshPro>().text = string.Format("[0]",DamageNum);
     }
     #endregion
 }

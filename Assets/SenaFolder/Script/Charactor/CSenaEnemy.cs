@@ -7,6 +7,7 @@ public class CSenaEnemy : CHPManager
     #region serialize field
     [SerializeField] private GameObject sceneManager;
     [SerializeField] private int nAddScore;
+    [SerializeField] private GameObject objDamageUI;
     #endregion
 
     // 変数宣言
@@ -35,7 +36,9 @@ public class CSenaEnemy : CHPManager
             Debug.Log("<color=green>EnemyHit</color>");
             //scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
+            // ダメージ通知
             ChangeHp(-1);
+            objDamageUI.GetComponent<CDamageUI>().TellDamaged(1);
         }
     }
 }
