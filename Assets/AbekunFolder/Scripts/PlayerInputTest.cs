@@ -29,6 +29,24 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField]
     private bool b_Controller = false;
     private static bool controller;
+    [SerializeField]
+    GameObject TPSTarget;
+    [SerializeField]
+    private float PlayerAngleY = 0.0f;
+    Quaternion rotate;
+    [SerializeField]
+    private float rotYDif;
+    [SerializeField]
+    private float playerEulerY;
+    [SerializeField]
+    private float TPSCameraEulerY;
+    [SerializeField]
+    private float PlayerMoveRot = 0;
+    [SerializeField]
+    private bool PlayerMoveFlg = false;
+    [SerializeField]private bool b_Left = false;
+    [SerializeField]private bool b_Right = true;
+    [SerializeField] private int PlayerDirect = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +67,7 @@ public class PlayerInputTest : MonoBehaviour
             if (Gamepad.current.leftStick.ReadValue().x > deadZone)//‰E
             {
                 this.transform.position += transform.right * PlayerMove * Time.deltaTime;
+                
             }
             if (Gamepad.current.leftStick.ReadValue().x < -deadZone)//¶
             {
@@ -57,6 +76,7 @@ public class PlayerInputTest : MonoBehaviour
             if (Gamepad.current.leftStick.ReadValue().y > deadZone)//‘O
             {
                 this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+                //this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, TPSTarget.transform.eulerAngles.y, this.transform.eulerAngles.z);
             }
             if (Gamepad.current.leftStick.ReadValue().y < -deadZone)//Œã
             {
@@ -65,27 +85,153 @@ public class PlayerInputTest : MonoBehaviour
         }
         if (controller)
         {
+            //if(Input.GetKeyDown("W"))
+            //PlayerAngleY = this.transform.eulerAngles.y;
+            rotYDif = -(this.transform.eulerAngles.y-TPSCamera.transform.eulerAngles.y);
+            //rotYDif = TPSCamera.transform.eulerAngles.y;
+           
+            if(rotYDif <0)
+            {
+              //  rotYDif = 360 - rotYDif;
+            }
             if (Input.GetKey(KeyCode.W))
             {
+                PlayerMoveFlg = true;
+                //PlayerAngleY = PlayerAngleY * 0.9f + TPSCamera.transform.eulerAngles.y * 0.1f;
                 //this.transform.position += new Vector3(0, 0, PlayerMove);
                 this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+                //rotYDif = rotYDif*0.9f+TPSCamera.transform.eulerAngles.y*0.1f;
+                //if(0<rotYDif)
+                PlayerMoveRot = PlayerMoveRot * 0.9f + (0) * 0.1f;
+                playerEulerY = this.transform.eulerAngles.y;
+                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                if (playerEulerY - TPSCameraEulerY > 180)
+                {
+                     playerEulerY -= 360;
+                    //rotate = Quaternion.Euler(0.0f, -360, 0.0f);
+                    //this.transform.rotation = rotate * Quaternion.identity;
+                }
+                if (playerEulerY - TPSCameraEulerY < -180)
+                {
+                    playerEulerY += 360;
+                    //rotate = Quaternion.Euler(0.0f, 360, 0.0f);
+                    //this.transform.rotation = rotate * Quaternion.identity;
+                }
+                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f), 0.0f);
+                
+
+                    this.transform.rotation = rotate * Quaternion.identity;
+               // this.transform.rotation = (Quaternion.Euler(0.0f, PlayerMoveRot, 0.0f)) * Quaternion.identity;
+
             }
+           
+            if (Input.GetKey(KeyCode.D))
+            {
+                b_Right = true;
+                b_Left = false;
+                if (this.transform.eulerAngles.y < -91)
+                {
+                    //this.transform.eulerAngles += new Vector3(0, 360, 0);
+                }
+                //this.transform.position -= new Vector3(PlayerMove, 0, 0);
+                //this.transform.position -= transform.right * PlayerMove * Time.deltaTime;
+                PlayerMoveFlg = true;
+                playerEulerY = this.transform.eulerAngles.y;
+               
+                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //PlayerMoveRot = PlayerMoveRot * 0.9f + (90) * 0.1f;
+                if (playerEulerY - TPSCameraEulerY > 180)
+                {
+                    playerEulerY -= 360;
+
+                }
+                if (playerEulerY - TPSCameraEulerY < -180)
+                {
+                    playerEulerY += 360;
+                }
+                
+                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+                if (this.transform.eulerAngles.y < 0)
+                {
+
+                    //this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y + 360, this.transform.eulerAngles.z);
+                }
+                rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f)+(90)*0.1f, 0.0f);
+                this.transform.rotation = rotate * Quaternion.identity;
+                //this.transform.rotation = (Quaternion.Euler(0.0f,PlayerMoveRot,0.0f)) * Quaternion.identity;
+                
+
+            }
+            
+            
             if (Input.GetKey(KeyCode.A))
             {
-                //this.transform.position -= new Vector3(PlayerMove, 0, 0);
-                this.transform.position -= transform.right * PlayerMove * Time.deltaTime;
+               
+                b_Left = true;
+                b_Right = false;
+                
+                PlayerMoveFlg = true;
+                playerEulerY = this.transform.eulerAngles.y;
+                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //PlayerMoveRot = PlayerMoveRot * 0.9f + (-90) * 0.1f;
+                if (playerEulerY - TPSCameraEulerY > 180)
+                {
+                    playerEulerY -= 360;
+
+                }
+                if (playerEulerY - TPSCameraEulerY < -180)
+                {
+                    playerEulerY += 360;
+                }
+                
+                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+                
+                rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (-90) * 0.1f, 0.0f);
+
+                this.transform.rotation = rotate * Quaternion.identity;
+               
+
             }
             if (Input.GetKey(KeyCode.S))
             {
-                //this.transform.position -= new Vector3(0, 0, PlayerMove);
-                this.transform.position -= transform.forward * PlayerMove * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                //this.transform.position += new Vector3(PlayerMove, 0, 0);
+                PlayerMoveFlg = true;
+                playerEulerY = this.transform.eulerAngles.y;
+                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //PlayerMoveRot = PlayerMoveRot * 0.9f + (90) * 0.1f;
+                if (playerEulerY - TPSCameraEulerY > 180)
+                {
+                    playerEulerY -= 360;
 
-                this.transform.position += transform.right * PlayerMove * Time.deltaTime;
+                }
+                if (playerEulerY - TPSCameraEulerY < -180)
+                {
+                    playerEulerY += 360;
+                }
+                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+                if (b_Left)
+                {
+                    if (playerEulerY > 90)
+                    {
+                        //playerEulerY -= 360;
+                        //rotate = Quaternion.Euler(0.0f, -360, 0.0f);
+                        //this.transform.rotation = rotate * Quaternion.identity;
+                    }
+                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (-180) * 0.1f, 0.0f);
+
+                }
+                if (b_Right)
+                {
+                    if (playerEulerY < -90)
+                    {
+                        //playerEulerY += 360;
+                        //rotate = Quaternion.Euler(0.0f, 360, 0.0f);
+                        //this.transform.rotation = rotate * Quaternion.identity;
+                    }
+                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (180) * 0.1f, 0.0f);
+                }
+                this.transform.rotation = rotate * Quaternion.identity;
             }
+
             if (Input.GetKey(KeyCode.Q))
             {
                 this.transform.eulerAngles -= new Vector3(0, PlayerRot, 0);
@@ -145,6 +291,7 @@ public class PlayerInputTest : MonoBehaviour
                  b_Charge = false;
              }
         }
+        
 
     }
     public static bool GetControllerUse()

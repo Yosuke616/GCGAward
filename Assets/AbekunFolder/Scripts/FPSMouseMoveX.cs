@@ -93,15 +93,16 @@ public class FPSMouseMoveX : MonoBehaviour
 
             this.transform.eulerAngles = new Vector3( this.transform.eulerAngles.x,MouseMoveX, this.transform.eulerAngles.z);
         }
-        
-        if(MouseMoveX>180)
-        {
-            MouseMoveX -= 360;
-        }
-        if(MouseMoveX<-180)
-        {
-            MouseMoveX += 360;
-        }
+
+        //if(MouseMoveX>180)
+        //{
+        //    MouseMoveX -= 360;
+        //}
+        //if(MouseMoveX<-180)
+        //{
+        //    MouseMoveX += 360;
+        //}
+        MouseMoveX = MouseMoveX % 360;
         //MouseMoveX = PlayerViewRotation.GetTPSVectorX();
         TPSVectorX = PlayerViewRotation.GetTPSVectorX();
         TPSVectorZ =PlayerViewRotation.GetTPSVectorZ();

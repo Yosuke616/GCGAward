@@ -51,7 +51,8 @@ public class PlayerViewRotation : MonoBehaviour
     {
         //Vector3 Pos = new Vector3(0.0f, 0.0f, CameraRange);
         //this.transform.position = Pos;
-       
+        PlayerVectorX = -Player.transform.forward.x;//X
+        PlayerVectorZ = -Player.transform.forward.z;//Z
     }
 
     // Update is called once per frame
@@ -77,16 +78,15 @@ public class PlayerViewRotation : MonoBehaviour
         {
             MouseMoveY = 3.13f;
         }
-        if(MouseMoveX<0.0f)
-        {
-            MouseMoveX = 6.27f;
-        }
-        if(MouseMoveX>6.28f)
-        {
-            MouseMoveX = 0.0f;
-        }
-        PlayerVectorX = -Player.transform.forward.x;//X
-        PlayerVectorZ = -Player.transform.forward.z;//Z
+        //if(MouseMoveX<0.0f)
+        //{
+        //    MouseMoveX = 6.27f;
+        //}
+        //if(MouseMoveX>6.28f)
+        //{
+        //    MouseMoveX = 0.0f;
+        //}
+        MouseMoveX = MouseMoveX % 6.28f;
         if (!b_Charge)
         {
             if (controller)
@@ -139,6 +139,11 @@ public class PlayerViewRotation : MonoBehaviour
             //this.transform.position = Player.transform.up * (Player.transform.position.y + 1.0f + CameraRange * cosY);
             //this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
 
+        }
+        if(b_Charge)
+        {
+            PlayerVectorX = -Player.transform.forward.x;//X
+            PlayerVectorZ = -Player.transform.forward.z;//Z
         }
         if (controller)
         {
