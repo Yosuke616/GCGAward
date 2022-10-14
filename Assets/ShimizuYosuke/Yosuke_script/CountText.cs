@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CountText : MonoBehaviour
 {
+    [SerializeField] private GameObject block;
+
     //スコアを管理する変数
     private int nScore;
     [SerializeField] Text scoreText;
@@ -26,6 +28,9 @@ public class CountText : MonoBehaviour
     {
         //スコアの表示
         scoreText.text = "SCORE:" + string.Format("{0}",nScore);
+
+        //1ブロック分進んだ時だけ加算する
+
 
         //Z方向にプレイヤーが進んだときだけスコアが加算させる
         if (old_player < player.transform.position.z) {
