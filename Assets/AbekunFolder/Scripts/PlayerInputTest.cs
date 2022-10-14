@@ -87,13 +87,48 @@ public class PlayerInputTest : MonoBehaviour
         {
             //if(Input.GetKeyDown("W"))
             //PlayerAngleY = this.transform.eulerAngles.y;
-            rotYDif = -(this.transform.eulerAngles.y-TPSCamera.transform.eulerAngles.y);
-            //rotYDif = TPSCamera.transform.eulerAngles.y;
-           
-            if(rotYDif <0)
+             //rotYDif = TPSCamera.transform.eulerAngles.y;
+            TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+            if (playerEulerY - TPSCameraEulerY > 180)
             {
-              //  rotYDif = 360 - rotYDif;
+               // playerEulerY -= 360;
+
             }
+            if (playerEulerY - TPSCameraEulerY < -180)
+            {
+                //playerEulerY += 360;
+            }
+
+            if(playerEulerY<TPSCameraEulerY)
+            {
+                rotYDif = -(this.transform.eulerAngles.y - TPSCamera.transform.eulerAngles.y);
+
+            }
+            else
+            {
+                rotYDif = -(this.transform.eulerAngles.y - (TPSCamera.transform.eulerAngles.y-360));
+            }
+            if(rotYDif>360)
+            {
+                rotYDif -= 360;
+            }
+            if (rotYDif < -360)
+            {
+                rotYDif += 360;
+            }
+            if(rotYDif<-180)
+            {
+                rotYDif = 360 - rotYDif;
+            }
+            if (rotYDif > 180)
+            {
+                rotYDif = 360-playerEulerY+TPSCameraEulerY;
+            }
+            if (rotYDif >360)
+            {
+                rotYDif = -(playerEulerY+360 - TPSCameraEulerY);
+            }
+            
             if (Input.GetKey(KeyCode.W))
             {
                 PlayerMoveFlg = true;
@@ -104,20 +139,20 @@ public class PlayerInputTest : MonoBehaviour
                 //if(0<rotYDif)
                 PlayerMoveRot = PlayerMoveRot * 0.9f + (0) * 0.1f;
                 playerEulerY = this.transform.eulerAngles.y;
-                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
                 if (playerEulerY - TPSCameraEulerY > 180)
                 {
-                     playerEulerY -= 360;
+                    // playerEulerY -= 360;
                     //rotate = Quaternion.Euler(0.0f, -360, 0.0f);
                     //this.transform.rotation = rotate * Quaternion.identity;
                 }
                 if (playerEulerY - TPSCameraEulerY < -180)
                 {
-                    playerEulerY += 360;
+                   // playerEulerY += 360;
                     //rotate = Quaternion.Euler(0.0f, 360, 0.0f);
                     //this.transform.rotation = rotate * Quaternion.identity;
                 }
-                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f), 0.0f);
+                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY+rotYDif) * 0.1f), 0.0f);
                 
 
                     this.transform.rotation = rotate * Quaternion.identity;
@@ -138,16 +173,16 @@ public class PlayerInputTest : MonoBehaviour
                 PlayerMoveFlg = true;
                 playerEulerY = this.transform.eulerAngles.y;
                
-                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
                 //PlayerMoveRot = PlayerMoveRot * 0.9f + (90) * 0.1f;
                 if (playerEulerY - TPSCameraEulerY > 180)
                 {
-                    playerEulerY -= 360;
+                    //playerEulerY -= 360;
 
                 }
                 if (playerEulerY - TPSCameraEulerY < -180)
                 {
-                    playerEulerY += 360;
+                   // playerEulerY += 360;
                 }
                 
                 this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
@@ -156,11 +191,13 @@ public class PlayerInputTest : MonoBehaviour
 
                     //this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y + 360, this.transform.eulerAngles.z);
                 }
-                rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f)+(90)*0.1f, 0.0f);
-                this.transform.rotation = rotate * Quaternion.identity;
-                //this.transform.rotation = (Quaternion.Euler(0.0f,PlayerMoveRot,0.0f)) * Quaternion.identity;
                 
+                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif+90) * 0.1f), 0.0f);
+                    this.transform.rotation = rotate * Quaternion.identity;
+                
+                    //this.transform.rotation = (Quaternion.Euler(0.0f,PlayerMoveRot,0.0f)) * Quaternion.identity;
 
+                
             }
             
             
@@ -172,21 +209,22 @@ public class PlayerInputTest : MonoBehaviour
                 
                 PlayerMoveFlg = true;
                 playerEulerY = this.transform.eulerAngles.y;
-                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
                 //PlayerMoveRot = PlayerMoveRot * 0.9f + (-90) * 0.1f;
                 if (playerEulerY - TPSCameraEulerY > 180)
                 {
-                    playerEulerY -= 360;
+                   // playerEulerY -= 360;
 
                 }
                 if (playerEulerY - TPSCameraEulerY < -180)
                 {
-                    playerEulerY += 360;
+                   // playerEulerY += 360;
                 }
                 
                 this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
-                
-                rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (-90) * 0.1f, 0.0f);
+                //if(playerEulerY<TPSCameraEulerY)
+               
+                rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif-90) * 0.1f) , 0.0f);
 
                 this.transform.rotation = rotate * Quaternion.identity;
                
@@ -196,39 +234,35 @@ public class PlayerInputTest : MonoBehaviour
             {
                 PlayerMoveFlg = true;
                 playerEulerY = this.transform.eulerAngles.y;
-                TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+                //TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
                 //PlayerMoveRot = PlayerMoveRot * 0.9f + (90) * 0.1f;
-                if (playerEulerY - TPSCameraEulerY > 180)
-                {
-                    playerEulerY -= 360;
-
-                }
-                if (playerEulerY - TPSCameraEulerY < -180)
-                {
-                    playerEulerY += 360;
-                }
+                
                 this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
-                if (b_Left)
-                {
-                    if (playerEulerY > 90)
-                    {
-                        //playerEulerY -= 360;
-                        //rotate = Quaternion.Euler(0.0f, -360, 0.0f);
-                        //this.transform.rotation = rotate * Quaternion.identity;
-                    }
-                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (-180) * 0.1f, 0.0f);
+                //if (b_Left)
+                //rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (-180) * 0.1f, 0.0f);
 
-                }
-                if (b_Right)
-                {
-                    if (playerEulerY < -90)
-                    {
-                        //playerEulerY += 360;
-                        //rotate = Quaternion.Euler(0.0f, 360, 0.0f);
-                        //this.transform.rotation = rotate * Quaternion.identity;
-                    }
-                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (180) * 0.1f, 0.0f);
-                }
+                //{
+                //    if (playerEulerY > 90)
+                //    {
+                //        //playerEulerY -= 360;
+                //        //rotate = Quaternion.Euler(0.0f, -360, 0.0f);
+                //        //this.transform.rotation = rotate * Quaternion.identity;
+                //    }
+
+                //}
+                // if (b_Right)
+                //rotYDif = rotYDif + 180;
+                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif + 180) * 0.1f), 0.0f);
+                //{
+                //    if (playerEulerY < -90)
+                //    {
+                //        //playerEulerY += 360;
+                //        //rotate = Quaternion.Euler(0.0f, 360, 0.0f);
+                //        //this.transform.rotation = rotate * Quaternion.identity;
+                //    }
+                //    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (180) * 0.1f, 0.0f);
+                //}
+
                 this.transform.rotation = rotate * Quaternion.identity;
             }
 
