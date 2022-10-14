@@ -146,7 +146,7 @@ MonoBehaviour:
   TimeScale: 0
   effectAsset: {fileID: 11400000, guid: 1970b2da19ed49f45bff6597847b2954, type: 2}
   playOnStart: 1
-  isLooping: 0
+  isLooping: 1
 --- !u!222 &3833094793634635929
 CanvasRenderer:
   m_ObjectHideFlags: 0
