@@ -3665,6 +3665,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 225715893}
     - target: {fileID: 691035549089894015, guid: dae66087148445a4f89398791276f1eb, type: 3}
+      propertyPath: run
+      value: 
+      objectReference: {fileID: 8300000, guid: 382f59bd09271754cb80149f28c3bce4, type: 3}
+    - target: {fileID: 691035549089894015, guid: dae66087148445a4f89398791276f1eb, type: 3}
+      propertyPath: fall
+      value: 
+      objectReference: {fileID: 8300000, guid: e054a986fc7d80d4d84cfc274ee74b0b, type: 3}
+    - target: {fileID: 691035549089894015, guid: dae66087148445a4f89398791276f1eb, type: 3}
+      propertyPath: jump
+      value: 
+      objectReference: {fileID: 8300000, guid: 6a4bfc904e9454345bbaf8f10c9d59f3, type: 3}
+    - target: {fileID: 691035549089894015, guid: dae66087148445a4f89398791276f1eb, type: 3}
+      propertyPath: walk
+      value: 
+      objectReference: {fileID: 8300000, guid: 382f59bd09271754cb80149f28c3bce4, type: 3}
+    - target: {fileID: 691035549089894015, guid: dae66087148445a4f89398791276f1eb, type: 3}
       propertyPath: refCamera
       value: 
       objectReference: {fileID: 1329927783}
@@ -3751,7 +3767,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
