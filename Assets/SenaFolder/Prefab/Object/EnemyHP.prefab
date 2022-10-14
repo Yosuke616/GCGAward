@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897358fe32ec83c4480daadb539ae705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textColor: {r: 0, g: 0, b: 0, a: 0}
+  objDamageUI: {fileID: 0}
+  nLifeTime: 1
 --- !u!1 &5581555250478998515
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,6 +101,7 @@ MonoBehaviour:
   nValNum: 0
   sceneManager: {fileID: 0}
   nAddScore: 0
+  objDamageUI: {fileID: 0}
 --- !u!65 &6892358473380770562
 BoxCollider:
   m_ObjectHideFlags: 0
