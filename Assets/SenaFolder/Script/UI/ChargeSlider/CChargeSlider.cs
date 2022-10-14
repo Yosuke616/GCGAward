@@ -20,14 +20,13 @@ public class CChargeSlider : MonoBehaviour
     #endregion
 
     #region serialize field
-    [Header("スライダーのリセットにかける時間")]
-    [SerializeField] private float fResetTime;           // スライダーのリセットにかける時間
+    //[Header("スライダーのリセットにかける時間")]
+    //[SerializeField] private float fResetTime;           // スライダーのリセットにかける時間
     [SerializeField] private GameObject objChargeSlider;
     [SerializeField] private Image sliderImage;
-    [Header("通常時のスライダーの色")]
-    [SerializeField] private Color normalColor;          // 通常時のスライダーの色
-    [Header("最大チャージ時のスライダーの色")]
-    [SerializeField] private Color maxChargeColor;       // 最大チャージ時のスライダーの色
+    [Header("スライダーの色(1段階目から最終段階、")]
+    [Header("最後に最大状態の色を入れてください)")]
+    [SerializeField] private Color[] sliderColor;           // 一段階目のスライダーの色
     [SerializeField] private GameObject objStepLine;     // 何段階目かを表すライン
     #endregion
 
@@ -40,6 +39,7 @@ public class CChargeSlider : MonoBehaviour
     private Slider scSlider;
     private RectTransform rectTransform;        // スライダーのサイズ取得用
     private float sliderWidth;                  // スライダーの縦幅
+    private int nCurrentStep = 0;                   // 現在のチャージ段階数
     #endregion
     // Start is called before the first frame update
     #region init
@@ -47,7 +47,7 @@ public class CChargeSlider : MonoBehaviour
     {
         scSlider = objChargeSlider.GetComponent<Slider>();
         scSlider.value = 0.0f;
-        sliderImage.color = normalColor;
+        sliderImage.color = sliderColor[0];
 
         // スライダーの横幅を取得する
         rectTransform = gameObject.GetComponent<RectTransform>();
@@ -114,7 +114,7 @@ public class CChargeSlider : MonoBehaviour
 
             case KIND_CHRGSLIDERMOVE.MAXCHARGE:
                 kSliderMove = KIND_CHRGSLIDERMOVE.MAXCHARGE;      // 待機状態にする
-                sliderImage.color = maxChargeColor;
+                sliderImage.color = sliderColor[nMaxStep];
                 break;
         }
     }
@@ -150,6 +150,7 @@ public class CChargeSlider : MonoBehaviour
     {
         //Debug.Log("MoveSlider");
         scSlider.value = fShowValue / fMaxValue;
+        sliderImage.color = sliderColor[nCurrentStep];
     }
     #endregion
 
@@ -175,20 +176,22 @@ public class CChargeSlider : MonoBehaviour
     {
         //Debug.Log("ResetSlider");
         scSlider.value = 0.0f;
-        sliderImage.color = normalColor;
+        sliderImage.color = sliderColor[0];
     }
     #endregion
 
     /*
    * @brief チャージ時間を受け取る
    * @param time チャージ時間
+   * @param step 段階数
    * @sa CChargeSlider::Update()
    * @details 毎フレームチャージ時間をチャージスライダーに伝える
    */
     #region get charge time
-    public void GetChargeTime(float time)
+    public void GetChargeTime(float time, int step)
     {
         fShowValue = time;
+        nCurrentStep = step;
     }
     #endregion
 
