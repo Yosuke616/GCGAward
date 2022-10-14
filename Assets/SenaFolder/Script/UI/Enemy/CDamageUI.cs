@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class CDamageUI : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class CDamageUI : MonoBehaviour
     [Header("ダメージ数UIの色")]
     [SerializeField] private Color textColor;
     [SerializeField] private GameObject objDamageUI;
+    [Header("UI表示時間")]
+    [SerializeField] private int nLifeTime;     // UIを表示させる時間
     #endregion
 
     #region valiable
@@ -35,7 +39,22 @@ public class CDamageUI : MonoBehaviour
     public void TellDamaged(int DamageNum)
     {
         nShowNum = DamageNum;
-        Instantiate(objDamageUI);
+        GameObject obj = Instantiate(objDamageUI);
+        //GameObject test = obj.transform.GetChild(0).;
+        obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = DamageNum.ToString();
+        StartCoroutine("DestroyUI",obj);
+    }
+    #endregion
+
+    /*
+     * @brief UIを削除する
+     * @details UI表示時間を過ぎたらUIを削除する
+    */
+    #region destroy ui
+    private IEnumerator DestroyUI(GameObject target)
+    {
+        yield return new WaitForSeconds(nShowNum);
+        Destroy(target);
     }
     #endregion
 }
