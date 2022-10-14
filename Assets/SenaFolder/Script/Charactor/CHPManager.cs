@@ -20,7 +20,8 @@ public class CHPManager : MonoBehaviour
     public GameObject[] objFrontHPBar;
     [System.NonSerialized]
     public GameObject[] objBGHPBar;
-    #endregion 
+    private int nChangeHPBar;       // 変更するHPバーの番号(現在のHPから計算する)
+    #endregion
 
     #region set hp bar
     public void SetHPBar()
@@ -39,17 +40,51 @@ public class CHPManager : MonoBehaviour
     #endregion
 
     /*
-   * @brief 前面のHPバーを変更する
-   * @param num 変更する量
-   * @param BarIndex 変更するバーの番号
-   * @sa 弓がチャージされたとき/敵のHPが減った時
-   * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
+     * @brief 変更するバーの番号の変更
+     * @param num 変更する量
+     * @param BarIndex 変更するバーの番号
+     * @sa 弓がチャージされたとき/敵のHPが減った時
+     * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
+　  */
+    #region calc change hp bar num
+    public void CalcBarNum()
+    {
+        // HPが満タンの時、番号が1つずれるため調整する
+        if (nCurrentHp == nMaxHp)
+            nChangeHPBar = nCurrentHp / (nMaxHp / nValNum) - 1;
+        else
+            nChangeHPBar = nCurrentHp / (nMaxHp / nValNum);
+    }
+    #endregion
+
+    /*
+     * @brief 前面のHPバーを変更する
+     * @param num 変更する量
+     * @param BarIndex 変更するバーの番号
+     * @sa 弓がチャージされたとき/敵のHPが減った時
+     * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
 　  */
     #region Add front bar
-    public void AddFrontBar(int num, int BarIndex)
+    public void AddFrontBar(int num)
     {
         // FrontHPBarの値を減らす
-        objFrontHPBar[BarIndex].GetComponent<CHPBar>().AddValue(num);
+        objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
+    }
+    #endregion
+
+    /*
+     * @brief 前面のHPバーを変更する
+     * @param num 変更する量
+     * @param BarIndex 変更するバーの番号
+     * @sa 弓がチャージされたとき/敵のHPが減った時
+     * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
+　  */
+    #region dec bg bar
+    public void AddBGBar(int nDecHP)
+    {
+        // HPを減らす
+        objBGHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(nDecHP);
+        nCurrentHp += nDecHP;
     }
     #endregion
 
@@ -59,4 +94,25 @@ public class CHPManager : MonoBehaviour
         nCurrentHp = nMaxHp;
     }
     #endregion 
+
+    /*
+     * @brief HPの変更
+     * @param num HPの加算量
+     * @sa ダメージをくらったとき / 回復した時
+     * @details HPにnumを加算する
+   　*/
+    #region change hp
+    public void ChangeHp(int num)
+    {
+        AddFrontBar(num);
+        AddBGBar(num);
+    }
+    #endregion
+
+    #region set hp bar animation
+    public void SetHpBarAnim()
+    {
+        objBGHPBar[nChangeHPBar].GetComponent<CBGHPBar>().changeBarValue();
+    }
+    #endregion
 }

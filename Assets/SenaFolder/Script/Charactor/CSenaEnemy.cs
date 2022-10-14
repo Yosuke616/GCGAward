@@ -34,7 +34,7 @@ public class CSenaEnemy : CHPManager
             Debug.Log("<color=green>EnemyHit</color>");
             //scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
-            Destroy(gameObject);      // 自身を消滅させる
+            ChangeHp(-1);
         }
     }
 }

@@ -153,8 +153,8 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_SHOT:
                 g_state = STATE_BOW.BOW_SHOT;
                 isShot = true;
-                objPlayer.GetComponent<CSenaPlayer>().SetHpBar();
-                objPlayer.GetComponent<CSenaPlayer>().DecBGBar(-1 * nUseHP);
+                objPlayer.GetComponent<CHPManager>().SetHpBarAnim();
+                objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nUseHP);
                 objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime);        // –î‚ð”­ŽË‚·‚é
                 break;
 

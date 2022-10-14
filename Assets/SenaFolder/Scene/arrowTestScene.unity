@@ -1159,6 +1159,16 @@ MonoBehaviour:
   b_Charge: 0
   b_AimMode: 0
   b_Controller: 0
+  TPSTarget: {fileID: 0}
+  PlayerAngleY: 0
+  rotYDif: 0
+  playerEulerY: 0
+  TPSCameraEulerY: 0
+  PlayerMoveRot: 0
+  PlayerMoveFlg: 0
+  b_Left: 0
+  b_Right: 1
+  PlayerDirect: 0
 --- !u!114 &1027814698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,7 +1197,6 @@ MonoBehaviour:
   HPFrontBarGroup: {fileID: 1624985659}
   HPBGBarGroup: {fileID: 1548595011}
   nValNum: 2
-  prefabHPBar: {fileID: 0}
   DeadEffect: {fileID: 3103008268053656085, guid: 3b76da6612639af4ea91a2096e5c5806, type: 3}
 --- !u!224 &1157064760 stripped
 RectTransform:
@@ -2558,6 +2567,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: nMaxHp
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: nValNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: HPBGBarGroup
+      value: 
+      objectReference: {fileID: 1719527186}
+    - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
+      propertyPath: HPFrontBarGroup
+      value: 
+      objectReference: {fileID: 1789904103}
     - target: {fileID: 5353144885352764069, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
