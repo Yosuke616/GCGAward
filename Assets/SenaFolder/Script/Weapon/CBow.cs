@@ -44,9 +44,9 @@ public class CBow : MonoBehaviour
     private float fChargeTime;              // チャージボタンを押している時間 
     private GameObject[] objCursur;         // カーソル
     private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
-    private float currentChargeStep;        // 現在のチャージ段階数
+    private int currentChargeStep;        // 現在のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
-    private int nCurrentStep;               // 現在の威力段階数
+    private int nCurrentAtkStep;               // 現在の威力段階数
     private int nAtkValue;                  // 矢の攻撃力
     private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
     private int nUseHP = 0;                 // 矢を撃つのに使用するHP
@@ -66,8 +66,8 @@ public class CBow : MonoBehaviour
 
         for (int i = 0; i < objCursur.Length; ++i)
             objCursur[i].GetComponent<CCursur>().SetChargeMaxTime(maxChargeTime);
-        currentChargeStep = 0.0f;
-        nCurrentStep = 0;       // 威力段階数の初期化
+        currentChargeStep = 0;
+        nCurrentAtkStep = 0;       // 威力段階数の初期化
 
         isAdjust = false;       // 使用HP未調整状態にする
     }
@@ -86,7 +86,7 @@ public class CBow : MonoBehaviour
             for (int i = 0; i < objCursur.Length; ++i)
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
-            nUseHP = nAtkDecHp + nAdjustHp * nCurrentStep;
+            nUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
             objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nUseHP);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
@@ -122,7 +122,7 @@ public class CBow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             AdjustUseHP(true);
 
-        //Debug.Log("Step:" + nCurrentStep);
+        //Debug.Log("Step:" + nCurrentAtkStep);
         #endregion
     }
     #endregion
@@ -256,7 +256,7 @@ public class CBow : MonoBehaviour
     #region tell charge time
     private void TellChargeTime()
     {
-        scChargeSlider.GetChargeTime(fChargeTime);
+        scChargeSlider.GetChargeTime(fChargeTime, currentChargeStep);
     }
     #endregion
 
@@ -300,10 +300,10 @@ public class CBow : MonoBehaviour
         // 段階数を増やす
         if (add)
         {
-            ++nCurrentStep;
+            ++nCurrentAtkStep;
             // 上限値の設定
-            if (nCurrentStep > maxDecStep)
-                nCurrentStep = maxDecStep;
+            if (nCurrentAtkStep > maxDecStep)
+                nCurrentAtkStep = maxDecStep;
             // 削れるHPを増やす
             //else
                 //objPlayer.GetComponent<CSenaPlayer>().AddHp(-1 * nAdjustHp);
@@ -311,10 +311,10 @@ public class CBow : MonoBehaviour
         // 段階数を減らす
         else
         {
-            --nCurrentStep;
+            --nCurrentAtkStep;
             // 下限値の設定
-            if (nCurrentStep < 0)
-                nCurrentStep = 0;
+            if (nCurrentAtkStep < 0)
+                nCurrentAtkStep = 0;
             // 削れるHPを減らす
             //else
                 //objPlayer.GetComponent<CSenaPlayer>().AddHp(nAdjustHp);
@@ -329,7 +329,7 @@ public class CBow : MonoBehaviour
     #region get step
     public int GetStep()
     {
-        return nCurrentStep;
+        return nCurrentAtkStep;
     }
     #endregion
 
