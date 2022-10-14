@@ -19,11 +19,7 @@ public class CSenaPlayer : CHPManager
     #endregion
 
     #region serialize field
-  
-    
-    
-    [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
-    
+    //[SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject DeadEffect;
     #endregion
 
@@ -31,7 +27,6 @@ public class CSenaPlayer : CHPManager
     #region variable
     PLAYERSTATE playerState;
     
-    private int nChangeHPBar;       // 変更するHPバーの番号(現在のHPから計算する)
     #endregion
     // Start is called before the first frame update
     #region init
@@ -78,13 +73,8 @@ public class CSenaPlayer : CHPManager
                 //    AddHp(-1);
                 //}
                 #endregion
-
-                // 変更するHPバーの番号の計算
-                // HPが満タンの時、番号が1つずれるため調整する
-                if (nCurrentHp == nMaxHp)
-                    nChangeHPBar = nCurrentHp / (nMaxHp / nValNum) - 1;     
-                else
-                    nChangeHPBar = nCurrentHp / (nMaxHp / nValNum);   
+                // 変更するバーの番号の変更
+                CalcBarNum();
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
                     ChangeState(PLAYERSTATE.PLAYER_DEAD);
@@ -95,25 +85,6 @@ public class CSenaPlayer : CHPManager
         }
     }
     #endregion
-
-   
-
-    /*
-    * @brief 弓が発射されたときに実行する処理
-    * @param nDecHP HPの消費量
-    * @sa 弓が発射されたとき
-    * @details 実際のHPを減らす
- 　  */
-    #region dec bg bar
-    public void DecBGBar(int nDecHP)
-    {
-        // HPを減らす
-        objBGHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(nDecHP);
-        nCurrentHp += nDecHP;
-    }
-    #endregion
-
-   
 
     /*
     * @brief 状態の更新(状態が変更されたときに1度だけ実行される)
@@ -143,44 +114,43 @@ public class CSenaPlayer : CHPManager
     }
     #endregion
 
+    /*
+     * @brief 前面のHPバーを変更する
+     * @param num 変更する量
+     * @sa 弓がチャージされたとき
+     * @details 消費されるHPに応じてFrontHPBarのnChangeHPBar番目の数値を変更する
+　  */
+    #region dec front hp bar
+    public void DecFrontHPBar(int num)
+    {
+        AddFrontBar(num);
+    }
+    #endregion
 
     /*
-     * @brief HPの加算
+     * @brief 背面のHPバーを変更する
+     * @param num 変更する量
+     * @sa 弓がチャージされたとき
+     * @details 消費されるHPに応じてBGHPBarのnChangeHPBar番目の数値を変更する
+　  */
+    #region dec bg hp bar
+    public void DecBGHPBar(int num)
+    {
+        AddBGBar(num);
+    }
+    #endregion
+
+    /*
+     * @brief HPバーのリセット
      * @param num HPの加算量
      * @sa ダメージをくらったとき
      * @details HPにnumを加算する
-   　*/
-    #region add hp
-    public void AddHp(int num)
-    {
-        AddFrontBar(num, nChangeHPBar);
-        DecBGBar(num);
-    }
-    #endregion
-
-    public void DecFrontHPBar(int num)
-    {
-        AddFrontBar(num, nChangeHPBar);
-    }
-
-    /*
-    * @brief HPバーのリセット
-    * @param num HPの加算量
-    * @sa ダメージをくらったとき
-    * @details HPにnumを加算する
   　*/
     #region reset hp bar
-    public void ResetHPBar()
-    {
-        objFrontHPBar[nChangeHPBar].GetComponent<CFrontHPBar>().ResetBarValue();
-    }
-    #endregion
-
-    #region set hp bar
-    public void SetHpBar()
-    {
-        objBGHPBar[nChangeHPBar].GetComponent<CBGHPBar>().changeBarValue();
-    }
+    //public void ResetHPBar()
+    //{
+    //    objFrontHPBar[nChangeHPBar].GetComponent<CFrontHPBar>().ResetBarValue();
+    //}
     #endregion
 
     /*
@@ -208,6 +178,12 @@ public class CSenaPlayer : CHPManager
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
     }
-    #endregion 
+    #endregion
 
+    #region add hp
+    public void AddHp(int num)
+    {
+        ChangeHp(num);
+    }
+    #endregion
 }

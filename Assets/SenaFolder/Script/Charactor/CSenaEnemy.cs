@@ -17,6 +17,7 @@ public class CSenaEnemy : CHPManager
     void Start()
     {
         InitHP();      // HPの初期化
+        SetHPBar();
         //scScore = sceneManager.GetComponent<CScore>();      // スコアの情報を取得する
     }
 
@@ -34,7 +35,7 @@ public class CSenaEnemy : CHPManager
             Debug.Log("<color=green>EnemyHit</color>");
             //scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
-            Destroy(gameObject);      // 自身を消滅させる
+            ChangeHp(-1);
         }
     }
 }
