@@ -1295,7 +1295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1027814691}
   CameraRange: 20
-  Sensi: 0.1
+  Sensi: 0.01
   ControllSensi: 0.05
   ObjectPos: {x: 0, y: 0, z: 0}
   MouseMoveX: 0
@@ -2529,7 +2529,8 @@ MonoBehaviour:
   FPSSensi: 5
   ControllerSensi: 1
   MouseMoveY: 0
-  TPSTarget: {fileID: 59243821}
+  TPSVirtualCamera: {fileID: 59243822}
+  active: 0
 --- !u!1 &2074509700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,6 +2753,10 @@ PrefabInstance:
       propertyPath: TPSCamera
       value: 
       objectReference: {fileID: 59243822}
+    - target: {fileID: 2781452734751324841, guid: b69e4aa2b7b506543aa8dba05a1d3bd7, type: 3}
+      propertyPath: TPSTarget
+      value: 
+      objectReference: {fileID: 59243821}
     - target: {fileID: 2781452734751324841, guid: b69e4aa2b7b506543aa8dba05a1d3bd7, type: 3}
       propertyPath: PlayerMove
       value: 20
