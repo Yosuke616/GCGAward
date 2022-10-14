@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CSenaEnemy : MonoBehaviour
+public class CSenaEnemy : CHPManager
 {
     #region serialize field
     [SerializeField] private GameObject sceneManager;
@@ -16,13 +16,14 @@ public class CSenaEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scScore = sceneManager.GetComponent<CScore>();      // スコアの情報を取得する
+        InitHP();      // HPの初期化
+        //scScore = sceneManager.GetComponent<CScore>();      // スコアの情報を取得する
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("currentHP" + nCurrentHp);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -31,7 +32,7 @@ public class CSenaEnemy : MonoBehaviour
         if(collision.gameObject.tag == "Arrow")
         {
             Debug.Log("<color=green>EnemyHit</color>");
-            scScore.addScore(nAddScore);        // スコアを加算する
+            //scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
             Destroy(gameObject);      // 自身を消滅させる
         }

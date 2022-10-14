@@ -87,7 +87,7 @@ public class CBow : MonoBehaviour
                 objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
             scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
             nUseHP = nAtkDecHp + nAdjustHp * nCurrentStep;
-            objPlayer.GetComponent<CSenaPlayer>().DecFrontBar(-1 * nUseHP);
+            objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nUseHP);
             ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
         }
         #endregion
@@ -122,7 +122,7 @@ public class CBow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             AdjustUseHP(true);
 
-        Debug.Log("Step:" + nCurrentStep);
+        //Debug.Log("Step:" + nCurrentStep);
         #endregion
     }
     #endregion
@@ -172,7 +172,7 @@ public class CBow : MonoBehaviour
                 g_state = STATE_BOW.BOW_RESET;
                 // 矢を発射していなければHPバーをリセットする
                 if (!isShot)
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontBar(nUseHP);
+                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(nUseHP);
                 else
                     isShot = false;
                 //objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
