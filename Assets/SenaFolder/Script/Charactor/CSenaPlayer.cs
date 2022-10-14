@@ -20,8 +20,8 @@ public class CSenaPlayer : MonoBehaviour
     [SerializeField] private int nValNum;        // 1マスのHP量
     
     [SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
-    [SerializeField] private GameObject HPBarGroup;
-    [SerializeField] private GameObject HPBarStaging;
+    [SerializeField] private GameObject HPFrontBarGroup;
+    [SerializeField] private GameObject HPBGBar;
     [SerializeField] private GameObject DeadEffect;
     #endregion
 
@@ -30,6 +30,7 @@ public class CSenaPlayer : MonoBehaviour
     private int nCurrentHp;     // 現在のHP
     PLAYERSTATE playerState;
     private GameObject[] objFrontHPBar;
+    private GameObject[] objBGHPBar;
     private CBGHPBar cBGHPBar;
     #endregion
     // Start is called before the first frame update
@@ -39,13 +40,13 @@ public class CSenaPlayer : MonoBehaviour
         nCurrentHp = nMaxHp;     // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
         objFrontHPBar = new GameObject[nValNum];
-        cBGHPBar = HPBarStaging.GetComponent<CBGHPBar>();
+        cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
         for (int num = 0; num < objFrontHPBar.Length; ++num)
         {
-            objFrontHPBar[num] = HPBarGroup.transform.GetChild(num).gameObject;
+            objFrontHPBar[num] = HPFrontBarGroup.transform.GetChild(num).gameObject;
             objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
         }
-        HPBarStaging.GetComponent<CHPBar>().SetHpBarParam(0, nMaxHp / nValNum);
+        HPBGBar.GetComponent<CHPBar>().SetHpBarParam(0, nMaxHp / nValNum);
 
         //SetHpUI();
     }
@@ -63,6 +64,19 @@ public class CSenaPlayer : MonoBehaviour
 
         if (nCurrentHp <= 0)
             Debug.Log("Dead");
+    }
+    #endregion
+
+    /*
+    * @brief 弓がチャージされたときに実行する処理
+    * @param nDecHP HPの消費量
+    * @sa 弓がチャージされたとき
+    * @details 消費されるHPに応じてFrontHPBarの数値を変更する
+ 　  */
+    #region set hp bar
+    private void SetHPBar()
+    {
+
     }
     #endregion
 
@@ -90,7 +104,7 @@ public class CSenaPlayer : MonoBehaviour
     public void DecBGBar(int nDecHP)
     {
         // HPを減らす
-        HPBarStaging.GetComponent<CHPBar>().AddValue(nDecHP);
+        HPBGBar.GetComponent<CHPBar>().AddValue(nDecHP);
         nCurrentHp += nDecHP;
     }
     #endregion
@@ -152,23 +166,6 @@ public class CSenaPlayer : MonoBehaviour
     }
     #endregion
 
-    /*
-     * @brief HPバーのセット
-     * @param setNum 設置するHPバーの個数
-     * @sa CPlayer::Start
-     * @details HPの分割数を設定し、連続してHPバーを設置する
-   　*/
-    #region set hp UI
-    private void SetHpUI()
-    {
-        //for (int num = 0; num < 5; ++num)
-        //{
-        //    GameObject hpBar = Instantiate(prefabHPBar);
-        //    hpBar.GetComponent<CHPBar>().SetHpBarParam(num);
-        //    hpBar.transform.SetParent()
-        //}
-    }
-    #endregion
 
     /*
      * @brief HPの加算
