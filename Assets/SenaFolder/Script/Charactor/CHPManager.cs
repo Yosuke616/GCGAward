@@ -105,6 +105,7 @@ public class CHPManager : MonoBehaviour
     public void ChangeHp(int num)
     {
         AddFrontBar(num);
+        SetHpBarAnim();
         AddBGBar(num);
     }
     #endregion

@@ -17,6 +17,7 @@ public class CSenaEnemy : CHPManager
     void Start()
     {
         InitHP();      // HP‚Ì‰Šú‰»
+        SetHPBar();
         //scScore = sceneManager.GetComponent<CScore>();      // ƒXƒRƒA‚Ìî•ñ‚ğæ“¾‚·‚é
     }
 

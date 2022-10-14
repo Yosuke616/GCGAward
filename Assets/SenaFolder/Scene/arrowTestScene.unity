@@ -2753,7 +2753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
       propertyPath: nMaxHp
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4510861948833330245, guid: e2753ac11eb034c49a058e43e500a9f8, type: 3}
       propertyPath: nValNum
