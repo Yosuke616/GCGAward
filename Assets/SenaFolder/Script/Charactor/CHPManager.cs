@@ -38,8 +38,23 @@ public class CHPManager : MonoBehaviour
     }
     #endregion
 
+    /*
+   * @brief 前面のHPバーを変更する
+   * @param num 変更する量
+   * @param BarIndex 変更するバーの番号
+   * @sa 弓がチャージされたとき/敵のHPが減った時
+   * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
+　  */
+    #region Add front bar
+    public void AddFrontBar(int num, int BarIndex)
+    {
+        // FrontHPBarの値を減らす
+        objFrontHPBar[BarIndex].GetComponent<CHPBar>().AddValue(num);
+    }
+    #endregion
+
     #region reset hp
-    public void resetHP()
+    public void InitHP()
     {
         nCurrentHp = nMaxHp;
     }

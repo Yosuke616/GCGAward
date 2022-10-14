@@ -16,7 +16,7 @@ public class CSenaEnemy : CHPManager
     // Start is called before the first frame update
     void Start()
     {
-        resetHP();      // HP‚Ì‰Šú‰»
+        InitHP();      // HP‚Ì‰Šú‰»
         //scScore = sceneManager.GetComponent<CScore>();      // ƒXƒRƒA‚Ìî•ñ‚ğæ“¾‚·‚é
     }
 

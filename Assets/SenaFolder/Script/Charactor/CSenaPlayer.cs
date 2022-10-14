@@ -37,7 +37,7 @@ public class CSenaPlayer : CHPManager
     #region init
     void Start()
     {
-        resetHP();      // HPの初期化
+        InitHP();      // HPの初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
         SetHPBar();     // HPバーUIの情報を取得する
     }
@@ -96,19 +96,7 @@ public class CSenaPlayer : CHPManager
     }
     #endregion
 
-    /*
-    * @brief 弓がチャージされたときに実行する処理
-    * @param nDecHP HPの消費量
-    * @sa 弓がチャージされたとき
-    * @details 消費されるHPに応じてFrontHPBarの数値を変更する
- 　  */
-    #region dec front bar
-    public void DecFrontBar(int nDecHP)
-    {
-        // FrontHPBarの値を減らす
-        objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(nDecHP);
-    }
-    #endregion
+   
 
     /*
     * @brief 弓が発射されたときに実行する処理
@@ -165,10 +153,15 @@ public class CSenaPlayer : CHPManager
     #region add hp
     public void AddHp(int num)
     {
-        DecFrontBar(num);
+        AddFrontBar(num, nChangeHPBar);
         DecBGBar(num);
     }
     #endregion
+
+    public void DecFrontHPBar(int num)
+    {
+        AddFrontBar(num, nChangeHPBar);
+    }
 
     /*
     * @brief HPバーのリセット
