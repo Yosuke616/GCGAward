@@ -39,6 +39,12 @@ public class CBow : MonoBehaviour
     [SerializeField] private int nAddAtk;
     [Header("攻撃力の初期値")]
     [SerializeField] private int nDefAtk;
+    [Header("構えてるときのキラキラ音")]
+    [SerializeField] private AudioClip seCharge;
+    [Header("段階が上がった時に鳴らす音")]
+    [SerializeField] private AudioClip[] seUpStep;
+    [Header("発射音")]
+    [SerializeField] private AudioClip seShot;
     #endregion
 
     #region variable
@@ -50,10 +56,11 @@ public class CBow : MonoBehaviour
     private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
     private int currentChargeStep;        // 現在のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
-    private int nCurrentAtkStep;               // 現在の威力段階数
+    private int nCurrentAtkStep;            // 現在の威力段階数
     private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
     private int nUseHP = 0;                 // 矢を撃つのに使用するHP
     private bool isShot = false;            // 矢を撃ったかどうか
+    private AudioSource audioSource;
     #endregion
 
     // Start is called before the first frame update
@@ -73,6 +80,7 @@ public class CBow : MonoBehaviour
         nCurrentAtkStep = 0;       // 威力段階数の初期化
 
         isAdjust = false;       // 使用HP未調整状態にする
+        audioSource = GetComponent<AudioSource>();
     }
     #endregion
 
@@ -150,12 +158,15 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_CHARGE:
                 g_state = STATE_BOW.BOW_CHARGE;
                 CreateArrow();      // 矢を生成する
+                audioSource.PlayOneShot(seUpStep[currentChargeStep]);
+                audioSource.PlayOneShot(seCharge);
                 break;
 
             // 発射状態
             case STATE_BOW.BOW_SHOT:
                 g_state = STATE_BOW.BOW_SHOT;
                 isShot = true;
+                audioSource.PlayOneShot(seShot);
                 objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
                 objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nUseHP);
                 int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
@@ -206,8 +217,11 @@ public class CBow : MonoBehaviour
                 fChargeTime += Time.deltaTime;
                 TellChargeTime();       // チャージ時間をスライダーに伝える
                 if (fChargeTime > (currentChargeStep + 1) * fValChargeTime)
+                {
                     ++currentChargeStep;        // チャージを1段階上げる
-                
+                    audioSource.PlayOneShot(seUpStep[currentChargeStep]);
+                }
+
                 // 最大チャージ段階になったら
                 if (currentChargeStep >= nMaxChargeStep)
                     ChangeState(STATE_BOW.BOW_CHARGEMAX);
