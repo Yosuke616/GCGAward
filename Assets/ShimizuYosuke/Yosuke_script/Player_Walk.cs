@@ -22,6 +22,13 @@ public class Player_Walk : MonoBehaviour
         MAX_STATE
     }
 
+    [Header("音の種類")]
+    [SerializeField] private AudioClip walk;
+    [SerializeField] private AudioClip run;
+    [SerializeField] private AudioClip jump;
+    [SerializeField] private AudioClip fall;
+
+    private AudioSource AS;
 
     /** @brief プレイヤーの移動速度*/
     [Header("プレイヤーのステータス")]
@@ -70,6 +77,8 @@ public class Player_Walk : MonoBehaviour
         // 自分に設定されているAnimatorコンポーネントを習得する
         this.animator = GetComponent<Animator>();
 
+        AS = GetComponent<AudioSource>();
+
         eState = 0;
     }
 
@@ -101,6 +110,7 @@ public class Player_Walk : MonoBehaviour
             velocity.z += 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
             this.animator.SetBool(key_isWalk, true);
+            AS.PlayOneShot(walk);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -225,32 +235,6 @@ public class Player_Walk : MonoBehaviour
             eState = PLAYER_STATE.JUMP_STATE;
             this.animator.SetBool(key_isJump, true);
         }
-
-        //アニメーションを変更する
-        //switch (eState)
-        //{
-        //    case 0:
-        //        this.animator.SetBool(key_isRun, false);
-        //        this.animator.SetBool(key_isWalk, false);
-        //        this.animator.SetBool(key_isJump, false);
-        //        break;
-        //    case PLAYER_STATE.WALK_STATE:
-        //        this.animator.SetBool(key_isWalk, true);
-        //        this.animator.SetBool(key_isRun, false);
-        //        this.animator.SetBool(key_isJump, false);
-        //        break;
-        //    case PLAYER_STATE.RUN_STATE:
-        //        this.animator.SetBool(key_isRun, true);
-        //        this.animator.SetBool(key_isWalk, false);
-        //        this.animator.SetBool(key_isJump, false);
-        //        break;
-        //    case PLAYER_STATE.JUMP_STATE:
-        //        this.animator.SetBool(key_isJump, true);
-        //        this.animator.SetBool(key_isRun, false);
-        //        this.animator.SetBool(key_isWalk, false);
-        //        break;
-        //}
-
     }
 
     private void OnCollisionStay(Collision collision)
