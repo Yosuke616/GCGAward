@@ -3446,8 +3446,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1027814691}
     - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
+      propertyPath: fValChargeTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
       propertyPath: scChargeSlider
       value: 
       objectReference: {fileID: 484812541}
+    - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
+      propertyPath: seUpStep.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
+      propertyPath: seUpStep.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: dd642db7d41e417438d05a9422aafedc, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
