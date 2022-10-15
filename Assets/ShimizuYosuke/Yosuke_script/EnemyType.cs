@@ -338,8 +338,8 @@ public class EnemyType : MonoBehaviour
             obj.GetComponent<CSenaPlayer>().AddHp(nRecovery);
 
             //オブジェクトを消滅させる
-            Destroy(collision.gameObject);      // 矢を消滅させる
-            Destroy(this.gameObject);      // 自身を消滅させる
+            //Destroy(collision.gameObject);      // 矢を消滅させる
+            //Destroy(this.gameObject);      // 自身を消滅させる
         }
 
         //元の場所に戻るフラグ
