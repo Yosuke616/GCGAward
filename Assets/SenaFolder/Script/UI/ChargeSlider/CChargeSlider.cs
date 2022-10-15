@@ -27,7 +27,7 @@ public class CChargeSlider : MonoBehaviour
     [Header("スライダーの色(1段階目から最終段階、")]
     [Header("最後に最大状態の色を入れてください)")]
     [SerializeField] private Color[] sliderColor;           // 一段階目のスライダーの色
-    [SerializeField] private GameObject objStepLine;     // 何段階目かを表すライン
+    //[SerializeField] private GameObject objStepLine;     // 何段階目かを表すライン
     #endregion
 
     // 変数宣言
@@ -129,12 +129,12 @@ public class CChargeSlider : MonoBehaviour
     {
         //float startPosX = rectTransform.anchoredPosition.x - sliderWidth / 2;
         //GameObject[] objLines = new GameObject[nMaxStep];
-        for (int i = 0; i < nMaxStep; ++i)
-        {
-            GameObject objLine = Instantiate(objStepLine);
-            objLine.GetComponent<RectTransform>().position = new Vector2(0.0f, 0.0f);
-            //objLine.transform.SetParent(transform, true);
-        }
+        //for (int i = 0; i < nMaxStep; ++i)
+        //{
+        //    GameObject objLine = Instantiate(objStepLine);
+        //    objLine.GetComponent<RectTransform>().position = new Vector2(0.0f, 0.0f);
+        //    //objLine.transform.SetParent(transform, true);
+        //}
 
         // 最大段階数分線を表示する
     }

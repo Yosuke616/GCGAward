@@ -5,7 +5,7 @@ using UnityEngine;
 public class CSenaEnemy : CCharactorManager
 {
     #region serialize field
-    [SerializeField] private GameObject sceneManager;
+    //[SerializeField] private GameObject sceneManager;
     //[SerializeField] private int nAddScore;
     [SerializeField] private GameObject objDamageUI;
     #endregion

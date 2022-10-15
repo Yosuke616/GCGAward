@@ -89,3 +89,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c48aec854e3b71418c294193ecbff26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorOn: {r: 1, g: 0.83225524, b: 0, a: 1}
+  colorOff: {r: 1, g: 1, b: 1, a: 1}
