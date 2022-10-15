@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEditor;
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(CHPManager))]
+[CustomEditor(typeof(CCharactorManager))]
 #endif
 
-public class CSenaPlayer : CHPManager
+public class CSenaPlayer : CCharactorManager
 {
     // プレイヤーの状態
     #region plater state
@@ -21,18 +21,20 @@ public class CSenaPlayer : CHPManager
     #region serialize field
     //[SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject DeadEffect;
+    [SerializeField] private GameObject objWeapon;              // 武器オブジェクト
+    [SerializeField] private GameObject GameOverUI;
     #endregion
 
     // 変数宣言
     #region variable
-    PLAYERSTATE playerState;
-    
+    private PLAYERSTATE playerState;
     #endregion
     // Start is called before the first frame update
     #region init
     void Start()
     {
         InitHP();      // HPの初期化
+        //InitAtk();      // 攻撃力の初期化
         playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
         SetHPBar();     // HPバーUIの情報を取得する
     }
@@ -48,8 +50,7 @@ public class CSenaPlayer : CHPManager
         if (Input.GetKeyDown(KeyCode.K))
             nCurrentHp = 0;
 
-        if (nCurrentHp <= 0)
-            Debug.Log("Dead");
+        //Debug.Log("PlayerAtk" + nCurrentAtk);
     }
     #endregion
 
@@ -68,10 +69,10 @@ public class CSenaPlayer : CHPManager
             case PLAYERSTATE.PLAYER_ALIVE:
                 // Zキー→HPを減らす(デバッグ用)
                 #region debug dec hp
-                //if (Input.GetKeyDown(KeyCode.Z))
-                //{
-                //    AddHp(-1);
-                //}
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    nCurrentHp = 0;
+                }
                 #endregion
                 // 変更するバーの番号の変更
                 CalcBarNum();
@@ -177,6 +178,7 @@ public class CSenaPlayer : CHPManager
     {
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
+        GameOverUI.SetActive(true);
     }
     #endregion
 
