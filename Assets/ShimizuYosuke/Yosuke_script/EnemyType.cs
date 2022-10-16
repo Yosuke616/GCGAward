@@ -335,7 +335,7 @@ public class EnemyType : MonoBehaviour
 
             //HPを回復させる
             GameObject obj = GameObject.Find("unitychan");
-            obj.GetComponent<CSenaPlayer>().AddHp(nRecovery);
+            //obj.GetComponent<CSenaPlayer>().AddHp(nRecovery);
 
             //オブジェクトを消滅させる
             //Destroy(collision.gameObject);      // 矢を消滅させる
