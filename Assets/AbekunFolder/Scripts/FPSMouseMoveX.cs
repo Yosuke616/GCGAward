@@ -33,8 +33,9 @@ public class FPSMouseMoveX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        controller = PlayerInputTest.GetControllerUse();
+
+        //controller = PlayerInputTest.GetControllerUse();
+        controller = true;
         if (controller)
         {
             if ((Input.GetMouseButtonDown(0)))//&& controller || Gamepad.current.rightTrigger.ReadValue()>deadZone )&& !b_AimMode && !controller)    //マウスの左クリックが押された

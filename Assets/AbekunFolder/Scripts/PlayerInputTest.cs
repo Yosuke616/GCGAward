@@ -19,7 +19,7 @@ public class PlayerInputTest : MonoBehaviour
     [Header("バーチャルカメラ")]
     [SerializeField] CinemachineVirtualCamera FPSCamera;    //FPSカメラ
     [SerializeField] CinemachineVirtualCamera TPSCamera;    //TPSカメラ
-    [SerializeField] CinemachineVirtualCamera TRASECamera;    //TRASEカメラ
+  //  [SerializeField] CinemachineVirtualCamera TRASECamera;    //TRASEカメラ
     [Header("コントローラーデッドゾーン")]
     [SerializeField] private float deadZone = 0.5f;
     [SerializeField]
@@ -57,7 +57,8 @@ public class PlayerInputTest : MonoBehaviour
     void Update()
     {
         if (Gamepad.current == null) b_Controller = true;
-        controller = b_Controller;
+        controller = true;  //マウスのみ
+
         
         Vector3 pos = this.transform.position;
         Quaternion myRotation = this.transform.rotation;
@@ -146,7 +147,7 @@ public class PlayerInputTest : MonoBehaviour
                 PlayerMoveFlg = true;
                 //PlayerAngleY = PlayerAngleY * 0.9f + TPSCamera.transform.eulerAngles.y * 0.1f;
                 //this.transform.position += new Vector3(0, 0, PlayerMove);
-                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+            //    this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
                 //rotYDif = rotYDif*0.9f+TPSCamera.transform.eulerAngles.y*0.1f;
                 //if(0<rotYDif)
                 //PlayerMoveRot = PlayerMoveRot * 0.9f + (0) * 0.1f;
@@ -197,7 +198,7 @@ public class PlayerInputTest : MonoBehaviour
                    // playerEulerY += 360;
                 }
                 
-                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+             //   this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
 
                
                     rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif + 90) * 0.1f), 0.0f);
@@ -230,7 +231,7 @@ public class PlayerInputTest : MonoBehaviour
                    // playerEulerY += 360;
                 }
                 
-                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+               // this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
                 //if(playerEulerY<TPSCameraEulerY)
                 //if (rotYDif > -1)
                 //{
@@ -271,7 +272,7 @@ public class PlayerInputTest : MonoBehaviour
                 //TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
                 //PlayerMoveRot = PlayerMoveRot * 0.9f + (90) * 0.1f;
                 
-                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
+                //this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
                 //if (b_Left)
                 //rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (-180) * 0.1f, 0.0f);
 
@@ -302,14 +303,14 @@ public class PlayerInputTest : MonoBehaviour
                 this.transform.rotation = rotate * Quaternion.identity;
             }
 
-            if (Input.GetKey(KeyCode.Q))
-            {
-                this.transform.eulerAngles -= new Vector3(0, PlayerRot, 0);
-            }
-            if (Input.GetKey(KeyCode.E))
-            {
-                this.transform.eulerAngles += new Vector3(0, PlayerRot, 0);
-            }
+            //if (Input.GetKey(KeyCode.Q))
+            //{
+            //    this.transform.eulerAngles -= new Vector3(0, PlayerRot, 0);
+            //}
+            //if (Input.GetKey(KeyCode.E))
+            //{
+            //    this.transform.eulerAngles += new Vector3(0, PlayerRot, 0);
+            //}
         }
         if (controller)
         {
