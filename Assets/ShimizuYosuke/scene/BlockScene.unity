@@ -513,7 +513,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3130972926947622601, guid: 752a4e499149b7c42a7553c265ffe9b7, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3130972926947622601, guid: 752a4e499149b7c42a7553c265ffe9b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1727,7 +1727,7 @@ RectTransform:
   - {fileID: 553361083}
   - {fileID: 1175406481}
   m_Father: {fileID: 0}
-  m_RootOrder: 48
+  m_RootOrder: 49
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4073,6 +4073,14 @@ PrefabInstance:
       propertyPath: scChargeSlider
       value: 
       objectReference: {fileID: 753294466}
+    - target: {fileID: 5900947746772388192, guid: dae66087148445a4f89398791276f1eb, type: 3}
+      propertyPath: seUpStep.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900947746772388192, guid: dae66087148445a4f89398791276f1eb, type: 3}
+      propertyPath: seUpStep.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: dd642db7d41e417438d05a9422aafedc, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae66087148445a4f89398791276f1eb, type: 3}
 --- !u!4 &1682870843 stripped
@@ -4925,7 +4933,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1970023654
 PrefabInstance:
@@ -4997,7 +5005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412341135816683080, guid: 5db28fc455188204e85cce0a2f2e6636, type: 3}
       propertyPath: m_RootOrder
-      value: 49
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 4412341135816683080, guid: 5db28fc455188204e85cce0a2f2e6636, type: 3}
       propertyPath: m_LocalPosition.x
