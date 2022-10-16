@@ -30,6 +30,9 @@ public class Player_Walk : MonoBehaviour
 
     private AudioSource AS;
 
+    [Header("ピッチの変更")]
+    [SerializeField] private float pitchRange = 0.1f;
+
     /** @brief プレイヤーの移動速度*/
     [Header("プレイヤーのステータス")]
     [SerializeField] float fPlayerWalk = 2.0f;
@@ -110,7 +113,6 @@ public class Player_Walk : MonoBehaviour
             velocity.z += 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
             this.animator.SetBool(key_isWalk, true);
-            AS.PlayOneShot(walk);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -252,6 +254,30 @@ public class Player_Walk : MonoBehaviour
                 this.animator.SetBool(key_isJump, false);
             }
         }
+    }
+
+    public void WalkSound() {
+        AS.pitch = 1.0f + Random.Range(-pitchRange,pitchRange);
+        AS.volume = 0.1f;
+        AS.PlayOneShot(walk);
+    }
+
+    public void RunSound() {
+        AS.pitch = 2.0f + Random.Range(-pitchRange, pitchRange);
+        AS.volume = 0.1f;
+        AS.PlayOneShot(run);
+    }
+
+    public void JumpSound() {
+        AS.pitch = 1.0f + Random.Range(-pitchRange, pitchRange);
+        AS.volume = 0.1f;
+        AS.PlayOneShot(jump);
+    }
+
+    public void FallSound() {
+        AS.pitch = 1.0f + Random.Range(-pitchRange, pitchRange);
+        AS.volume = 0.1f;
+        AS.PlayOneShot(fall);
     }
 
 }
