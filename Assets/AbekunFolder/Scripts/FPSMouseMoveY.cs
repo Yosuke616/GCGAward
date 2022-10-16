@@ -20,18 +20,22 @@ public class FPSMouseMoveY : MonoBehaviour
     [SerializeField]
     CinemachineVirtualCamera TPSVirtualCamera;
     [SerializeField]
-    private float active = 0.0f; 
+    private float active = 0.0f;
+    CinemachineBrain brain;
+    float blendtime;
     // Start is called before the first frame update
     void Start()
     {
-        
+        brain= CinemachineCore.Instance.FindPotentialTargetBrain(TPSVirtualCamera);
+       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
         
+
         controller = PlayerInputTest.GetControllerUse();
 
 
@@ -102,28 +106,27 @@ public class FPSMouseMoveY : MonoBehaviour
         //this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         if (!b_Charge)
         {
-            MouseMoveY = 0;
-            CinemachineBrain brain = CinemachineCore.Instance.FindPotentialTargetBrain(TPSVirtualCamera);
-            var blendtime = brain.ActiveBlend;
-            active = blendtime.BlendWeight;
-            if (blendtime.BlendWeight >0.999f)
+           // MouseMoveY = 0;
+            
+            
+            //if (blendtime.BlendWeight >0.999f)
+            //{
+            //        this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+            
+            
+            if (MouseMoveY < -1)
             {
-                    this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                MouseMoveY++;
+                this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+            }
+            else if (MouseMoveY > 1)
+            {
+                MouseMoveY--;
+                this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
             
-            
-            //if (MouseMoveY < -1)
-            //{
-            //    MouseMoveY++;
-            //    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
-
-            //}
-            //else if (MouseMoveY > 1)
-            //{
-            //    MouseMoveY--;
-            //    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
-
-            //}
             }
         }
     }
