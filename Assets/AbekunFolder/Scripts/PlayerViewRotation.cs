@@ -43,7 +43,8 @@ public class PlayerViewRotation : MonoBehaviour
     [SerializeField]private bool b_Charge = false; 
     [SerializeField]private bool b_AimMode = false;
     [SerializeField]
-    private bool controller ;
+    private float cameraHeight = 0.0f;
+    private bool controller = true ;
     private static float TPSVectorX;
     private static float TPSVectorZ;
     // Start is called before the first frame update
@@ -59,7 +60,7 @@ public class PlayerViewRotation : MonoBehaviour
     void Update()
     {
         
-        controller = PlayerInputTest.GetControllerUse();
+        //controller = PlayerInputTest.GetControllerUse();
         ObjectPos = this.transform.position;
         //pi+=0.01f;
         //if(pi>=6.28)
@@ -96,8 +97,8 @@ public class PlayerViewRotation : MonoBehaviour
             }
             else
             {
-                MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllSensi;
-                MouseMoveY += (Gamepad.current.rightStick.ReadValue().y * ControllSensi) / 2;
+                //MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllSensi;
+               // MouseMoveY += (Gamepad.current.rightStick.ReadValue().y * ControllSensi) / 2;
             }
            
                 sinX = Mathf.Sin(MouseMoveX + Mathf.Atan2(PlayerVectorX, PlayerVectorZ));//X
@@ -131,7 +132,7 @@ public class PlayerViewRotation : MonoBehaviour
            // }
 
             this.transform.position = new Vector3((Player.transform.position.x + CameraRange * sinX),
-                                                       (Player.transform.position.y + 1.0f + CameraRange * cosY),
+                                                       (Player.transform.position.y  + CameraRange * cosY+cameraHeight),
                                                        (Player.transform.position.z + CameraRange * cosX));
 
             //this.transform.position = -Player.transform.forward * (Player.transform.position.z + CameraRange * cosX);

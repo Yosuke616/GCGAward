@@ -34,10 +34,10 @@ public class FPSMouseMoveY : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
-        controller = PlayerInputTest.GetControllerUse();
 
+        //controller = PlayerInputTest.GetControllerUse();
+        controller = true;
 
         if (controller)
         {
