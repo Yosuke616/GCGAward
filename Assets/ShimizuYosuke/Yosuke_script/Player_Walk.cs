@@ -78,7 +78,7 @@ public class Player_Walk : MonoBehaviour
 
         bJumpFlg = false;
         // 自分に設定されているAnimatorコンポーネントを習得する
-        this.animator = GetComponent<Animator>();
+        //this.animator = GetComponent<Animator>();
 
         AS = GetComponent<AudioSource>();
 
@@ -92,17 +92,17 @@ public class Player_Walk : MonoBehaviour
         if (!Input.anyKey)
         {
             eState = 0;
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isWalk, false);
-            this.animator.SetBool(key_isJump, false);
+            //this.animator.SetBool(key_isRun, false);
+            //this.animator.SetBool(key_isWalk, false);
+            //this.animator.SetBool(key_isJump, false);
         }
 
         //シフトだけ押しているときはアニメーション消す
         if (Input.GetKey(KeyCode.LeftShift)) {
             eState = 0;
-            this.animator.SetBool(key_isRun, false);
-            this.animator.SetBool(key_isWalk, false);
-            this.animator.SetBool(key_isJump, false);
+            //this.animator.SetBool(key_isRun, false);
+            //this.animator.SetBool(key_isWalk, false);
+            //this.animator.SetBool(key_isJump, false);
         }
 
         //-------------WASD------------------走る
@@ -112,38 +112,38 @@ public class Player_Walk : MonoBehaviour
         {
             velocity.z += 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
-            this.animator.SetBool(key_isWalk, true);
+            //this.animator.SetBool(key_isWalk, true);
         }
         if (Input.GetKey(KeyCode.A))
         {
             velocity.x -= 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
-            this.animator.SetBool(key_isWalk, true);
+            //this.animator.SetBool(key_isWalk, true);
         }
         if (Input.GetKey(KeyCode.S))
         {
             velocity.z -= 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
-            this.animator.SetBool(key_isWalk, true);
+            //this.animator.SetBool(key_isWalk, true);
         }
         if (Input.GetKey(KeyCode.D))
         {
             velocity.x += 0.1f;
             eState = PLAYER_STATE.WALK_STATE;
-            this.animator.SetBool(key_isWalk, true);
+            //this.animator.SetBool(key_isWalk, true);
         }
 
         if (eState == PLAYER_STATE.WALK_STATE)
         {
             moveSpeed = 5.0f;
-            this.animator.SetBool(key_isWalk, true);
-            this.animator.SetBool(key_isRun, false);
+            //this.animator.SetBool(key_isWalk, true);
+            //this.animator.SetBool(key_isRun, false);
 
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 eState = PLAYER_STATE.RUN_STATE;
-                this.animator.SetBool(key_isRun, true);
+                //this.animator.SetBool(key_isRun, true);
             }
         }
 
@@ -235,7 +235,7 @@ public class Player_Walk : MonoBehaviour
             //プレイヤーに上ベクトルの力を加える
             rb.AddForce(0, fJumpPower, 0);
             eState = PLAYER_STATE.JUMP_STATE;
-            this.animator.SetBool(key_isJump, true);
+            //this.animator.SetBool(key_isJump, true);
         }
     }
 
@@ -243,16 +243,16 @@ public class Player_Walk : MonoBehaviour
     {
         if (collision.gameObject.tag == ("Ground"))
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-            {
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            //{
                 if (bJumpFlg) {
                     bJumpFlg = false;
-                    this.animator.SetBool(key_isRun, true);
-                    this.animator.SetBool(key_isRun, false);
-                    this.animator.SetBool(key_isWalk, false);
+                    //this.animator.SetBool(key_isRun, true);
+                    //this.animator.SetBool(key_isRun, false);
+                    //this.animator.SetBool(key_isWalk, false);
                 }
-                this.animator.SetBool(key_isJump, false);
-            }
+                //this.animator.SetBool(key_isJump, false);
+            //}
         }
     }
 

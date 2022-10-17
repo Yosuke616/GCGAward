@@ -9,12 +9,14 @@ public class EnemyType : MonoBehaviour
         ENEMY_ROLL_90 = 0,
         ENEMY_ROLL_180,
         WALK_ENEMY,
+        STOP_ENEMY
     }
 
     [Header("敵の種類")]
     [Header("1:90度回転")]
     [Header("2:180度回転")]
     [Header("3:歩く")]
+    [Header("4:止まって撃つ")]
     [SerializeField] private ENEMY_TYPE eType = 0;
 
     [Header("HPの回復量")]
@@ -74,6 +76,8 @@ public class EnemyType : MonoBehaviour
 
     //チェイスフラグ
     private bool Chase;
+
+    //
 
     //後で消す
     //頭
@@ -225,6 +229,9 @@ public class EnemyType : MonoBehaviour
                                 this.transform.position += this.transform.forward * Time.deltaTime * WALK_SPEED;
                             }
                         }
+                        break;
+                    case ENEMY_TYPE.STOP_ENEMY:
+
                         break;
                 }
             }
