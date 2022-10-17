@@ -8,6 +8,7 @@ public class CSenaEnemy : CCharactorManager
     //[SerializeField] private GameObject sceneManager;
     //[SerializeField] private int nAddScore;
     [SerializeField] private GameObject objDamageUI;
+    [SerializeField] private GameObject objHitEffect;
     #endregion
 
     // 変数宣言
@@ -49,6 +50,8 @@ public class CSenaEnemy : CCharactorManager
             // ダメージ通知
             ChangeHp(-1 * DamageNum);
             objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
+            // ヒットエフェクト再生
+            Instantiate(objHitEffect);
         }
     }
     #endregion
