@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CCharactorManager : MonoBehaviour
 {
@@ -91,8 +92,21 @@ public class CCharactorManager : MonoBehaviour
     #region Add front bar
     public void AddFrontBar(int num)
     {
-        // FrontHPBarの値を減らす
-        objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
+        float remain = objFrontHPBar[nChangeHPBar].GetComponent<Slider>().value;
+        float perHPBar =  nMaxHp / nValNum;
+        float ChangeValue = -1 * (float)num / perHPBar;
+        // 該当のHPバーの残り量が変更する値より少ない場合、HPバーをまたぐ処理を行う
+        if (remain < ChangeValue)
+        {
+            // 現在のHPバーは0にする
+            objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(-1 * (int)(remain * perHPBar));
+            float dif = ChangeValue - remain;
+            // 減らしきれなかった分を次のHPバーで減らす
+            objFrontHPBar[nChangeHPBar - 1].GetComponent<CHPBar>().AddValue(-1 * (int)(dif * perHPBar));
+        }
+        else
+            // FrontHPBarの値を減らす
+            objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
     }
     #endregion
 

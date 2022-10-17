@@ -50,6 +50,7 @@ public class CSenaPlayer : CCharactorManager
         if (Input.GetKeyDown(KeyCode.K))
             nCurrentHp = 0;
 
+        Debug.Log("HP" + nCurrentHp);
         //Debug.Log("PlayerAtk" + nCurrentAtk);
     }
     #endregion

@@ -32,7 +32,7 @@ public class CSenaEnemy : CCharactorManager
     #region update
     void Update()
     {
-        Debug.Log("EnemyAtk" + nCurrentAtk);
+        //Debug.Log("EnemyAtk" + nCurrentAtk);
     }
     #endregion
 

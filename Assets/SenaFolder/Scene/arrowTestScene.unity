@@ -1524,7 +1524,6 @@ MonoBehaviour:
   PlayerRot: 1
   FPSCamera: {fileID: 905504256}
   TPSCamera: {fileID: 59243822}
-  TRASECamera: {fileID: 1584627913}
   deadZone: 0.5
   b_Charge: 0
   b_AimMode: 0
@@ -3340,6 +3339,10 @@ PrefabInstance:
     - target: {fileID: 2269357575631854606, guid: ce59db3b77c379343b24a76edcaeb19f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269357577690279951, guid: ce59db3b77c379343b24a76edcaeb19f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 623
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce59db3b77c379343b24a76edcaeb19f, type: 3}
@@ -5801,6 +5804,10 @@ PrefabInstance:
     - target: {fileID: 6078688453297845046, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
+      propertyPath: nAdjustHp
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
       propertyPath: objPlayer
