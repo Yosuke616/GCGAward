@@ -32,9 +32,6 @@ public class TitleScript : MonoBehaviour
     [SerializeField] private int DELTTIME = 10;
     private int nDeltTime;
 
-    //マウスクリック用のフラグ
-    private bool bMouse;
-
     //デフォルトの場所
     private Vector3 Str_Pos;
     private Vector3 Opt_Pos;
@@ -201,8 +198,6 @@ public class TitleScript : MonoBehaviour
     }
 
     private void MoveBrackets() {
-        Debug.Log(bInOrOut);
-
         if (bInOrOut)
         {
             //外側

@@ -180,6 +180,7 @@ public class CSenaPlayer : CCharactorManager
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
         GameOverUI.SetActive(true);
+        Time.timeScale = 0f;
     }
     #endregion
 

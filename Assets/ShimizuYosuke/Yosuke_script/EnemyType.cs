@@ -35,6 +35,16 @@ public class EnemyType : MonoBehaviour
     [SerializeField] int bullet_deltTime = 480;
     int nBullet_Time;
 
+    [Header("敵が攻撃するかしないかのフラグ")]
+    [Header("true :攻撃する")]
+    [Header("false:攻撃しない")]
+    [SerializeField] private bool bAttackFlg = true;
+
+    [Header("敵が追いかけるか追いかけないかのフラグ")]
+    [Header("true :追いかける")]
+    [Header("false:追いかけない")]
+    [SerializeField] private bool bChaseFlg = true;
+
     //レイを使用して視界を制御する
     private RaycastHit rayCastHit;
 
@@ -304,24 +314,28 @@ public class EnemyType : MonoBehaviour
                         Vector3 p = new Vector3(0f, 0f, 0.05f);
 
                         //移動させる
-                        transform.Translate(p);
+                        if (bChaseFlg) {
+                            transform.Translate(p);
+                        }
 
                         nBullet_Time--;
                         if (nBullet_Time < 0)
                         {
-                            //弾を発射する
-                            Vector3 bulletPosition = firingPoint.transform.position;
-                            //上で取得した場所に弾を出現
-                            GameObject newBall = Instantiate(bullet, bulletPosition, this.transform.rotation);
-                            // 出現させたボールのforward(z軸方向)
-                            Vector3 directions = newBall.transform.forward;
-                            // 弾の発射方向にnewBallのz方向(ローカル座標)を入れ、弾オブジェクトのrigidbodyに衝撃力を加える
-                            newBall.GetComponent<Rigidbody>().AddForce(direction * bullet_speed, ForceMode.Impulse);
-                            // 出現させたボールの名前を"bullet"に変更
-                            newBall.name = bullet.name;
-                            // 出現させたボールを0.8秒後に消す
-                            Destroy(newBall, 2.0f);
-                            nBullet_Time = bullet_deltTime;
+                            if (bAttackFlg) {
+                                //弾を発射する
+                                Vector3 bulletPosition = firingPoint.transform.position;
+                                //上で取得した場所に弾を出現
+                                GameObject newBall = Instantiate(bullet, bulletPosition, this.transform.rotation);
+                                // 出現させたボールのforward(z軸方向)
+                                Vector3 directions = newBall.transform.forward;
+                                // 弾の発射方向にnewBallのz方向(ローカル座標)を入れ、弾オブジェクトのrigidbodyに衝撃力を加える
+                                newBall.GetComponent<Rigidbody>().AddForce(direction * bullet_speed, ForceMode.Impulse);
+                                // 出現させたボールの名前を"bullet"に変更
+                                newBall.name = bullet.name;
+                                // 出現させたボールを0.8秒後に消す
+                                Destroy(newBall, 2.0f);
+                                nBullet_Time = bullet_deltTime;
+                            }
                         }
                     }
                 }
