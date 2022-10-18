@@ -132,7 +132,7 @@ public class PlayerViewRotation : MonoBehaviour
            // }
 
             this.transform.position = new Vector3((Player.transform.position.x + CameraRange * sinX),
-                                                       (Player.transform.position.y  + CameraRange * cosY+cameraHeight),
+                                                       (Player.transform.position.y  + CameraRange * cosY),
                                                        (Player.transform.position.z + CameraRange * cosX));
 
             //this.transform.position = -Player.transform.forward * (Player.transform.position.z + CameraRange * cosX);

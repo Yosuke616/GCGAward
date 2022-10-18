@@ -23,6 +23,7 @@ public class FPSMouseMoveX : MonoBehaviour
     [SerializeField]
     private float TPSVectorZ;
 
+    private static float mouseX = 0.0f;
     //private float MouseMoveY = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -91,9 +92,10 @@ public class FPSMouseMoveX : MonoBehaviour
         //MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
         if (b_Charge)
         {
-
-            this.transform.eulerAngles = new Vector3( this.transform.eulerAngles.x,MouseMoveX, this.transform.eulerAngles.z);
+           
+            this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x,MouseMoveX, this.transform.eulerAngles.z);
         }
+        //this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, MouseMoveX, this.transform.eulerAngles.z);
 
         //if(MouseMoveX>180)
         //{
@@ -108,6 +110,10 @@ public class FPSMouseMoveX : MonoBehaviour
         TPSVectorX = PlayerViewRotation.GetTPSVectorX();
         TPSVectorZ =PlayerViewRotation.GetTPSVectorZ();
         //PlayerAngleY = this.transform.eulerAngles.y - PlayerViewRotation.GetTPSVectorX();
-
+        mouseX = MouseMoveX/180;
+    }
+    public static float GetMouseMoveX()
+    {
+        return mouseX;
     }
 }
