@@ -47,6 +47,7 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField]private bool b_Left = false;
     [SerializeField]private bool b_Right = true;
     [SerializeField] private int PlayerDirect = 0;
+    private static float PlayerRotY = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -165,10 +166,10 @@ public class PlayerInputTest : MonoBehaviour
                     //rotate = Quaternion.Euler(0.0f, 360, 0.0f);
                     //this.transform.rotation = rotate * Quaternion.identity;
                 }
-                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY+rotYDif) * 0.1f), 0.0f);
+                  //  rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY+rotYDif) * 0.1f), 0.0f);
                 
 
-                    this.transform.rotation = rotate * Quaternion.identity;
+                    //this.transform.rotation = rotate * Quaternion.identity;
                // this.transform.rotation = (Quaternion.Euler(0.0f, PlayerMoveRot, 0.0f)) * Quaternion.identity;
 
             }
@@ -201,8 +202,8 @@ public class PlayerInputTest : MonoBehaviour
              //   this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
 
                
-                    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif + 90) * 0.1f), 0.0f);
-                    this.transform.rotation = rotate * Quaternion.identity;
+                    //rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif + 90) * 0.1f), 0.0f);
+                    //this.transform.rotation = rotate * Quaternion.identity;
                
 
                 //this.transform.rotation = (Quaternion.Euler(0.0f,PlayerMoveRot,0.0f)) * Quaternion.identity;
@@ -237,9 +238,9 @@ public class PlayerInputTest : MonoBehaviour
                 //{
 //                rotYDif = rotYDif * 0.9f + -90 * 0.1f;
 //                rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif) * 0.1f) - 90 * 0.1f, 0.0f);
-                rotate = Quaternion.Euler(0.0f,  TPSCameraEulerY -90, 0.0f);
+                //rotate = Quaternion.Euler(0.0f,  TPSCameraEulerY -90, 0.0f);
 
-                this.transform.rotation = rotate * Quaternion.identity;
+                //this.transform.rotation = rotate * Quaternion.identity;
                 //}
                 //else if(rotYDif<1)
                 //{
@@ -288,7 +289,7 @@ public class PlayerInputTest : MonoBehaviour
                 // if (b_Right)
                 //rotYDif = rotYDif + 180;
                 //rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + (playerEulerY + rotYDif) * 0.1f) - 90 * 0.1f, 0.0f);
-                rotate = Quaternion.Euler(0.0f, TPSCameraEulerY+180, 0.0f);
+                //rotate = Quaternion.Euler(0.0f, TPSCameraEulerY+180, 0.0f);
 
                 //{
                 //    if (playerEulerY < -90)
@@ -300,7 +301,7 @@ public class PlayerInputTest : MonoBehaviour
                 //    rotate = Quaternion.Euler(0.0f, (playerEulerY * 0.9f + TPSCameraEulerY * 0.1f) + (180) * 0.1f, 0.0f);
                 //}
 
-                this.transform.rotation = rotate * Quaternion.identity;
+               // this.transform.rotation = rotate * Quaternion.identity;
             }
 
             //if (Input.GetKey(KeyCode.Q))
@@ -362,11 +363,15 @@ public class PlayerInputTest : MonoBehaviour
                  b_Charge = false;
              }
         }
-        
+        PlayerRotY = rotYDif;
 
     }
     public static bool GetControllerUse()
     {
         return controller;
+    }
+    public static float GetPlayerYRotation()
+    {
+        return PlayerRotY;
     }
 }
