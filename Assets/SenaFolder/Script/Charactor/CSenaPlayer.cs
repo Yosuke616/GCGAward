@@ -50,6 +50,7 @@ public class CSenaPlayer : CCharactorManager
         if (Input.GetKeyDown(KeyCode.K))
             nCurrentHp = 0;
 
+        Debug.Log("HP" + nCurrentHp);
         //Debug.Log("PlayerAtk" + nCurrentAtk);
     }
     #endregion
@@ -74,8 +75,8 @@ public class CSenaPlayer : CCharactorManager
                     nCurrentHp = 0;
                 }
                 #endregion
-                // 変更するバーの番号の変更
                 CalcBarNum();
+                CalcFrontBarNum();
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
                     ChangeState(PLAYERSTATE.PLAYER_DEAD);

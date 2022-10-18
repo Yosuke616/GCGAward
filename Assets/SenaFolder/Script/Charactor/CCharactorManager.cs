@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CCharactorManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class CCharactorManager : MonoBehaviour
     [System.NonSerialized]
     public GameObject[] objBGHPBar;
     private int nChangeHPBar;       // 変更するHPバーの番号(現在のHPから計算する)
+    private int nChangeFrontBarIndex = 0;       // 変更するHPバーの番号(現在のHPから計算する)
+    private int nCurrentFrontVal = 0;
     [System.NonSerialized]
     public int nCurrentAtk;                // 攻撃力
     #endregion
@@ -34,6 +37,7 @@ public class CCharactorManager : MonoBehaviour
     public void InitHP()
     {
         nCurrentHp = nMaxHp;
+        nCurrentFrontVal = nMaxHp;
     }
     #endregion
 
@@ -64,14 +68,14 @@ public class CCharactorManager : MonoBehaviour
     #endregion
 
     /*
-     * @brief 変更するバーの番号の変更
-     * @param num 変更する量
-     * @param BarIndex 変更するバーの番号
-     * @sa 弓がチャージされたとき/敵のHPが減った時
-     * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
+  * @brief 変更するバーの番号の変更
+  * @param num 変更する量
+  * @param BarIndex 変更するバーの番号
+  * @sa 弓がチャージされたとき/敵のHPが減った時
+  * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
 　  */
-    #region calc change hp bar num
-    public void CalcBarNum()
+    #region calc change  bar num
+    public virtual void CalcBarNum()
     {
         // HPが満タンの時、番号が1つずれるため調整する
         if (nCurrentHp == nMaxHp)
@@ -80,6 +84,26 @@ public class CCharactorManager : MonoBehaviour
             nChangeHPBar = nCurrentHp / (nMaxHp / nValNum);
     }
     #endregion
+
+    /*
+     * @brief 変更するバーの番号の変更
+     * @param num 変更する量
+     * @param BarIndex 変更するバーの番号
+     * @sa 弓がチャージされたとき/敵のHPが減った時
+     * @details 消費されるHPに応じてFrontHPBarのBarIndex番目の数値を変更する
+　  */
+    #region calc front  bar num
+    public virtual void CalcFrontBarNum()
+    {
+        // HPが満タンの時、番号が1つずれるため調整する
+        if (nCurrentFrontVal == nMaxHp)
+            nChangeFrontBarIndex = nCurrentHp / (nMaxHp / nValNum) - 1;
+        else
+            nChangeFrontBarIndex = nCurrentHp / (nMaxHp / nValNum);
+    }
+    #endregion
+
+
 
     /*
      * @brief 前面のHPバーを変更する
@@ -91,8 +115,29 @@ public class CCharactorManager : MonoBehaviour
     #region Add front bar
     public void AddFrontBar(int num)
     {
-        // FrontHPBarの値を減らす
-        objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
+        //nCurrentFrontVal += num;
+        float remain = objFrontHPBar[nChangeFrontBarIndex].GetComponent<Slider>().value;
+        float perHPBar =  nMaxHp / nValNum;
+        float ChangeValue = Mathf.Abs((float)num / perHPBar);
+        // 該当のHPバーの残り量が変更する値より少ない場合、HPバーをまたぐ処理を行う
+        if (remain < ChangeValue)
+        {
+            objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(-1 * (int)(remain * perHPBar));
+            float dif = ChangeValue - remain;
+            // 減らしきれなかった分を次のHPバーで減らす
+            if (num < 0)
+            {
+                objFrontHPBar[nChangeFrontBarIndex - 1].GetComponent<CHPBar>().AddValue(-1 * (int)(dif * perHPBar));
+            }
+            else
+            {
+                //nChangeHPBar--;
+                objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue((int)(dif * perHPBar));
+            }
+        }
+        else
+            // FrontHPBarの値を減らす
+            objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(num);
     }
     #endregion
 

@@ -55,10 +55,11 @@ public class CBow : MonoBehaviour
     private GameObject[] objCursur;         // カーソル
     private float maxChargeTime;            // 最大チャージ時間(Initで計算して格納する)
     private int currentChargeStep;        // 現在のチャージ段階数
+    private int nOldStep = 0;                   // 過去のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
     private int nCurrentAtkStep;            // 現在の威力段階数
     private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
-    private int nUseHP = 0;                 // 矢を撃つのに使用するHP
+    //private int nUseHP = 0;                 // 矢を撃つのに使用するHP
     private bool isShot = false;            // 矢を撃ったかどうか
     private AudioSource audioSource;
     #endregion
@@ -94,12 +95,8 @@ public class CBow : MonoBehaviour
         #region charge action
         if (Input.GetMouseButtonDown(0))
         {
-            for (int i = 0; i < objCursur.Length; ++i)
-                objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
-            scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
-            nUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-            objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nUseHP);
-            ChangeState(STATE_BOW.BOW_CHARGE);      // チャージ状態に変更する
+           
+            ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
         }
         #endregion
         // チャージ中に左クリックが離されたらチャージ解除
@@ -135,6 +132,8 @@ public class CBow : MonoBehaviour
 
         //Debug.Log("Step:" + nCurrentAtkStep);
         #endregion
+
+        Debug.Log("威力段階数" + nCurrentAtkStep);
     }
     #endregion
 
@@ -158,6 +157,16 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_CHARGE:
                 g_state = STATE_BOW.BOW_CHARGE;
                 CreateArrow();      // 矢を生成する
+                for (int i = 0; i < objCursur.Length; ++i)
+                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
+                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
+
+                // 威力分を加える
+                int nUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
+                objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nUseHP);
+                nOldStep = nCurrentAtkStep;
+
+                // 効果音再生
                 audioSource.PlayOneShot(seUpStep[currentChargeStep]);
                 audioSource.PlayOneShot(seCharge);
                 break;
@@ -168,7 +177,8 @@ public class CBow : MonoBehaviour
                 isShot = true;
                 audioSource.PlayOneShot(seShot);
                 objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
-                objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nUseHP);
+                int nShotUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
+                objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nShotUseHP);
                 int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
                 objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue);        // 矢を発射する
                 break;
@@ -187,7 +197,11 @@ public class CBow : MonoBehaviour
                 g_state = STATE_BOW.BOW_RESET;
                 // 矢を発射していなければHPバーをリセットする
                 if (!isShot)
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(nUseHP);
+                {
+                    int nResetUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
+                    objPlayer.GetComponent<CSenaPlayer>().CalcFrontBarNum();
+                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(nResetUseHP);
+                }
                 else
                     isShot = false;
                 //objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
@@ -216,6 +230,13 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_CHARGE:
                 fChargeTime += Time.deltaTime;
                 TellChargeTime();       // チャージ時間をスライダーに伝える
+
+                // 段階数が変わった時HPバーを修正する
+                if (nOldStep != nCurrentAtkStep)
+                {
+                    int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
+                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nChargeUseHP);
+                }
                 if (fChargeTime > (currentChargeStep + 1) * fValChargeTime)
                 {
                     ++currentChargeStep;        // チャージを1段階上げる
@@ -225,6 +246,8 @@ public class CBow : MonoBehaviour
                 // 最大チャージ段階になったら
                 if (currentChargeStep >= nMaxChargeStep)
                     ChangeState(STATE_BOW.BOW_CHARGEMAX);
+
+                nOldStep = nCurrentAtkStep;
                 //Debug.Log("ChargeTime:" + fChargeTime.ToString("F1"));
                 //Debug.Log("ChargeStep:" + currentChargeStep);
                 break;
@@ -236,6 +259,14 @@ public class CBow : MonoBehaviour
             // 最大チャージ状態
             case STATE_BOW.BOW_CHARGEMAX:
                 fChargeTime = maxChargeTime;
+                // 段階数が変わった時HPバーを修正する
+                if (nOldStep != nCurrentAtkStep)
+                {
+                    int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
+                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nChargeUseHP);
+                }
+                nOldStep = nCurrentAtkStep;
+
                 break;
 
             // チャージリセット状態
