@@ -110,25 +110,25 @@ public class Player_Walk : MonoBehaviour
         velocity = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            velocity.z += 0.1f;
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
             eState = PLAYER_STATE.WALK_STATE;
             //this.animator.SetBool(key_isWalk, true);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            velocity.x -= 0.1f;
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
             eState = PLAYER_STATE.WALK_STATE;
             //this.animator.SetBool(key_isWalk, true);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            velocity.z -= 0.1f;
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
             eState = PLAYER_STATE.WALK_STATE;
             //this.animator.SetBool(key_isWalk, true);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            velocity.x += 0.1f;
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
             eState = PLAYER_STATE.WALK_STATE;
             //this.animator.SetBool(key_isWalk, true);
         }
@@ -154,19 +154,19 @@ public class Player_Walk : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W))
             {
-                velocity.z += 0.1f;
+               transform.position += transform.forward * moveSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                velocity.x -= 0.1f;
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                velocity.z -= 0.1f;
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                velocity.x += 0.1f;
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
             }
         }
 
