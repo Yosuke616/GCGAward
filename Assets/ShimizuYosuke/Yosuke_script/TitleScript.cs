@@ -16,6 +16,17 @@ public class TitleScript : MonoBehaviour
     //オプション出すよーん
     [SerializeField] private GameObject Pause_UI;
 
+    //【】を出して動かしておく
+    [SerializeField] private GameObject Right_Bracket;
+    [SerializeField] private GameObject Left_Bracket;
+
+    //外側に動くか内側に動くか
+    //trueで外側 falseで内側
+    private bool bInOrOut;
+    private int nCnt;
+    //矢印を動かしたときに一回だけ座標を変える変数
+    private bool bChangeFlg;
+
     //時間設定
     [Header("どの位の時間でボタン制御するか")]
     [SerializeField] private int DELTTIME = 10;
@@ -23,6 +34,11 @@ public class TitleScript : MonoBehaviour
 
     //マウスクリック用のフラグ
     private bool bMouse;
+
+    //デフォルトの場所
+    private Vector3 Str_Pos;
+    private Vector3 Opt_Pos;
+    private Vector3 End_Pos;
 
     //必要になってくるボタンを追加していく
     public enum TITLE_BUTTON {
@@ -48,6 +64,13 @@ public class TitleScript : MonoBehaviour
         eButton = TITLE_BUTTON.START_BUTTON;
         Pause_UI.SetActive(false);
 
+        //デフォルトの場所を保存しておく
+        Str_Pos = Start_Btn.transform.position;
+        Opt_Pos = Option_Btn.transform.position;
+        End_Pos = End_Btn.transform.position;
+        nCnt = 0;
+        bChangeFlg = true;
+        bInOrOut = true;
     }
 
     // Update is called once per frame
@@ -59,7 +82,7 @@ public class TitleScript : MonoBehaviour
         }
 
         nDeltTime++;
-       
+
         //ボタンでの処理
         //時間がある程度立つと移動するようにする
         if (nDeltTime > DELTTIME) {
@@ -69,42 +92,84 @@ public class TitleScript : MonoBehaviour
                 if (eButton < 0) {
                     eButton = TITLE_BUTTON.MAX_BUTTON - 1;
                 }
+                bChangeFlg = true;
+                nCnt = 0;
                 nDeltTime = 0;
+                bInOrOut = true;
             }
             if (Input.GetKey(KeyCode.S)) {
                 eButton++;
                 if (eButton >= TITLE_BUTTON.MAX_BUTTON) {
                     eButton = 0;
                 }
+                bChangeFlg = true;
+                nCnt = 0;
                 nDeltTime = 0;
+                bInOrOut = true;
             }
         }
 
-        //ボタンの色をデフォルトに変更する
-        Start_Btn.GetComponent<Button>().image.color = Color.white; 
-        Option_Btn.GetComponent<Button>().image.color = Color.white; 
-        End_Btn.GetComponent<Button>().image.color = Color.white;
         //大きさもデフォルトに変える
-        Start_Btn.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
-        Option_Btn.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
-        End_Btn.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+        Start_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        Option_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        End_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        //場所をデフォルトに保存しておく
+        Start_Btn.transform.position = Str_Pos;
+        Option_Btn.transform.position = Opt_Pos;
+        End_Btn.transform.position = End_Pos;
+        //日本語を非表示にしておく
+        GameObject Str_Chil = Start_Btn.transform.GetChild(0).gameObject;
+        GameObject Opt_Chil = Option_Btn.transform.GetChild(0).gameObject;
+        GameObject End_Chil = End_Btn.transform.GetChild(0).gameObject;
+        Str_Chil.SetActive(false);
+        Opt_Chil.SetActive(false);
+        End_Chil.SetActive(false);
 
         //選ばれている列挙体変数によって処理する内容を変える
         switch (eButton) {
             case TITLE_BUTTON.START_BUTTON:
-                Start_Btn.GetComponent<Button>().image.color = Color.red;
+                //座標を少し右にずらす
+                Start_Btn.transform.position = new Vector3(Str_Pos.x - 100.0f, Str_Pos.y, Str_Pos.z);
                 Start_Btn.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                //日本語を出す
+                Str_Chil.SetActive(true);
+                //かっこの場所を変更する
+                if (bChangeFlg) {
+                    Right_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x + 220.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x - 130.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    bChangeFlg = false;
+                }
                 break;
             case TITLE_BUTTON.OPTION_BUTTON:
-                Option_Btn.GetComponent<Button>().image.color = Color.red;
+                Option_Btn.transform.position = new Vector3(Opt_Pos.x - 100.0f, Opt_Pos.y, Opt_Pos.z);
                 Option_Btn.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                Opt_Chil.SetActive(true);
+                //かっこの場所を変更する
+                if (bChangeFlg) {
+                    Right_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x + 220.0f, Option_Btn.transform.position.y, Option_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x - 145.0f, Option_Btn.transform.position.y, Option_Btn.transform.position.z);
+                    bChangeFlg = false;
+                }
                 break;
             case TITLE_BUTTON.END_BUTTON:
-                End_Btn.GetComponent<Button>().image.color = Color.red;
+                End_Btn.transform.position = new Vector3(End_Pos.x - 100.0f, End_Pos.y, End_Pos.z);
                 End_Btn.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                End_Chil.SetActive(true);
+                //かっこの場所を変更する
+                if (bChangeFlg)
+                {
+                    Right_Bracket.transform.position = new Vector3(End_Btn.transform.position.x + 200.0f, End_Btn.transform.position.y, End_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(End_Btn.transform.position.x - 150.0f, End_Btn.transform.position.y, End_Btn.transform.position.z);
+                    bChangeFlg = false;
+                }
                 break;
-            default:break;
+            default: break;
         }
+
+        //カーソルが動かす関数
+        //かっこの場所を変更する
+        MoveBrackets();
+
 
         //ボタンが押されたときの処理
         if (Input.GetKey(KeyCode.Return) || Input.GetMouseButtonDown(0)) {
@@ -131,7 +196,44 @@ public class TitleScript : MonoBehaviour
 
     //ボタンにセットさせる
     public void SetButton(int nButton) {
-        TITLE_BUTTON btn = (TITLE_BUTTON)Enum.ToObject(typeof(TITLE_BUTTON),nButton);
+        TITLE_BUTTON btn = (TITLE_BUTTON)Enum.ToObject(typeof(TITLE_BUTTON), nButton);
         eButton = btn;
+    }
+
+    private void MoveBrackets() {
+        Debug.Log(bInOrOut);
+
+        if (bInOrOut)
+        {
+            //外側
+            Right_Bracket.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
+            Left_Bracket.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
+
+            nCnt++;
+            if (nCnt > 30) {
+                nCnt = 0;
+                bInOrOut = false;
+            }
+
+        }
+        else {
+            //内側
+            Right_Bracket.transform.position -= new Vector3(1.0f, 0.0f, 0.0f);
+            Left_Bracket.transform.position -= new Vector3(-1.0f, 0.0f, 0.0f);
+
+            nCnt++;
+            if (nCnt > 30)
+            {
+                nCnt = 0;
+                bInOrOut = true;
+            }
+        }
+    }
+
+    public void SetButtonAny() {
+        bChangeFlg = true;
+        nCnt = 0;
+        nDeltTime = 0;
+        bInOrOut = true;
     }
 }
