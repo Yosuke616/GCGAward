@@ -75,8 +75,8 @@ public class CSenaPlayer : CCharactorManager
                     nCurrentHp = 0;
                 }
                 #endregion
-                // 変更するバーの番号の変更
                 CalcBarNum();
+                CalcFrontBarNum();
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
                     ChangeState(PLAYERSTATE.PLAYER_DEAD);

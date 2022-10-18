@@ -85,4 +85,6 @@ public class CHPBar : MonoBehaviour
         scHPSlider.value = num / (float)nMax;
     }
     #endregion
+
+   
 }

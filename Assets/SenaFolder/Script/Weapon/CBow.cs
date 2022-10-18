@@ -199,6 +199,7 @@ public class CBow : MonoBehaviour
                 if (!isShot)
                 {
                     int nResetUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
+                    objPlayer.GetComponent<CSenaPlayer>().CalcFrontBarNum();
                     objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(nResetUseHP);
                 }
                 else
