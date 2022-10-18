@@ -64,7 +64,7 @@ public class Player_Walk : MonoBehaviour
     [SerializeField] private Vector3 velocity;              // 移動方向
     [SerializeField] private float moveSpeed = 5.0f;        // 移動速度
     [SerializeField] private float applySpeed = 0.2f;       // 回転の適用速度
-    [SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
+    //[SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
     private void Awake()
     {
         //60fps
@@ -179,13 +179,13 @@ public class Player_Walk : MonoBehaviour
             // プレイヤーの回転(transform.rotation)の更新
             // 無回転状態のプレイヤーのZ+方向(後頭部)を、
             // カメラの水平回転(refCamera.hRotation)で回した移動の反対方向(-velocity)に回す回転に段々近づけます
-            transform.rotation = Quaternion.Slerp(transform.rotation,
-                                                  Quaternion.LookRotation(refCamera.hRotation * velocity),
-                                                  applySpeed);
+            //transform.rotation = Quaternion.Slerp(transform.rotation,
+            //                                      Quaternion.LookRotation(refCamera.hRotation * velocity),
+            //                                      applySpeed);
 
             // プレイヤーの位置(transform.position)の更新
             // カメラの水平回転(refCamera.hRotation)で回した移動方向(velocity)を足し込みます
-            transform.position += refCamera.hRotation * velocity;
+          //  transform.position += refCamera.hRotation * velocity;
         }
         //===============================================================================================================================
 
