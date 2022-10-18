@@ -1049,6 +1049,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FPSTargetMove: {fileID: 1135125244}
+  PlayerYRot: 0
+  rightTurn: 1
+  RotDif: 0
+  playerMove: 0
+  Direct: 0
 --- !u!1001 &1685112272
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -41,11 +41,11 @@ public class PlayerRotation : MonoBehaviour
         {
             Direct = 6;
         }
-         else if (Input.GetKey("d"))
+        if (Input.GetKey("d"))
         {
             Direct = 2;
         }
-        else  if(Input.GetKey("s"))
+        if(Input.GetKey("s"))
         {
             Direct = 4;
             if (Input.GetKey("a"))
@@ -57,7 +57,7 @@ public class PlayerRotation : MonoBehaviour
                 Direct = 3;
             }
         }
-        else if (Input.GetKey("w"))
+        if (Input.GetKey("w"))
         {
             Direct = 0;
             if (Input.GetKey("a"))
@@ -69,10 +69,9 @@ public class PlayerRotation : MonoBehaviour
                 Direct = 1;
             }
         }
-        else
-        {
-            playerMove = false;   
-        }
+        
+          if(!Input.anyKey)  playerMove = false;   
+        
         switch (Direct)
         {
             case 0:
@@ -102,10 +101,16 @@ public class PlayerRotation : MonoBehaviour
             default:
                 break;
         }
-
+        
         RotDif = PlayerYRot + Rotation;
-
-
+        if(RotDif<-180)
+        {
+            RotDif = RotDif + 360;
+        }
+        if(RotDif>180)
+        {
+            RotDif = RotDif - 360;
+        }
         if (playerMove)
         {
             this.transform.eulerAngles += new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
