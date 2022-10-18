@@ -26,12 +26,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3842094581830704091}
   - {fileID: 2949734536651026439}
-  - {fileID: 5255203665459555790}
   - {fileID: 7002257890615836978}
+  - {fileID: 5255203665459555790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,6 +45,14 @@ PrefabInstance:
     - target: {fileID: 2385248666666329018, guid: de1e68bb43527a34886d7c6264e6ab48, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385248666666329018, guid: de1e68bb43527a34886d7c6264e6ab48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385248666666329018, guid: de1e68bb43527a34886d7c6264e6ab48, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2385248666666329018, guid: de1e68bb43527a34886d7c6264e6ab48, type: 3}
       propertyPath: m_LocalPosition.x
@@ -114,7 +122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5252984116218538031, guid: 1ca8346309ffc10498761d7676503ea8, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5252984116218538031, guid: 1ca8346309ffc10498761d7676503ea8, type: 3}
       propertyPath: m_LocalScale.x
@@ -238,6 +246,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7765310403670807009, guid: ed4b99a4fa92d9746940a6f5cbee136e, type: 3}
+      propertyPath: TimeScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7765310403670807009, guid: ed4b99a4fa92d9746940a6f5cbee136e, type: 3}
+      propertyPath: EmitterScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7765310403670807014, guid: ed4b99a4fa92d9746940a6f5cbee136e, type: 3}
       propertyPath: m_Name
       value: eff_charge_side
@@ -266,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1244512141355105039, guid: 245d2908a703d914da5ae11aef06c53c, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1244512141355105039, guid: 245d2908a703d914da5ae11aef06c53c, type: 3}
       propertyPath: m_LocalPosition.x
