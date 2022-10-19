@@ -23,9 +23,9 @@ public class PlayerInputTest : MonoBehaviour
     [Header("コントローラーデッドゾーン")]
     [SerializeField] private float deadZone = 0.5f;
     [SerializeField]
-    private bool b_Charge = false;
+    private static bool b_Charge = false;
     [SerializeField]
-    private bool b_AimMode = false;
+    private static bool b_AimMode = false;
     [SerializeField]
     private bool b_Controller = false;
     private static bool controller;
@@ -64,27 +64,7 @@ public class PlayerInputTest : MonoBehaviour
         Vector3 pos = this.transform.position;
         Quaternion myRotation = this.transform.rotation;
         //myRotation = Quaternion.identity;
-        if (!controller)
-        {
-            if (Gamepad.current.leftStick.ReadValue().x > deadZone)//右
-            {
-                this.transform.position += transform.right * PlayerMove * Time.deltaTime;
-                
-            }
-            if (Gamepad.current.leftStick.ReadValue().x < -deadZone)//左
-            {
-                this.transform.position -= transform.right * PlayerMove * Time.deltaTime;
-            }
-            if (Gamepad.current.leftStick.ReadValue().y > deadZone)//前
-            {
-                this.transform.position += transform.forward * PlayerMove * Time.deltaTime;
-                //this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, TPSTarget.transform.eulerAngles.y, this.transform.eulerAngles.z);
-            }
-            if (Gamepad.current.leftStick.ReadValue().y < -deadZone)//後
-            {
-                this.transform.position -= transform.forward * PlayerMove * Time.deltaTime;
-            }
-        }
+        
         if (controller)
         {
             //if(Input.GetKeyDown("W"))
@@ -337,31 +317,33 @@ public class PlayerInputTest : MonoBehaviour
                 FPSCamera.Priority = 0;
                 b_Charge = false;
             }
+            if ((Gamepad.current.rightTrigger.ReadValue() > deadZone) && !b_AimMode)    //マウスの左クリックが押された
+            {
+                TPSCamera.Priority = 0;
+                FPSCamera.Priority = 100;
+                b_Charge = true;
+                b_AimMode = true;
+            }
+            if ((Gamepad.current.rightTrigger.ReadValue() < deadZone) && b_AimMode)  //マウスの左クリックが外れたとき
+            {
+                TPSCamera.Priority = 100;
+                FPSCamera.Priority = 0;
+                if (b_AimMode)
+                    b_AimMode = false;
+                if (b_Charge)
+                    b_Charge = false;
+            }
+            if ((Gamepad.current.buttonEast.ReadValue() > deadZone) && b_Charge)    //マウスの右クリックが押された
+            {
+                TPSCamera.Priority = 100;
+                FPSCamera.Priority = 0;
+                //b_Charge = false;
+                b_AimMode = true;
+            }
         }
         else
         {
-             if ((Gamepad.current.rightTrigger.ReadValue() > deadZone) && !b_AimMode  )    //マウスの左クリックが押された
-             {
-                 TPSCamera.Priority = 0;
-                 FPSCamera.Priority = 100;
-                 b_Charge = true;
-                 b_AimMode = true;
-             }
-             if ((Gamepad.current.rightTrigger.ReadValue() < deadZone) && b_AimMode )  //マウスの左クリックが外れたとき
-             {
-                 TPSCamera.Priority = 100;
-                 FPSCamera.Priority = 0;
-                 if (b_AimMode)
-                     b_AimMode = false;
-                 if (b_Charge)
-                     b_Charge = false;
-             }
-             if ((Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge )    //マウスの右クリックが押された
-             {
-                 TPSCamera.Priority = 100;
-                 FPSCamera.Priority = 0;
-                 b_Charge = false;
-             }
+             
         }
         PlayerRotY = rotYDif;
 
@@ -373,5 +355,13 @@ public class PlayerInputTest : MonoBehaviour
     public static float GetPlayerYRotation()
     {
         return PlayerRotY;
+    }
+    public static bool GetAimMode()
+    {
+        return b_AimMode;
+    }
+    public static bool GetChargeMode()
+    {
+        return b_Charge;
     }
 }
