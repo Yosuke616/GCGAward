@@ -9,12 +9,16 @@ public class CSenaEnemy : CCharactorManager
     //[SerializeField] private int nAddScore;
     [SerializeField] private GameObject objDamageUI;
     [SerializeField] private GameObject objHitEffect;
+    [Header("敵の消滅時間")]
+    [SerializeField] private float fDestroyTime;        
     #endregion
 
     // 変数宣言
     #region variable
     private CScore scScore;     // スコアの情報格納用
     private GameObject objPlayer;
+    private CHARACTORSTATE state;
+    private GameObject hitEffect;
     #endregion
     // Start is called before the first frame update
     #region init
@@ -32,7 +36,75 @@ public class CSenaEnemy : CCharactorManager
     #region update
     void Update()
     {
+        UpdateState(state);
         //Debug.Log("EnemyAtk" + nCurrentAtk);
+        
+    }
+    #endregion
+
+    #region change state
+    private void ChangeState(CHARACTORSTATE state)
+    {
+        switch(state)
+        {
+            // 生存状態の時
+            case CHARACTORSTATE.CHARACTOR_ALIVE:
+                break;
+
+            // 死亡状態の時
+            case CHARACTORSTATE.CHARACTOR_DEAD:
+                //float fLifeTime = objDamageUI.GetComponent<CDamageUI>().fLifeTime;
+                //StartCoroutine("DestroyHitEffect",(objHitEffect,fLifeTime));        // 1秒後に
+                StartCoroutine("DestroyEnemy", fDestroyTime);
+                break;
+        }
+    }
+    #endregion
+
+    // 毎フレーム実行される
+    #region update state
+    private void UpdateState(CHARACTORSTATE state)
+    {
+        switch (state)
+        {
+            // 生存状態の時
+            case CHARACTORSTATE.CHARACTOR_ALIVE:
+                // HPが0になったときに死亡状態にする
+                if (nCurrentHp < 0)
+                    ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
+                break;
+            
+            // 死亡状態の時
+            case CHARACTORSTATE.CHARACTOR_DEAD:
+                break;
+
+        }
+    }
+    #endregion
+
+    /*
+    * @brief ヒットエフェクトの削除
+    * @param GameObject ヒットエフェクトのオブジェクト
+    * @details ヒットエフェクトのオブジェクトを取得して消滅させる
+  　*/
+    //#region destroy hit effect
+    //private IEnumerator DestroyHitEffect(GameObject effect, float lifeTime)
+    //{
+    //    yield return new WaitForSeconds(lifeTime);
+    //    Destroy(effect);    
+    //}
+    //#endregion
+
+    /*
+     * @brief 敵オブジェクトの消滅
+     * @param float 消滅までの時間
+     * @details fTime秒後に敵オブジェクトを消滅させる
+　   */
+    #region destroy enemy
+    private IEnumerator DestroyEnemy(float fTime)
+    {
+        yield return new WaitForSeconds(fTime);
+        Destroy(gameObject);
     }
     #endregion
 
@@ -42,16 +114,18 @@ public class CSenaEnemy : CCharactorManager
         // 矢が当たった場合、自身と矢を消滅させる
         if(collision.gameObject.tag == "Arrow")
         {
-            Debug.Log("<color=green>EnemyHit</color>");
+            //Debug.Log("<color=green>EnemyHit</color>");
             //scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
             // 当たった矢のダメージ数を取得する
             int DamageNum = collision.gameObject.GetComponent<CArrow>().GetArrowAtk();
+            // ヒットエフェクト再生
+            hitEffect = Instantiate(objHitEffect);
             // ダメージ通知
             ChangeHp(-1 * DamageNum);
-            objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
-            // ヒットエフェクト再生
-            Instantiate(objHitEffect);
+            //if(nCurrentHp > 0)
+                objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
+            
         }
     }
     #endregion

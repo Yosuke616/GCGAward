@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CCharactorManager : MonoBehaviour
 {
+    // プレイヤーの状態
+    #region plater state
+    public enum CHARACTORSTATE
+    {
+        CHARACTOR_ALIVE = 0,       // 生存状態
+        CHARACTOR_DEAD,            // 死亡状態
+    }
+    #endregion
     #region serialize field
     [Header("キャラクターの最大HP")]
     [SerializeField, Range(1, 100)] public int nMaxHp;        // キャラクターのHPの最大値
@@ -95,11 +104,17 @@ public class CCharactorManager : MonoBehaviour
     #region calc front  bar num
     public virtual void CalcFrontBarNum()
     {
+        //// HPが満タンの時、番号が1つずれるため調整する
+        //if (nCurrentFrontVal == nMaxHp)
+        //    nChangeFrontBarIndex = nCurrentHp / (nMaxHp / nValNum) - 1;
+        //else
+        //    nChangeFrontBarIndex = nCurrentHp / (nMaxHp / nValNum);
+
         // HPが満タンの時、番号が1つずれるため調整する
-        if (nCurrentFrontVal == nMaxHp)
-            nChangeFrontBarIndex = nCurrentHp / (nMaxHp / nValNum) - 1;
+        if (nCurrentHp == nMaxHp)
+            nChangeHPBar = nCurrentHp / (nMaxHp / nValNum) - 1;
         else
-            nChangeFrontBarIndex = nCurrentHp / (nMaxHp / nValNum);
+            nChangeHPBar = nCurrentHp / (nMaxHp / nValNum);
     }
     #endregion
 
@@ -116,30 +131,60 @@ public class CCharactorManager : MonoBehaviour
     public void AddFrontBar(int num)
     {
         //nCurrentFrontVal += num;
-        float remain = objFrontHPBar[nChangeFrontBarIndex].GetComponent<Slider>().value;
-        float perHPBar =  nMaxHp / nValNum;
-        float ChangeValue = Mathf.Abs((float)num / perHPBar);
+        //float remain = objFrontHPBar[nChangeFrontBarIndex].GetComponent<Slider>().value;
+        //float perHPBar =  nMaxHp / nValNum;
+        //float ChangeValue = Mathf.Abs((float)num / perHPBar);
         // 該当のHPバーの残り量が変更する値より少ない場合、HPバーをまたぐ処理を行う
-        if (remain < ChangeValue)
-        {
-            objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(-1 * (int)(remain * perHPBar));
-            float dif = ChangeValue - remain;
+        //if (remain < ChangeValue)
+        //{
+            objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
+            //float dif = ChangeValue - remain;
             // 減らしきれなかった分を次のHPバーで減らす
-            if (num < 0)
-            {
-                objFrontHPBar[nChangeFrontBarIndex - 1].GetComponent<CHPBar>().AddValue(-1 * (int)(dif * perHPBar));
-            }
-            else
-            {
-                //nChangeHPBar--;
-                objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue((int)(dif * perHPBar));
-            }
-        }
-        else
+            //if (num < 0)
+            //{
+            //    objFrontHPBar[nChangeFrontBarIndex - 1].GetComponent<CHPBar>().AddValue(-1 * (int)(dif * perHPBar));
+            //}
+            //else
+            //{
+            //    //nChangeHPBar--;
+            //    objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue((int)(dif * perHPBar));
+            //}
+        //}
+        //else
             // FrontHPBarの値を減らす
-            objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(num);
+            //objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(num);
     }
     #endregion
+
+
+    //#region Add front bar
+    //public void AddFrontBar(int num)
+    //{
+    //    //nCurrentFrontVal += num;
+    //    float remain = objFrontHPBar[nChangeFrontBarIndex].GetComponent<Slider>().value;
+    //    float perHPBar = nMaxHp / nValNum;
+    //    float ChangeValue = Mathf.Abs((float)num / perHPBar);
+    //    // 該当のHPバーの残り量が変更する値より少ない場合、HPバーをまたぐ処理を行う
+    //    if (remain < ChangeValue)
+    //    {
+    //        objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(-1 * (int)(remain * perHPBar));
+    //        //float dif = ChangeValue - remain;
+    //        // 減らしきれなかった分を次のHPバーで減らす
+    //        if (num < 0)
+    //        {
+    //            objFrontHPBar[nChangeFrontBarIndex - 1].GetComponent<CHPBar>().AddValue(-1 * (int)(dif * perHPBar));
+    //        }
+    //        else
+    //        {
+    //            //nChangeHPBar--;
+    //            objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue((int)(dif * perHPBar));
+    //        }
+    //    }
+    //    else
+    //        // FrontHPBarの値を減らす
+    //        objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(num);
+    //}
+    //#endregion
 
     /*
      * @brief 前面のHPバーを変更する

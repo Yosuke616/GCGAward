@@ -11,23 +11,12 @@ public class CDamageUI : MonoBehaviour
     [SerializeField] private Color textColor;
     [SerializeField] private GameObject objDamageUI;
     [Header("UI表示時間")]
-    [SerializeField] private float fLifeTime;     // UIを表示させる時間
+    [SerializeField] public float fLifeTime;     // UIを表示させる時間
     #endregion
 
     #region valiable
     private int nShowNum = 0;           // 表示する数値
     #endregion
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     /*
      * @brief ダメージを受けた通知を受け取る
@@ -40,8 +29,10 @@ public class CDamageUI : MonoBehaviour
     {
         nShowNum = DamageNum;
         GameObject obj = Instantiate(objDamageUI);
+        //obj.transform.parent = this.transform;
         //GameObject test = obj.transform.GetChild(0).;
         obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = DamageNum.ToString();
+        //StartCoroutine("DestroyUI",(obj, fLifeTime));
         StartCoroutine("DestroyUI",obj);
     }
     #endregion
@@ -51,7 +42,7 @@ public class CDamageUI : MonoBehaviour
      * @details UI表示時間を過ぎたらUIを削除する
     */
     #region destroy ui
-    private IEnumerator DestroyUI(GameObject target)
+    public IEnumerator DestroyUI(GameObject target)
     {
         yield return new WaitForSeconds(fLifeTime);
         Destroy(target);
