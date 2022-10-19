@@ -42,7 +42,7 @@ public class CArrow : MonoBehaviour
         rb.useGravity = true;
         arrowForce = chargeTime * fFlyDistance;
         nArrowAtk = nAtk;
-        Vector3 direction = -transform.up;
+        Vector3 direction = -transform.right;
         rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // –î‚ð”­ŽË‚·‚é
         //Debug.Log("arrowForce" + arrowForce);
     }
