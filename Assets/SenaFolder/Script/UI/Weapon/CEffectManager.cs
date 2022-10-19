@@ -7,8 +7,8 @@ public class CEffectManager : MonoBehaviour
 {
     [SerializeField] private EffekseerEmitter[] emittersEffect;
     
-    public EffekseerEmitter[] GetEmittersEff()
+    public EffekseerEmitter GetEmitterEff(int num)
     {
-        return emittersEffect;
+        return emittersEffect[num];
     }
 }

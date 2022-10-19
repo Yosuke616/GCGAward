@@ -16,12 +16,8 @@ public class CArrow : MonoBehaviour
 
     #region serialize field
     [SerializeField] private float fFlyDistance;        // 矢の飛距離
-    [SerializeField] private GameObject objEffSide;     // 外側のエフェクトオブジェクト
-    [SerializeField] private GameObject objEffTop;      // 先端のエフェクトオブジェクト
-    [Header("矢のエフェクト(side)1段階目から順に")]
-    [SerializeField] private EffekseerEffectAsset[] effSide;
-    [Header("矢のエフェクト(top)1段階目から順に")]
-    [SerializeField] private EffekseerEffectAsset[] effTop;
+    [Header("変更するエフェクトの再生オブジェクト")]
+    [SerializeField] private GameObject[] objEff;       // エフェクトの再生オブジェクト
     #endregion
 
     // Start is called before the first frame update
@@ -42,9 +38,9 @@ public class CArrow : MonoBehaviour
         // 段階が変わっていたらエフェクトの色を変更する
         if (nStep != nOldStep)
         {
-            Destroy(objEffSide.GetComponent<EffekseerEmitter>());
-            //ChangeEffectColor(objEffSide, effSide, nStep);      // 外側
-            //ChangeEffectColor(objEffTop, effTop, nStep);        // 先端
+            // 変更する全てのエフェクトの色を変更する
+            for(int i = 0; i < objEff.Length; ++i)
+                ChangeEffectColor(objEff[i], nStep, nOldStep);
         }
         nOldStep = nStep;
         Debug.Log("取得した段階数" + nStep);
@@ -109,10 +105,12 @@ public class CArrow : MonoBehaviour
     * @sa CBow::Update()
     */
     #region change effect color
-    private void ChangeEffectColor(GameObject objEff, EffekseerEffectAsset[] effect, int num)
+    private void ChangeEffectColor(GameObject objEff, int newStep, int oldStep)
     {
-        Vector3 pos = objEff.transform.position;
-        objEff.GetComponent<EffekseerEmitter>().effectAsset = effect[num];
+        EffekseerEmitter ComponentOldEff = objEff.GetComponent<CEffectManager>().GetEmitterEff(oldStep);
+        ComponentOldEff.enabled = false;
+        EffekseerEmitter ComponentCurEff = objEff.GetComponent<CEffectManager>().GetEmitterEff(newStep);
+        ComponentCurEff.enabled = true;
     }
     #endregion 
 
