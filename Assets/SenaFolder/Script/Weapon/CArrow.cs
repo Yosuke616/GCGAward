@@ -40,11 +40,11 @@ public class CArrow : MonoBehaviour
         int nStep = objBow.GetComponent<CBow>().GetStep();      // 弓のチャージ段階数を取得する
 
         // 段階が変わっていたらエフェクトの色を変更する
-        if (nStep != nOldStep)
-        {
-            ChangeEffectColor(objEffSide, effSide, nStep);      // 外側
-            ChangeEffectColor(objEffTop, effTop, nStep);        // 先端
-        }
+        //if (nStep != nOldStep)
+        //{
+        //    ChangeEffectColor(objEffSide, effSide, nStep);      // 外側
+        //    ChangeEffectColor(objEffTop, effTop, nStep);        // 先端
+        //}
 
     }
     /*
