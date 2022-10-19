@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Effekseer;
 
 public class CArrow : MonoBehaviour
 {
@@ -10,10 +11,17 @@ public class CArrow : MonoBehaviour
     private GameObject objBow;
     private int nArrowNum;          // 何番目の矢か
     private int nArrowAtk;          // 攻撃力
+    private int nOldStep;
     #endregion
 
     #region serialize field
     [SerializeField] private float fFlyDistance;        // 矢の飛距離
+    [SerializeField] private GameObject objEffSide;     // 外側のエフェクトオブジェクト
+    [SerializeField] private GameObject objEffTop;      // 先端のエフェクトオブジェクト
+    [Header("矢のエフェクト(side)1段階目から順に")]
+    [SerializeField] private EffekseerEffectAsset[] effSide;
+    [Header("矢のエフェクト(top)1段階目から順に")]
+    [SerializeField] private EffekseerEffectAsset[] effTop;
     #endregion
 
     // Start is called before the first frame update
@@ -23,12 +31,21 @@ public class CArrow : MonoBehaviour
         // 弓のオブジェクトを取得
         objBow = GameObject.FindWithTag("Weapon");
         nArrowNum = 0;
+        //ChangeEffectColor(objEffSide, effSide, 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        int nStep = objBow.GetComponent<CBow>().GetStep();      // 弓のチャージ段階数を取得する
+
+        // 段階が変わっていたらエフェクトの色を変更する
+        if (nStep != nOldStep)
+        {
+            ChangeEffectColor(objEffSide, effSide, nStep);      // 外側
+            ChangeEffectColor(objEffTop, effTop, nStep);        // 先端
+        }
+
     }
     /*
     * @brief 矢を発射する
@@ -81,5 +98,20 @@ public class CArrow : MonoBehaviour
         return nArrowAtk;
     }
     #endregion
+
+    /*
+    * @brief エフェクトの色を変更する
+    * @param GameObject エフェクトを格納するオブジェクト
+    * @param EffekseerEffectAsset[]　再生するエフェクトアセット配列
+    * @param int 再生するカラー番号
+    * @sa CBow::Update()
+    */
+    #region change effect color
+    private void ChangeEffectColor(GameObject objEff, EffekseerEffectAsset[] effect, int num)
+    {
+        Vector3 pos = objEff.transform.position;
+        objEff.GetComponent<EffekseerEmitter>().effectAsset = effect[num];
+    }
+    #endregion 
 
 }
