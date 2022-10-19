@@ -132,6 +132,11 @@ public class Player_Walk : MonoBehaviour
             eState = PLAYER_STATE.WALK_STATE;
             //this.animator.SetBool(key_isWalk, true);
         }
+        if (PlayerRotation.GetPlayerMove())
+        {
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            eState = PLAYER_STATE.WALK_STATE;
+        }
 
         if (eState == PLAYER_STATE.WALK_STATE)
         {
@@ -168,6 +173,11 @@ public class Player_Walk : MonoBehaviour
             {
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
             }
+            if (PlayerRotation.GetPlayerMove())
+            {
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            }
+
         }
 
         //===============================================================================================================================

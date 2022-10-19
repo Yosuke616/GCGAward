@@ -6,24 +6,52 @@ public class TPSCameraTargetMove : MonoBehaviour
 {
     [SerializeField] public Transform PlayerTransform;
     [SerializeField] private float TPSCameraDistance;
-    [SerializeField] private float FPSMouseSensi;
+    [SerializeField] private Vector2 FPSMouseSensi;
     public Vector2 MouseMove = Vector2.zero;
     private Vector3 pos = Vector3.zero;
     private Vector3 nowPos;
     private static float MouseX;
+    [Header("コントローラー感度")]
+    [SerializeField] private Vector2 RightStickSensi;
+    [Header("コントローラーデッドゾーン")]
+    [SerializeField] private float DeadZone;
+    [Header("デバッグ用")]
+    [SerializeField] private Vector2 RightStick;
+    [SerializeField] private float RoghtStickRot;
+    [SerializeField] private Vector2 MouseAxis;
     // Start is called before the first frame update
     void Start()
     {
+        MouseMove.y = 0.6f;
+        MouseMove.x = 0;
         nowPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-            MouseMove -= new Vector2(-Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * Time.deltaTime * FPSMouseSensi;
+        MouseAxis.x = Input.GetAxis("Mouse X");
+        MouseAxis.y = Input.GetAxis("Mouse Y");
+        if (!PlayerRotation.GetControllerUse())
+        {
+            MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * FPSMouseSensi.x * Time.deltaTime * 2, Input.GetAxis("Mouse Y")) * Time.deltaTime * FPSMouseSensi.y / 10;
+        }
+        else
+        {
+            RightStick = Gamepad.current.rightStick.ReadValue();
+            if (Mathf.Abs(RightStick.x) < DeadZone)
+            {
+                RightStick.x = 0;
+            }
+            if (Mathf.Abs(RightStick.y) < DeadZone)
+            {
+                RightStick.y = 0;
+            }
+            MouseMove -= new Vector2(-RightStick.x * RightStickSensi.x * Time.deltaTime, RightStick.y * RightStickSensi.y * Time.deltaTime);
 
-        
+        }
+
+
         MouseMove.y = Mathf.Clamp(MouseMove.y, -0.4f + 0.5f, 0.4f + 0.5f);
         //MouseMove += new Vector2(Input.GetAxis("Mouse X")*FPSMouseSensi, Input.GetAxis("Mouse Y")*FPSMouseSensi);
         // 球面座標系変換
@@ -33,19 +61,33 @@ public class TPSCameraTargetMove : MonoBehaviour
         //pos *= nowPos.z;
 
         //pos.y += nowPos.y;
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            
-            MouseMove.x=FPSMouseMoveX.GetMouseMoveX()+0.5f;
+
+            MouseMove.x = FPSMouseMoveX.GetMouseMoveX() + 0.5f;
             MouseMove.y = 0.6f;
         }
-        MouseX = MouseMove.x-0.5f;
+        MouseX = MouseMove.x - 0.5f;
         // 座標の更新
         transform.position = pos + PlayerTransform.position;
-       // transform.LookAt(PlayerTransform.position);
+        // transform.LookAt(PlayerTransform.position);
+
     }
     public static float GetMouseX()
     {
         return MouseX;
+    }
+    float GetAngle(Vector2 start, Vector2 target)
+    {
+        Vector2 dt = target - start;
+        float rad = Mathf.Atan2(dt.x, dt.y);
+        float degree = rad * Mathf.Rad2Deg;
+
+        if (degree < 0)
+        {
+            degree += 360;
+        }
+
+        return degree;
     }
 }
