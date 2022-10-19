@@ -74,7 +74,13 @@ public class GameOverScript : MonoBehaviour
         int num;
         //文字を数字に変える
         num = KS.GetHead();
-        //Head.text;
+        Head.text = num.ToString();
+        num = KS.GetBreak();
+        Break.text = num.ToString();
+        num = KS.GetWave();
+        Wave.text = num.ToString();
+        num = KS.GetTotal();
+        Total.text = num.ToString();
 
     }
 
@@ -82,6 +88,18 @@ public class GameOverScript : MonoBehaviour
     void Update()
     {
         if (bUseFlg) {
+            //スコア表示
+            int num;
+            //文字を数字に変える
+            num = KS.GetHead();
+            Head.text = num.ToString();
+            num = KS.GetBreak();
+            Break.text = num.ToString();
+            num = KS.GetWave();
+            Wave.text = num.ToString();
+            num = KS.GetTotal();
+            Total.text = num.ToString();
+
             //ボタンをデフォルトの大きさにしていく
             Retory_Btn.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
             Title_Btn.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
@@ -94,6 +112,11 @@ public class GameOverScript : MonoBehaviour
 
             //【】を動かす関数
             MoveBrackets();
+
+            //クリックして決定できる
+            if (Input.GetMouseButtonDown(0)) {
+                SelectButton();
+            }
         }
     }
 
@@ -114,7 +137,7 @@ public class GameOverScript : MonoBehaviour
         }
 
         if (bChangeFlg) {
-            Right_Bracket.transform.position = new Vector3(obj.transform.position.x + 165.0f, obj.transform.position.y, obj.transform.position.z);
+            Right_Bracket.transform.position = new Vector3(obj.transform.position.x + 185.0f, obj.transform.position.y, obj.transform.position.z);
             Left_Bracket.transform.position = new Vector3(obj.transform.position.x - 50.0f, obj.transform.position.y, obj.transform.position.z);
             bChangeFlg = false;
         }
@@ -163,6 +186,17 @@ public class GameOverScript : MonoBehaviour
         bChangeFlg = true;
         nCnt = 0;
         bInOrOut = true;
+    }
+
+    private void SelectButton() {
+        switch (eButton) {
+            case RESULT_BUTTON.RETORY_BUTTON:
+                SceneManager.LoadScene("TitleScene2");
+                break;
+            case RESULT_BUTTON.TITLE_BUTTON:
+                SceneManager.LoadScene("TitleScene2");
+                break;
+        }
     }
 
 }
