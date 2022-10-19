@@ -180,6 +180,11 @@ public class CSenaPlayer : CCharactorManager
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
         GameOverUI.SetActive(true);
+        //eventsysytemからゲームオーバースクリプトを取得する
+        GameOverScript GOS;
+        GOS = GameObject.Find("EventSystem").GetComponent<GameOverScript>();
+        GOS.SetUseFlg(true);
+
         Time.timeScale = 0f;
     }
     #endregion
