@@ -19,6 +19,7 @@ public class TPSCameraTargetMove : MonoBehaviour
     [SerializeField] private Vector2 RightStick;
     [SerializeField] private float RoghtStickRot;
     [SerializeField] private Vector2 MouseAxis;
+    [SerializeField] private float WheelAxis;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,10 @@ public class TPSCameraTargetMove : MonoBehaviour
         MouseAxis.y = Input.GetAxis("Mouse Y");
         if (!PlayerRotation.GetControllerUse())
         {
-            MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * FPSMouseSensi.x * Time.deltaTime * 2, Input.GetAxis("Mouse Y")) * Time.deltaTime * FPSMouseSensi.y / 10;
+            MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * FPSMouseSensi.x, Input.GetAxis("Mouse Y")) * Time.deltaTime * FPSMouseSensi.y ;
+
+            WheelAxis = Input.GetAxis("Mouse ScrollWheel");
+            TPSCameraDistance += WheelAxis;
         }
         else
         {
@@ -48,10 +52,16 @@ public class TPSCameraTargetMove : MonoBehaviour
                 RightStick.y = 0;
             }
             MouseMove -= new Vector2(-RightStick.x * RightStickSensi.x * Time.deltaTime, RightStick.y * RightStickSensi.y * Time.deltaTime);
-
+            if(Gamepad.current.buttonNorth.isPressed)
+            {
+                TPSCameraDistance -= 0.1f;
+            }
+            if (Gamepad.current.buttonWest.isPressed)
+            {
+                TPSCameraDistance += 0.1f;
+            }
         }
-
-
+        TPSCameraDistance = Mathf.Clamp(TPSCameraDistance, 1.5f, 5);
         MouseMove.y = Mathf.Clamp(MouseMove.y, -0.4f + 0.5f, 0.4f + 0.5f);
         //MouseMove += new Vector2(Input.GetAxis("Mouse X")*FPSMouseSensi, Input.GetAxis("Mouse Y")*FPSMouseSensi);
         // ãÖñ ç¿ïWånïœä∑

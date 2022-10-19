@@ -44,54 +44,45 @@ public class FPSMouseMoveX : MonoBehaviour
         controller = true;
         if (controller)
         {
-            if ((Input.GetMouseButtonDown(0)))//&& controller || Gamepad.current.rightTrigger.ReadValue()>deadZone )&& !b_AimMode && !controller)    //マウスの左クリックが押された
+            b_Charge = PlayerInputTest.GetChargeMode();
+            //if ((Input.GetMouseButtonDown(0)))//&& controller || Gamepad.current.rightTrigger.ReadValue()>deadZone )&& !b_AimMode && !controller)    //マウスの左クリックが押された
+            if (b_Charge)
             {
-                b_AimMode = true;
-                b_Charge = true;
+                //b_AimMode = true;
+                //b_Charge = true;
                 MouseMoveX = TPSTarget.transform.eulerAngles.y;
             }
-            if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone && b_AimMode && !controller)  //マウスの左クリックが外れたとき
+            //if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone && b_AimMode && !controller)  //マウスの左クリックが外れたとき
+            //{
+            //    if (b_AimMode)
+            //        b_AimMode = false;
+            //    if (b_Charge)
+            //        b_Charge = false;
+
+            //}
+            //if (Input.GetMouseButtonDown(1))// && controller || Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge && !controller)    //マウスの右クリックが押された
+            //{
+
+            //    b_Charge = false;
+
+            //}
+            if (!(PlayerRotation.GetControllerUse()))
             {
-                if (b_AimMode)
-                    b_AimMode = false;
-                if (b_Charge)
-                    b_Charge = false;
+                MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
 
             }
-            if (Input.GetMouseButtonDown(1))// && controller || Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge && !controller)    //マウスの右クリックが押された
+            else
             {
-
-                b_Charge = false;
+                if (Gamepad.current.rightStick.ReadValue().x > deadZone)
+                    MouseMoveX += ControllerSensi;
+                if (Gamepad.current.rightStick.ReadValue().x < -deadZone)
+                    MouseMoveX -= ControllerSensi;
 
             }
-            MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
         }
         else
         {
-            if ((Gamepad.current.rightTrigger.ReadValue()>deadZone )&& !b_AimMode )    //マウスの左クリックが押された
-            {
-                b_AimMode = true;
-                b_Charge = true;
-                MouseMoveX = this.transform.eulerAngles.y;
-                //MouseMoveX = TPSTarget.transform.eulerAngles.y;
-            }
-            if ((Gamepad.current.rightTrigger.ReadValue() < deadZone) && b_AimMode )  //マウスの左クリックが外れたとき
-            {
-                if (b_AimMode)
-                    b_AimMode = false;
-                if (b_Charge)
-                    b_Charge = false;
 
-            }
-            if ((Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge )    //マウスの右クリックが押された
-            {
-
-                b_Charge = false;
-
-            }
-
-            MouseMoveX += Gamepad.current.rightStick.ReadValue().x * ControllerSensi;
-            
         }
         //MouseMoveX = TPSTarget.transform.forward.x;
         //MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;

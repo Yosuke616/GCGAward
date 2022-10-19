@@ -36,7 +36,7 @@ public class PlayerRotation : MonoBehaviour
     void Update()
     {
         PlayerYRot = PlayerInputTest.GetPlayerYRotation();
-        if (Input.GetMouseButtonUp(0) || Input.GetMouseButton(0))
+        if (PlayerInputTest.GetChargeMode())
             this.transform.eulerAngles = new Vector3(0.0f, FPSTargetMove.transform.eulerAngles.y, 0.0f);
         if (PlayerYRot > 181)
         {

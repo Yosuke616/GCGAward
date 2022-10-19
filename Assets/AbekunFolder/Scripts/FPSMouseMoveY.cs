@@ -15,6 +15,7 @@ public class FPSMouseMoveY : MonoBehaviour
     private float ControllerSensi = 1.0f;
     [SerializeField]
     private float MouseMoveY = 0.0f;
+    [SerializeField]
     private float deadZone = 0.5f;
     private bool controller = false;
     [SerializeField]
@@ -74,33 +75,22 @@ public class FPSMouseMoveY : MonoBehaviour
         else
         {
             
-            if ((Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode)    //マウスの左クリックが押された
-            {
-                b_AimMode = true;
-                b_Charge = true;
-            }
-            if ((Gamepad.current.rightTrigger.ReadValue() < deadZone)&&b_AimMode )  //マウスの左クリックが外れたとき
-            {
-                if (b_AimMode)
-                    b_AimMode = false;
-                if (b_Charge)
-                    b_Charge = false;
-            }
-            if ((Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge )    //マウスの右クリックが押された
-            {
-
-                b_Charge = false;
-
-            }
+           
         }
         //MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
-        
+        b_Charge = PlayerInputTest.GetChargeMode();
         if (b_Charge)
         {
-            if (controller)
+            if (!PlayerRotation.GetControllerUse())
             MouseMoveY -= Input.GetAxis("Mouse Y") * FPSSensi;
-            if(!controller)
-            MouseMoveY -= Gamepad.current.rightStick.ReadValue().y * ControllerSensi;
+            if(PlayerRotation.GetControllerUse())
+            {
+                if(Gamepad.current.rightStick.ReadValue().y>deadZone)
+                MouseMoveY -= ControllerSensi;
+                if (Gamepad.current.rightStick.ReadValue().y < -deadZone)
+                    MouseMoveY += ControllerSensi;
+
+            }
             if (MouseMoveY>90)
             {
                 MouseMoveY = 90;
