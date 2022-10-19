@@ -43,7 +43,12 @@ public class CArrowDecUIManager : MonoBehaviour
         {
             // 前回の段階数が0の時は変更するものがないのでスルーする
             if(g_nOldStep != 0)
-                objectsDecUI[g_nOldStep - 1].GetComponent<CArrowDecUI>().setSwitch(false);
+            {
+                // 複数個を一度にリセットする場合にも対応
+                int nDif = g_nOldStep - nCurrentStep;
+                for(int i = 1; i < nDif + 1; ++i)
+                    objectsDecUI[g_nOldStep - i].GetComponent<CArrowDecUI>().setSwitch(false);
+            }
             g_nOldStep = nCurrentStep;           // 現在の段階数を退避させる
         }
 

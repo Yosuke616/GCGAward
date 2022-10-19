@@ -206,6 +206,7 @@ public class CBow : MonoBehaviour
                     isShot = false;
                 //objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
                 ResetCharge();      // チャージをリセットする
+                nCurrentAtkStep = 0;            // 段階数をリセットする
                 break;
         }
     }
@@ -379,6 +380,17 @@ public class CBow : MonoBehaviour
     public int GetStep()
     {
         return nCurrentAtkStep;
+    }
+    #endregion
+
+    /*
+     * @brief チャージ段階数の情報を渡す
+     * @return int チャージ段階数
+    */
+    #region get charge step
+    public int GetChargeStep()
+    {
+        return currentChargeStep;
     }
     #endregion
 
