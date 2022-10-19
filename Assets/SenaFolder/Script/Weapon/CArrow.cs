@@ -11,7 +11,7 @@ public class CArrow : MonoBehaviour
     private GameObject objBow;
     private int nArrowNum;          // 何番目の矢か
     private int nArrowAtk;          // 攻撃力
-    private int nOldStep;
+    private int nOldStep = 0;
     #endregion
 
     #region serialize field
@@ -37,15 +37,17 @@ public class CArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int nStep = objBow.GetComponent<CBow>().GetStep();      // 弓のチャージ段階数を取得する
+        int nStep = objBow.GetComponent<CBow>().GetChargeStep();      // 弓のチャージ段階数を取得する
 
         // 段階が変わっていたらエフェクトの色を変更する
-        //if (nStep != nOldStep)
-        //{
-        //    ChangeEffectColor(objEffSide, effSide, nStep);      // 外側
-        //    ChangeEffectColor(objEffTop, effTop, nStep);        // 先端
-        //}
-
+        if (nStep != nOldStep)
+        {
+            Destroy(objEffSide.GetComponent<EffekseerEmitter>());
+            //ChangeEffectColor(objEffSide, effSide, nStep);      // 外側
+            //ChangeEffectColor(objEffTop, effTop, nStep);        // 先端
+        }
+        nOldStep = nStep;
+        Debug.Log("取得した段階数" + nStep);
     }
     /*
     * @brief 矢を発射する

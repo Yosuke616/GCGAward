@@ -240,7 +240,7 @@ PrefabInstance:
     - target: {fileID: 7733329290118210830, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: effectAsset
       value: 
-      objectReference: {fileID: 11400000, guid: b58f706e1590615438720c60106d5de1, type: 2}
+      objectReference: {fileID: 11400000, guid: acce8acf0e22c6d439f9013ef7f08d67, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 490384402c5195e46adcfb35db754409, type: 3}
 --- !u!1 &2478440974072040743 stripped
@@ -258,6 +258,58 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7733329290118210825, guid: 490384402c5195e46adcfb35db754409, type: 3}
   m_PrefabInstance: {fileID: 2969784094630475235}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8203461813372671193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784094812260487402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimingOfUpdate: 0
+  EmitterScale: 1
+  TimeScale: 1
+  effectAsset: {fileID: 11400000, guid: e2141d13b6364b144bdec6a1afdd0a21, type: 2}
+  playOnStart: 1
+  isLooping: 1
+--- !u!114 &2712013513718123208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784094812260487402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a2adcf648e26446b7ccae965fc4e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emittersEffect:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &7396888927498506758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784094812260487402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimingOfUpdate: 0
+  EmitterScale: 1
+  TimeScale: 1
+  effectAsset: {fileID: 11400000, guid: b58f706e1590615438720c60106d5de1, type: 2}
+  playOnStart: 1
+  isLooping: 1
 --- !u!1001 &6851302434133393374
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -384,6 +384,17 @@ public class CBow : MonoBehaviour
     #endregion
 
     /*
+     * @brief チャージ段階数の情報を渡す
+     * @return int チャージ段階数
+    */
+    #region get charge step
+    public int GetChargeStep()
+    {
+        return currentChargeStep;
+    }
+    #endregion
+
+    /*
     * @brief 最大威力調整段階数の情報を渡す
     * @return int 最大威力調整段階数
     */
