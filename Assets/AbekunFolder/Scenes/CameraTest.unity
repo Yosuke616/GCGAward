@@ -1052,8 +1052,11 @@ MonoBehaviour:
   PlayerYRot: 0
   rightTurn: 1
   RotDif: 0
-  playerMove: 0
   Direct: 0
+  ControllerDeadZone: 0.5
+  ControllerLeftStick: {x: 1, y: 1}
+  ControllerLeftStickInput: 0
+  controllerRot: 0
 --- !u!1001 &1685112272
 PrefabInstance:
   m_ObjectHideFlags: 0
