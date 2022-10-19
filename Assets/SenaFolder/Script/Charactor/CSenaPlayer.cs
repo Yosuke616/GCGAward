@@ -9,15 +9,6 @@ using UnityEditor;
 
 public class CSenaPlayer : CCharactorManager
 {
-    // プレイヤーの状態
-    #region plater state
-    public enum PLAYERSTATE
-    {
-        PLAYER_ALIVE = 0,       // 生存状態
-        PLAYER_DEAD,            // 死亡状態
-    }
-    #endregion
-
     #region serialize field
     //[SerializeField] private GameObject prefabHPBar;        // HPバーのプレハブ
     [SerializeField] private GameObject DeadEffect;
@@ -27,7 +18,7 @@ public class CSenaPlayer : CCharactorManager
 
     // 変数宣言
     #region variable
-    private PLAYERSTATE playerState;
+    private CHARACTORSTATE playerState;
     #endregion
     // Start is called before the first frame update
     #region init
@@ -35,7 +26,7 @@ public class CSenaPlayer : CCharactorManager
     {
         InitHP();      // HPの初期化
         //InitAtk();      // 攻撃力の初期化
-        playerState = PLAYERSTATE.PLAYER_ALIVE;     // 生存状態に設定する
+        playerState = CHARACTORSTATE.CHARACTOR_ALIVE;     // 生存状態に設定する
         SetHPBar();     // HPバーUIの情報を取得する
     }
     #endregion
@@ -57,17 +48,17 @@ public class CSenaPlayer : CCharactorManager
 
     /*
     * @brief 状態の更新(毎フレーム実行される)
-    * @param PLAYERSTATE プレイヤーの状態
+    * @param CHARACTORSTATE プレイヤーの状態
     * @sa CPlayer::Update
     * @details プレイヤーの状態を取得し、状態に合わせた更新処理を実行する
   　*/
     #region update state
-    private void UpdateState(PLAYERSTATE state)
+    private void UpdateState(CHARACTORSTATE state)
     {
         switch (state)
         {
             // 生存状態の時
-            case PLAYERSTATE.PLAYER_ALIVE:
+            case CHARACTORSTATE.CHARACTOR_ALIVE:
                 // Zキー→HPを減らす(デバッグ用)
                 #region debug dec hp
                 if (Input.GetKeyDown(KeyCode.Z))
@@ -79,10 +70,10 @@ public class CSenaPlayer : CCharactorManager
                 CalcFrontBarNum();
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
-                    ChangeState(PLAYERSTATE.PLAYER_DEAD);
+                    ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
                 break;
             // 死亡状態の時
-            case PLAYERSTATE.PLAYER_DEAD:
+            case CHARACTORSTATE.CHARACTOR_DEAD:
                 break;
         }
     }
@@ -90,23 +81,23 @@ public class CSenaPlayer : CCharactorManager
 
     /*
     * @brief 状態の更新(状態が変更されたときに1度だけ実行される)
-    * @param PLAYERSTATE 変更先の状態
+    * @param CHARACTORSTATE 変更先の状態
     * @sa CPlayer::UpdateState
     * @details プレイヤーの状態を取得し、状態に合わせた処理を実行する
   　*/
     #region change state
-    private void ChangeState(PLAYERSTATE state)
+    private void ChangeState(CHARACTORSTATE state)
     {
         switch (state)
         {
             // 生存状態に変更する時
-            case PLAYERSTATE.PLAYER_ALIVE:
+            case CHARACTORSTATE.CHARACTOR_ALIVE:
                 // 特に何もしない(復活とかそういう仕様があったら追加する)
-                playerState = PLAYERSTATE.PLAYER_ALIVE;
+                playerState = CHARACTORSTATE.CHARACTOR_ALIVE;
                 break;
             // 死亡状態の時
-            case PLAYERSTATE.PLAYER_DEAD:
-                playerState = PLAYERSTATE.PLAYER_DEAD;
+            case CHARACTORSTATE.CHARACTOR_DEAD:
+                playerState = CHARACTORSTATE.CHARACTOR_DEAD;
                 Instantiate(DeadEffect, transform.position, Quaternion.identity);
                 StartCoroutine("DestroyPlayer");
                 Debug.Log("<color=red>GAMEOVER</color>");
