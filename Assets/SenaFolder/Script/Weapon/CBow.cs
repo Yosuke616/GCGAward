@@ -206,6 +206,7 @@ public class CBow : MonoBehaviour
                     isShot = false;
                 //objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
                 ResetCharge();      // チャージをリセットする
+                nCurrentAtkStep = 0;            // 段階数をリセットする
                 break;
         }
     }
