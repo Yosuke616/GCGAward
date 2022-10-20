@@ -165,7 +165,6 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     #region destroy player
-
     private IEnumerator DestroyPlayer()
     {
         yield return new WaitForSeconds(1.0f);

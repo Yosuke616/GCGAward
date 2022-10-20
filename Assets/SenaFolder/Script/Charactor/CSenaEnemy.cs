@@ -10,7 +10,7 @@ public class CSenaEnemy : CCharactorManager
     [SerializeField] private GameObject objDamageUI;
     [SerializeField] private GameObject objHitEffect;
     [Header("敵の消滅時間")]
-    [SerializeField] private float fDestroyTime;        
+    [SerializeField] private float fDestroyTime;
     #endregion
 
     // 変数宣言
@@ -125,6 +125,8 @@ public class CSenaEnemy : CCharactorManager
             ChangeHp(-1 * DamageNum);
             //if(nCurrentHp > 0)
                 objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
+            // ヒットカーソルの再生
+            GetComponent<CEnemyDamage>().ArrowHit();
             
         }
     }

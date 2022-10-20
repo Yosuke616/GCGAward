@@ -16,6 +16,8 @@ TagManager:
 
   - Slope
 
+  - Cursur
+
   layers:
   - Default
   - TransparentFX
