@@ -14,27 +14,29 @@ public class PlayerRotation : MonoBehaviour
     [SerializeField] private static bool playerMove = false;
     [SerializeField] private int Direct = 0;
     Quaternion Rotate;
+    [SerializeField] private bool Controller = false;
     [SerializeField] private static bool ControllerUse;
     [SerializeField] private float ControllerDeadZone = 0.5f;
     [SerializeField] Vector2 ControllerLeftStick;
     [SerializeField] float ControllerLeftStickInput;
     [SerializeField] private float controllerRot;
-
+    
     void Start()
     {
         if (Gamepad.current == null)
         {
-            ControllerUse = false;
+            //ControllerUse = false;
         }
         else
         {
-            ControllerUse = true;
+            //ControllerUse = true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        ControllerUse = Controller;
         PlayerYRot = PlayerInputTest.GetPlayerYRotation();
         if (PlayerInputTest.GetChargeMode())
             this.transform.eulerAngles = new Vector3(0.0f, FPSTargetMove.transform.eulerAngles.y, 0.0f);
@@ -106,43 +108,62 @@ public class PlayerRotation : MonoBehaviour
         //Rotation = 0;
         if (!ControllerUse)
         {
-            playerMove = true;
+           
+            playerMove = false;
             if (Input.GetKey("a"))
             {
                 Direct = 6;
+                playerMove = true;
             }
+            
             if (Input.GetKey("d"))
             {
                 Direct = 2;
+                playerMove = true;
             }
             if (Input.GetKey("s"))
             {
                 Direct = 4;
+                playerMove = true;
                 if (Input.GetKey("a"))
                 {
                     Direct = 5;
+                    playerMove = true;
+                    if (Input.GetKey("d"))
+                    {
+                        Direct = 4;
+                    }
                 }
                 else if (Input.GetKey("d"))
                 {
                     Direct = 3;
+                    
                 }
             }
             if (Input.GetKey("w"))
             {
                 Direct = 0;
+                playerMove = true;
                 if (Input.GetKey("a"))
                 {
                     Direct = 7;
+                    playerMove = true;
+                    if (Input.GetKey("d"))
+                    {
+                        Direct = 0;
+                    }
                 }
                 else if (Input.GetKey("d"))
                 {
                     Direct = 1;
                 }
+
             }
 
-            if (!Input.anyKey) playerMove = false;
         }
-        switch (Direct)
+        if (playerMove)
+        {
+            switch (Direct)
         {
             case 0:
                 Rotation = 0;
@@ -168,11 +189,10 @@ public class PlayerRotation : MonoBehaviour
             case 7:
                 Rotation = -45;
                 break;
-            default:
-                break;
+            
         }
-
-        RotDif = PlayerYRot + Rotation;
+        
+            RotDif = PlayerYRot + Rotation;
         if (RotDif < -180)
         {
             RotDif = RotDif + 360;
@@ -181,8 +201,7 @@ public class PlayerRotation : MonoBehaviour
         {
             RotDif = RotDif - 360;
         }
-        if (playerMove)
-        {
+        
             this.transform.eulerAngles += new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
 
         }

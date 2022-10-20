@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponRotationTest : MonoBehaviour
 {
     [SerializeField] GameObject FPSTarget;
-    private Quaternion RotY;
+   
     // Start is called before the first frame update
     void Start()
     {
