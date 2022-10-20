@@ -17,9 +17,9 @@ MonoBehaviour:
   soundResources: []
   modelResources:
   - path: sand_eff.asset
-    asset: {fileID: 11400000, guid: 1234b50e6798400469af145932e9f5c1, type: 2}
+    asset: {fileID: 0}
   - path: sand01.asset
-    asset: {fileID: 11400000, guid: 1f6c4800008cb434eb56ef313f126cae, type: 2}
+    asset: {fileID: 0}
   materialResources: []
   curveResources: []
   Scale: 1

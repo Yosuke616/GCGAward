@@ -12,6 +12,7 @@ TagManager:
   - Head
   - Enemy_Start_Pos
   - Slope
+  - Cursur
   layers:
   - Default
   - TransparentFX

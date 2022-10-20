@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 5581555250478998516}
   - component: {fileID: 4510861948833330245}
   - component: {fileID: 6892358473380770562}
+  - component: {fileID: 5306360777712408207}
   m_Layer: 0
   m_Name: EnemyHP
   m_TagString: Untagged
@@ -115,6 +116,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.2923565, y: 10.154556, z: 10.129324}
   m_Center: {x: -0.095421076, y: 0.033319473, z: 0.05363369}
+--- !u!114 &5306360777712408207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581555250478998515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8d5c1c2f8e56b439c6d75ae1ac6d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fLifeTime: 0.5
 --- !u!1 &5581555251081822952
 GameObject:
   m_ObjectHideFlags: 0
