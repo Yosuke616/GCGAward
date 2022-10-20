@@ -1141,6 +1141,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4945319175923212719, guid: b5dd695b3beefcc48bed1b4aa632a8dd, type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945319175923212719, guid: b5dd695b3beefcc48bed1b4aa632a8dd, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4945319176574621140, guid: b5dd695b3beefcc48bed1b4aa632a8dd, type: 3}
       propertyPath: m_Name
       value: CM_PlayerFPS
@@ -1688,6 +1696,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 260524730472496534, guid: 9552a7743f4e2564aac1f8231ca461b3, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 260524730472496534, guid: 9552a7743f4e2564aac1f8231ca461b3, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 260524730472496534, guid: 9552a7743f4e2564aac1f8231ca461b3, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 260524730472496534, guid: 9552a7743f4e2564aac1f8231ca461b3, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 260524730472496553, guid: 9552a7743f4e2564aac1f8231ca461b3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2020,6 +2044,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_BiasX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_ScreenX
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_VerticalDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_HorizontalDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
+      propertyPath: m_TrackedObjectOffset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4097798175273354950, guid: 2075e2ae81066f34db7cd510dc953732, type: 3}
       propertyPath: m_TrackedObjectOffset.y
       value: 0

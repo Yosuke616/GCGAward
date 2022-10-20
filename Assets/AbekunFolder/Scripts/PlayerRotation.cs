@@ -20,7 +20,7 @@ public class PlayerRotation : MonoBehaviour
     [SerializeField] Vector2 ControllerLeftStick;
     [SerializeField] float ControllerLeftStickInput;
     [SerializeField] private float controllerRot;
-    
+    private static int RotationPlayer = 0;
     void Start()
     {
         if (Gamepad.current == null)
@@ -211,7 +211,7 @@ public class PlayerRotation : MonoBehaviour
         //Rotate = Quaternion.Euler(0.0f, this.transform.eulerAngles.y+RotDif, 0.0f);
 
         //  this.transform.rotation = Rotate*Quaternion.identity;
-
+        RotationPlayer = Direct;
     }
     float GetAngle(Vector2 start, Vector2 target)
     {
@@ -233,5 +233,9 @@ public class PlayerRotation : MonoBehaviour
     public static bool GetControllerUse()
     {
         return ControllerUse;
+    }
+    public static int GetPlayerRotation()
+    {
+        return RotationPlayer;
     }
 }

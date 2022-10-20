@@ -132,52 +132,98 @@ public class Player_Walk : MonoBehaviour
         //    eState = PLAYER_STATE.WALK_STATE;
         //    //this.animator.SetBool(key_isWalk, true);
         //}
-        if (PlayerRotation.GetPlayerMove())
+        if (!PlayerInputTest.GetChargeMode())
         {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            eState = PLAYER_STATE.WALK_STATE;
-        }
-
-        if (eState == PLAYER_STATE.WALK_STATE)
-        {
-            moveSpeed = 5.0f;
-            //this.animator.SetBool(key_isWalk, true);
-            //this.animator.SetBool(key_isRun, false);
-
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                eState = PLAYER_STATE.RUN_STATE;
-                //this.animator.SetBool(key_isRun, true);
-            }
-        }
-
-
-        if (eState == PLAYER_STATE.RUN_STATE)
-        {
-            moveSpeed = 10.0f;
-
-            //if (Input.GetKey(KeyCode.W))
-            //{
-            //   transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            //}
-            //if (Input.GetKey(KeyCode.A))
-            //{
-            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            //}
-            //if (Input.GetKey(KeyCode.S))
-            //{
-            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            //}
-            //if (Input.GetKey(KeyCode.D))
-            //{
-            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            //}
             if (PlayerRotation.GetPlayerMove())
             {
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                eState = PLAYER_STATE.WALK_STATE;
             }
 
+            if (eState == PLAYER_STATE.WALK_STATE)
+            {
+                moveSpeed = 5.0f;
+                //this.animator.SetBool(key_isWalk, true);
+                //this.animator.SetBool(key_isRun, false);
+
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    eState = PLAYER_STATE.RUN_STATE;
+                    //this.animator.SetBool(key_isRun, true);
+                }
+            }
+
+
+            if (eState == PLAYER_STATE.RUN_STATE)
+            {
+                moveSpeed = 7.5f;
+
+                //if (Input.GetKey(KeyCode.W))
+                //{
+                //   transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                //}
+                //if (Input.GetKey(KeyCode.A))
+                //{
+                //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                //}
+                //if (Input.GetKey(KeyCode.S))
+                //{
+                //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                //}
+                //if (Input.GetKey(KeyCode.D))
+                //{
+                //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                //}
+                if (PlayerRotation.GetPlayerMove())
+                {
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                }
+
+            }
+        }
+        else
+        {
+            moveSpeed = 4.0f;
+            if (PlayerRotation.GetPlayerMove())
+            {
+                switch (PlayerRotation.GetPlayerRotation())
+                {
+                    case 0:
+                        transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                        break;
+                    case 1:
+                        transform.position += transform.forward * moveSpeed/2 * Time.deltaTime;
+                        transform.position += transform.right * moveSpeed/2 * Time.deltaTime;
+
+                        break;
+                    case 2:
+                        transform.position += transform.right * moveSpeed * Time.deltaTime;
+                        break;
+                    case 3:
+                        transform.position += transform.right * moveSpeed/2 * Time.deltaTime;
+                        transform.position -= transform.forward * moveSpeed/2 * Time.deltaTime;
+
+                        break;
+                    case 4:
+                        transform.position -= transform.forward * moveSpeed * Time.deltaTime;
+                        break;
+                    case 5:
+                        transform.position -= transform.forward * moveSpeed/2 * Time.deltaTime;
+                        transform.position -= transform.right * moveSpeed/2 * Time.deltaTime;
+
+                        break;
+                    case 6:
+                        transform.position -= transform.right * moveSpeed * Time.deltaTime;
+                        break;
+                    case 7:
+                        transform.position -= transform.right * moveSpeed/2 * Time.deltaTime;
+                        transform.position += transform.forward * moveSpeed/2 * Time.deltaTime;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         //===============================================================================================================================

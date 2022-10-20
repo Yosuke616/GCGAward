@@ -107,8 +107,8 @@ public class FPSMouseMoveY : MonoBehaviour
         {
             // MouseMoveY = 0;
 
-            //if (blendtime.BlendWeight > 0.98f)
-            //{
+            if (blendtime.BlendWeight > 0.98f)
+            {
             //MouseMoveY = 0;
             //this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
@@ -133,7 +133,7 @@ public class FPSMouseMoveY : MonoBehaviour
                 MouseMoveY = 0;
 
             }
-            //  }
+              }
             //MouseMoveY = TPSCamera.transform.eulerAngles.x;
             //this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
