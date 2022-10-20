@@ -20,6 +20,7 @@ public class TPSCameraTargetMove : MonoBehaviour
     [SerializeField] private float RoghtStickRot;
     [SerializeField] private Vector2 MouseAxis;
     [SerializeField] private float WheelAxis;
+    private bool ChargeFlg = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,10 @@ public class TPSCameraTargetMove : MonoBehaviour
     {
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
+        if(PlayerInputTest.GetChargeMode())
+        {
+            ChargeFlg = false;
+        }
         if (!PlayerRotation.GetControllerUse())
         {
             MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * FPSMouseSensi.x, Input.GetAxis("Mouse Y")) * Time.deltaTime * FPSMouseSensi.y ;
@@ -60,6 +65,7 @@ public class TPSCameraTargetMove : MonoBehaviour
             {
                 TPSCameraDistance += 0.1f;
             }
+
         }
         TPSCameraDistance = Mathf.Clamp(TPSCameraDistance, 1.5f, 5);
         MouseMove.y = Mathf.Clamp(MouseMove.y, -0.4f + 0.5f, 0.4f + 0.5f);
@@ -71,9 +77,9 @@ public class TPSCameraTargetMove : MonoBehaviour
         //pos *= nowPos.z;
 
         //pos.y += nowPos.y;
-        if (Input.GetMouseButtonUp(0))
+        if (!PlayerInputTest.GetChargeMode() && ChargeFlg == false)
         {
-
+            ChargeFlg = true;
             MouseMove.x = FPSMouseMoveX.GetMouseMoveX() + 0.5f;
             MouseMove.y = 0.6f;
         }
