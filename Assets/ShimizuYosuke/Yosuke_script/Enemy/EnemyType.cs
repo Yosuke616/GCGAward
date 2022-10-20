@@ -23,7 +23,7 @@ public class EnemyType : MonoBehaviour
     [SerializeField] private int nRecovery = 0;
 
     //敵が誰を追いかけるかの対象
-    [SerializeField] GameObject player;
+    private GameObject player;
 
     //弾丸関係
     [Header("弾関係")]
@@ -47,10 +47,6 @@ public class EnemyType : MonoBehaviour
 
     //レイを使用して視界を制御する
     private RaycastHit rayCastHit;
-
-    //スコアを加算する為のやつ
-    [SerializeField] private GameObject score;
-    private CountText scScore;     // スコアの情報格納用
 
     //行動するためのカウント(共有)
     [Header("何秒で次の行動をするか")]
@@ -96,10 +92,10 @@ public class EnemyType : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //プレイヤーの取得
+        player = GameObject.Find("Player");
         //時間の初期化
         nBullet_Time = bullet_deltTime;
-        //スコアの機能を使えるようにする
-        scScore = score.GetComponent<CountText>();
         //行動するときの時間を0にする
         nActTime = 0;
         //falseで行動しない trueで行動する
@@ -352,15 +348,14 @@ public class EnemyType : MonoBehaviour
         if (collision.gameObject.tag == "Arrow")
         {
             //スコアを加算させる
-            scScore.AddScore(10000);
+            WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+            WM.AddScore(100);
+
+
 
             //HPを回復させる
             GameObject obj = GameObject.Find("unitychan");
-            //obj.GetComponent<CSenaPlayer>().AddHp(nRecovery);
 
-            //オブジェクトを消滅させる
-            //Destroy(collision.gameObject);      // 矢を消滅させる
-            //Destroy(this.gameObject);      // 自身を消滅させる
         }
 
         //元の場所に戻るフラグ
