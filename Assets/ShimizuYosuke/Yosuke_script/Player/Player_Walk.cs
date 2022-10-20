@@ -203,36 +203,36 @@ public class Player_Walk : MonoBehaviour
         //ç∂âÒì]
         if (Input.GetKey(KeyCode.Q))
         {
-            leftRot += 0.01f;
+            //leftRot += 0.01f;
 
             if (leftRot < 1.0f)
             {
-                this.transform.eulerAngles -= new Vector3(0, PlayerRot, 0);
+               // this.transform.eulerAngles -= new Vector3(0, PlayerRot, 0);
             }
         }
         else
         {
             if (!Input.GetKey(KeyCode.A))
             {
-                leftRot = 0.0f;
+               // leftRot = 0.0f;
             }
         }
 
         //âEâÒì]
         if (Input.GetKey(KeyCode.E))
         {
-            rightRot += 0.01f;
+            //rightRot += 0.01f;
 
             if (rightRot < 1.0f)
             {
-                this.transform.eulerAngles += new Vector3(0, PlayerRot, 0);
+               // this.transform.eulerAngles += new Vector3(0, PlayerRot, 0);
             }
         }
         else
         {
             if (!Input.GetKey(KeyCode.D))
             {
-                rightRot = 0.0f;
+                //rightRot = 0.0f;
             }
         }
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
