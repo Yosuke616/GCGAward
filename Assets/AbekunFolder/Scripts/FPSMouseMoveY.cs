@@ -6,6 +6,7 @@ using Cinemachine;
 public class FPSMouseMoveY : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
     private bool b_Charge = false;
     private bool b_AimMode = false;
     [SerializeField]
@@ -25,7 +26,7 @@ public class FPSMouseMoveY : MonoBehaviour
     [SerializeField]
     GameObject TPSCamera;
     CinemachineBrain brain;
-    float blendtime;
+    [SerializeField] float debugBlend = 0;
     private float TPSCameraEulerY = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -45,42 +46,42 @@ public class FPSMouseMoveY : MonoBehaviour
 
         //controller = PlayerInputTest.GetControllerUse();
         controller = true;
+        var blendtime = brain.ActiveBlend;
+        debugBlend = blendtime.BlendWeight;
+       // TPSCameraEulerY = TPSCamera.transform.rotation.x;
 
-        if (controller)
-        {
-            if ((Input.GetMouseButtonDown(0))&&b_Charge == false)//&&controller || Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode && !controller)    //マウスの左クリックが押された
+       
+            b_Charge = PlayerInputTest.GetChargeMode();
+            if ((Input.GetMouseButtonDown(0))&&b_Charge == false || Gamepad.current.rightTrigger.ReadValue() > deadZone&&b_Charge==false)//&&controller || Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode && !controller)    //マウスの左クリックが押された
             {
                 b_AimMode = true;
                 b_Charge = true;
-                //MouseMoveY = TPSTarget.transform.eulerAngles.x;
-                //MouseMoveY = 0;
+                //MouseMoveY = TPSCamera.transform.eulerAngles.x;
+                MouseMoveY = 0;
                 //TPSCameraEulerY = TPSCamera.transform.rotation.x;
-
-
-            }
-            if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
-            {
-                if (b_AimMode)
-                    b_AimMode = false;
-                if (b_Charge)
-                    b_Charge = false;
-            }
-            if ((Input.GetMouseButtonDown(1)))// && controller || Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge && !controller)    //マウスの右クリックが押された
-            {
-
-                b_Charge = false;
-
-            }
+                //MouseMoveY = TPSCameraEulerY;
+               // this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         }
-        else
-        {
-            
-           
-        }
+            //if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
+            //{
+            //    if (b_AimMode)
+            //        b_AimMode = false;
+            //    if (b_Charge)
+            //        b_Charge = false;
+            //}
+            //if ((Input.GetMouseButtonDown(1)))// && controller || Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge && !controller)    //マウスの右クリックが押された
+            //{
+
+            //    b_Charge = false;
+
+            //}
+        
+        
         //MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
-        b_Charge = PlayerInputTest.GetChargeMode();
+       // b_Charge = PlayerInputTest.GetChargeMode();
         if (b_Charge)
         {
+            //TPSCameraEulerY = TPSCamera.transform.rotation.x;
             if (!PlayerRotation.GetControllerUse())
             MouseMoveY -= Input.GetAxis("Mouse Y") * FPSSensi;
             if(PlayerRotation.GetControllerUse())
@@ -99,27 +100,27 @@ public class FPSMouseMoveY : MonoBehaviour
             {
                 MouseMoveY = -90;
             }
-            this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x+MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         }
         //this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         if (!b_Charge)
         {
             // MouseMoveY = 0;
 
-
-            //if (blendtime.BlendWeight >0.999f)
+            //if (blendtime.BlendWeight > 0.98f)
             //{
-                   // this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            //MouseMoveY = 0;
+            //this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
 
 
-            if (MouseMoveY < 0)
+            if (MouseMoveY < 1)
             {
                 MouseMoveY += 0.5f;
                 this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
             }
-            else if (MouseMoveY > 0)
+            else if (MouseMoveY > 1)
             {
                 MouseMoveY -= 0.5f;
                 this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
@@ -132,6 +133,7 @@ public class FPSMouseMoveY : MonoBehaviour
                 MouseMoveY = 0;
 
             }
+            //  }
             //MouseMoveY = TPSCamera.transform.eulerAngles.x;
             //this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 

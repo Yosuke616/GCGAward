@@ -13,8 +13,7 @@ public class FPSMouseMoveX : MonoBehaviour
     private float ControllerSensi = 1.0f;
     [SerializeField]
     private float deadZone = 0.5f;
-    [SerializeField]
-    GameObject TPSTarget;
+    [SerializeField]  GameObject TPSTarget;
     [SerializeField]
     private float MouseMoveX = 0.0f;
     private bool controller;
@@ -39,19 +38,21 @@ public class FPSMouseMoveX : MonoBehaviour
         {
             return;
         }
-
-        //controller = PlayerInputTest.GetControllerUse();
-        controller = true;
-        if (controller)
+        if (((Input.GetMouseButtonDown(0)) || Gamepad.current.rightTrigger.ReadValue() > deadZone))    //マウスの左クリックが押された
         {
+            b_AimMode = true;
+            //b_Charge = true;
+            MouseMoveX = TPSTarget.transform.eulerAngles.y;
+            //    this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, MouseMoveX, this.transform.eulerAngles.z);
+        }
+        //controller = PlayerInputTest.GetControllerUse();
+        
             b_Charge = PlayerInputTest.GetChargeMode();
-            //if ((Input.GetMouseButtonDown(0)))//&& controller || Gamepad.current.rightTrigger.ReadValue()>deadZone )&& !b_AimMode && !controller)    //マウスの左クリックが押された
-            if (b_Charge)
+            if(TPSTarget==null)
             {
-                //b_AimMode = true;
-                //b_Charge = true;
-                MouseMoveX = TPSTarget.transform.eulerAngles.y;
+                //TPSTarget = GameObject.Find("CM_PlayerTPS");
             }
+            
             //if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone && b_AimMode && !controller)  //マウスの左クリックが外れたとき
             //{
             //    if (b_AimMode)
@@ -79,11 +80,7 @@ public class FPSMouseMoveX : MonoBehaviour
                     MouseMoveX -= ControllerSensi;
 
             }
-        }
-        else
-        {
-
-        }
+       
         //MouseMoveX = TPSTarget.transform.forward.x;
         //MouseMoveY += Input.GetAxis("Mouse Y") * FPSSensi;
         if (b_Charge)
