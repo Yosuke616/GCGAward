@@ -69,7 +69,7 @@ public class FPSMouseMoveX : MonoBehaviour
             //}
             if (!(PlayerRotation.GetControllerUse()))
             {
-                MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi;
+                MouseMoveX += Input.GetAxis("Mouse X") * FPSSensi*Time.deltaTime*5;
 
             }
             else

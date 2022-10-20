@@ -16,9 +16,10 @@ public class FPSTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(FPSTargetMove.transform.position.x, FPSTargetMove.transform.position.y, FPSTargetMove.transform.position.z);
+        this.transform.position = FPSTargetMove.transform.position;
 
         this.transform.position += FPSTargetMove.transform.forward * TargetDistance;
+        
        // this.transform.position = new Vector3(this.transform.position.x, FPSTargetMove.transform.position.y + TargetHeight, this.transform.position.z);
     }
 }

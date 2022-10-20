@@ -57,17 +57,17 @@ public class TPSCameraTargetMove : MonoBehaviour
                 RightStick.y = 0;
             }
             MouseMove -= new Vector2(-RightStick.x * RightStickSensi.x * Time.deltaTime, RightStick.y * RightStickSensi.y * Time.deltaTime);
-            if(Gamepad.current.buttonNorth.isPressed)
+            if(Gamepad.current.dpad.ReadValue().y<-DeadZone)
             {
                 TPSCameraDistance -= 0.1f;
             }
-            if (Gamepad.current.buttonWest.isPressed)
+            if (Gamepad.current.dpad.ReadValue().y>DeadZone)
             {
                 TPSCameraDistance += 0.1f;
             }
 
         }
-        TPSCameraDistance = Mathf.Clamp(TPSCameraDistance, 1.5f, 5);
+        TPSCameraDistance = Mathf.Clamp(TPSCameraDistance, 1.0f, 5);
         MouseMove.y = Mathf.Clamp(MouseMove.y, -0.4f + 0.5f, 0.4f + 0.5f);
         //MouseMove += new Vector2(Input.GetAxis("Mouse X")*FPSMouseSensi, Input.GetAxis("Mouse Y")*FPSMouseSensi);
         // ãÖñ ç¿ïWånïœä∑

@@ -83,7 +83,7 @@ public class FPSMouseMoveY : MonoBehaviour
         {
             //TPSCameraEulerY = TPSCamera.transform.rotation.x;
             if (!PlayerRotation.GetControllerUse())
-            MouseMoveY -= Input.GetAxis("Mouse Y") * FPSSensi;
+            MouseMoveY -= Input.GetAxis("Mouse Y") * FPSSensi*Time.deltaTime;
             if(PlayerRotation.GetControllerUse())
             {
                 if(Gamepad.current.rightStick.ReadValue().y>deadZone)

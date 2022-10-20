@@ -2970,6 +2970,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4288539276822920036, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
+      propertyPath: FPSSensi
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4288539276822920036, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
       propertyPath: TPSCamera
       value: 
       objectReference: {fileID: 1849095485}
@@ -3020,6 +3024,10 @@ PrefabInstance:
     - target: {fileID: 4288539276822920037, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4288539276822920039, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
+      propertyPath: FPSSensi
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4288539276822920039, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
       propertyPath: TPSTarget
