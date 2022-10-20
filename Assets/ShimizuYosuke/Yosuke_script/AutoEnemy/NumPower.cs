@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class NumPower : MonoBehaviour
 {
+    private AutoEnemy AE;
+    private WaveManager WM;
+
+    //敵のランダム生成用のリスト
+    private  List<int> RndNumList = new List<int>();
+
+    //プレイヤーの場所を保存する変数
+    private int Player_Pos;
+
+    private void Awake()
+    {
+        AE = GameObject.Find("Spawn").GetComponent<AutoEnemy>();
+        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+
+        
+        SetList(WM.GetEnemyNum());
+
+        SetPlayerPos();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +35,29 @@ public class NumPower : MonoBehaviour
     {
         
     }
+
+    //引数分のランダムに選ばれた変数をリストに追加する関数
+    public void SetList(int nNum) {
+        //リストをクリアする
+        RndNumList.Clear();
+
+        for (int i = 0;i < nNum;i++) {
+            int rnd = Random.Range(0,AE.GetNum());
+            RndNumList.Add(rnd);
+        }
+
+    }
+
+    private void SetPlayerPos() {
+        Player_Pos = Random.Range(0, AE.GetNum());
+    }
+
+    public List<int> GetNumList() {
+        return RndNumList;
+    }
+
+    public int GetPlayerPos() {
+        return Player_Pos;
+    }
+
 }
