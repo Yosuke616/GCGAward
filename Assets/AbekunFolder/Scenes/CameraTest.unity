@@ -732,7 +732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 32320114}
   TPSCameraDistance: 3
-  FPSMouseSensi: {x: 10, y: 10}
+  FPSMouseSensi: {x: 1, y: 1}
   MouseMove: {x: 0, y: 0}
   RightStickSensi: {x: 1, y: 1}
   DeadZone: 0

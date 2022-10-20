@@ -108,30 +108,30 @@ public class Player_Walk : MonoBehaviour
         //-------------WASD------------------ëñÇÈ
         // WASDì¸óÕÇ©ÇÁÅAXZïΩñ (êÖïΩÇ»ínñ )Çà⁄ìÆÇ∑ÇÈï˚å¸(velocity)ÇìæÇ‹Ç∑
         velocity = Vector3.zero;
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            eState = PLAYER_STATE.WALK_STATE;
-            //this.animator.SetBool(key_isWalk, true);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            eState = PLAYER_STATE.WALK_STATE;
-            //this.animator.SetBool(key_isWalk, true);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            eState = PLAYER_STATE.WALK_STATE;
-            //this.animator.SetBool(key_isWalk, true);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            eState = PLAYER_STATE.WALK_STATE;
-            //this.animator.SetBool(key_isWalk, true);
-        }
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //    eState = PLAYER_STATE.WALK_STATE;
+        //    //this.animator.SetBool(key_isWalk, true);
+        //}
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //    eState = PLAYER_STATE.WALK_STATE;
+        //    //this.animator.SetBool(key_isWalk, true);
+        //}
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //    eState = PLAYER_STATE.WALK_STATE;
+        //    //this.animator.SetBool(key_isWalk, true);
+        //}
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //    eState = PLAYER_STATE.WALK_STATE;
+        //    //this.animator.SetBool(key_isWalk, true);
+        //}
         if (PlayerRotation.GetPlayerMove())
         {
             transform.position += transform.forward * moveSpeed * Time.deltaTime;
@@ -157,22 +157,22 @@ public class Player_Walk : MonoBehaviour
         {
             moveSpeed = 10.0f;
 
-            if (Input.GetKey(KeyCode.W))
-            {
-               transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            }
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //   transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            //}
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            //}
+            //if (Input.GetKey(KeyCode.S))
+            //{
+            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            //}
+            //if (Input.GetKey(KeyCode.D))
+            //{
+            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            //}
             if (PlayerRotation.GetPlayerMove())
             {
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
