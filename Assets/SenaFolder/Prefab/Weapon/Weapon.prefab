@@ -49,7 +49,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: 46d97ed5cc258a447820551438cca110, type: 2}
+  effectAsset: {fileID: 11400000, guid: e0696689f5a236149a7b3dacd1986496, type: 2}
   playOnStart: 1
   isLooping: 1
 --- !u!114 &974395332907821656
