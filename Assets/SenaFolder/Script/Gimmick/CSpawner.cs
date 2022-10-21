@@ -23,6 +23,7 @@ public class CSpawner : MonoBehaviour
         {
             canSpawn = true;
         }
+
         if (canSpawn)
         {
             Instantiate(spawnObj, transform.position, Quaternion.identity);
