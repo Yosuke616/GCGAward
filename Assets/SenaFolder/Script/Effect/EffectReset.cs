@@ -12,6 +12,7 @@ public class EffectReset : MonoBehaviour
         EffekseerHandle handle = EffekseerSystem.PlayEffect(effect, transform.position);
         handle.SetRotation(transform.rotation);
         handle.SetLocation(transform.position);
+        handle.SetScale(transform.localScale);
     }
 
     // Update is called once per frame
