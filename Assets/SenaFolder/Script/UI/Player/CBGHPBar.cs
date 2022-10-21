@@ -16,14 +16,6 @@ public class CBGHPBar : CHPBar
     [SerializeField, Range(0.01f, 1.0f)] private float fBarStagingValue;
     #endregion
 
-    #region variable
-    private float fSetValue;     // セットする最終数値
-    private bool isStaging = false;     // 減少演出中か
-    private float fDecNum;
-    private float fStartValue;
-    private float fCurrentValue;
-    #endregion
-
     void Update()
     {
         if(isStaging)

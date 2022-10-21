@@ -12,7 +12,12 @@ public class CFrontHPBar : CHPBar
     #region variable
     private int nOldValue;
     #endregion 
-   
+
+    private void Update()
+    {
+        Debug.Log(nNumber + "番目:,スライダーの値" + nCurrentValue);
+    }
+
     /*
      * @brief HPの加算
      * @param num HPの加算量
@@ -21,11 +26,11 @@ public class CFrontHPBar : CHPBar
    　*/
     #region add value
     public override void AddValue(int num)
-   {
+    {
         nOldValue = nCurrentValue;
         nCurrentValue += num;
         SetValue(nCurrentValue, nMaxValue);
-   }
+    }
     #endregion
 
     /*

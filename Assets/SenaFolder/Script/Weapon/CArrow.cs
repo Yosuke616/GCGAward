@@ -43,7 +43,7 @@ public class CArrow : MonoBehaviour
                 ChangeEffectColor(objEff[i], nStep, nOldStep);
         }
         nOldStep = nStep;
-        Debug.Log("æ“¾‚µ‚½’iŠK”" + nStep);
+        //Debug.Log("æ“¾‚µ‚½’iŠK”" + nStep);
     }
     /*
     * @brief –î‚ğ”­Ë‚·‚é

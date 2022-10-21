@@ -136,7 +136,7 @@ public class CBow : MonoBehaviour
         //Debug.Log("Step:" + nCurrentAtkStep);
         #endregion
 
-        Debug.Log("威力段階数" + nCurrentAtkStep);
+        //Debug.Log("威力段階数" + nCurrentAtkStep);
     }
     #endregion
 
@@ -168,7 +168,6 @@ public class CBow : MonoBehaviour
                 effString.enabled = true;
                 effString = objString.GetComponent<CEffectManager>().GetEmitterEff(0);
                 effString.enabled = false;
-
 
                 // カーソルを動かす
                 for (int i = 0; i < objCursur.Length; ++i)
@@ -205,7 +204,7 @@ public class CBow : MonoBehaviour
                 for (int i = 0; i < objCursur.Length; ++i)
                     objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを止める
                 scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MAXCHARGE);       // スライダーを止める
-                Debug.Log("ChargeMax");
+                //Debug.Log("ChargeMax");
                 break;
 
             // チャージリセット状態

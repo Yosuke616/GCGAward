@@ -37,6 +37,7 @@ public class CCharactorManager : MonoBehaviour
     private int nCurrentFrontVal = 0;
     [System.NonSerialized]
     public int nCurrentAtk;                // 攻撃力
+    private int nPerVal;                  // スライダー1つあたりの数値
     #endregion
 
     /*
@@ -47,6 +48,7 @@ public class CCharactorManager : MonoBehaviour
     {
         nCurrentHp = nMaxHp;
         nCurrentFrontVal = nMaxHp;
+        nPerVal = nMaxHp / nValNum;
     }
     #endregion
 
@@ -130,34 +132,38 @@ public class CCharactorManager : MonoBehaviour
     #region Add front bar
     public void AddFrontBar(int num)
     {
-        //nCurrentFrontVal += num;
-        //float remain = objFrontHPBar[nChangeFrontBarIndex].GetComponent<Slider>().value;
-        //float perHPBar =  nMaxHp / nValNum;
-        //float ChangeValue = Mathf.Abs((float)num / perHPBar);
-        // 該当のHPバーの残り量が変更する値より少ない場合、HPバーをまたぐ処理を行う
-        //if (remain < ChangeValue)
-        //{
-            objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
-            //float dif = ChangeValue - remain;
-            // 減らしきれなかった分を次のHPバーで減らす
-            //if (num < 0)
-            //{
-            //    objFrontHPBar[nChangeFrontBarIndex - 1].GetComponent<CHPBar>().AddValue(-1 * (int)(dif * perHPBar));
-            //}
-            //else
-            //{
-            //    //nChangeHPBar--;
-            //    objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue((int)(dif * perHPBar));
-            //}
-        //}
-        //else
-            // FrontHPBarの値を減らす
-            //objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(num);
+        // 現在のバーの値を取得する
+        int barValue = objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().nCurrentValue;
+        // 体力が減っているとき現在のHPスライダーの値と減少量を比較して差分を次のスライダーに反映させる
+        if (num < 0)
+        {
+            if(Mathf.Abs(num) > barValue)
+            {
+                Debug.Log("<color=red>BarIndexChange</color>");
+                // 現在のバーのあるだけの値を減らす
+                objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(-1 * barValue);
+                objFrontHPBar[nChangeHPBar - 1].GetComponent<CHPBar>().AddValue(-1 * (Mathf.Abs(num) - barValue));
+
+            }
+            else
+                objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
+        }
+        // 体力がリセットされるとき現在見ているスライダーの値が0の場合1つ前のスライダーの値を比較する
+        else
+        {
+            if(barValue <= 0)
+            {
+                Debug.Log("<color=yellow>BarIndexChange</color>");
+            }
+            else
+                objFrontHPBar[nChangeHPBar].GetComponent<CHPBar>().AddValue(num);
+        }
+        // 
     }
     #endregion
 
-
-    //#region Add front bar
+    
+//#region Add front bar
     //public void AddFrontBar(int num)
     //{
     //    //nCurrentFrontVal += num;
@@ -185,7 +191,6 @@ public class CCharactorManager : MonoBehaviour
     //        objFrontHPBar[nChangeFrontBarIndex].GetComponent<CHPBar>().AddValue(num);
     //}
     //#endregion
-
     /*
      * @brief 前面のHPバーを変更する
      * @param num 変更する量
