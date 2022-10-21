@@ -1871,7 +1871,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.38701722
+      - time: 0.37864903
         functionName: RunSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: b98fa85516fba3143842c7a685dd094b, type: 3}
