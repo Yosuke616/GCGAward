@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponRotationTest : MonoBehaviour
 {
-    [SerializeField] GameObject FPSTarget;
+    [SerializeField] Transform FPSTarget;
    
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,7 @@ public class WeaponRotationTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.eulerAngles = new Vector3 (FPSTarget.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+        this.transform.LookAt(FPSTarget);
+        //this.transform.eulerAngles = new Vector3 (FPSTarget.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
     }
 }
