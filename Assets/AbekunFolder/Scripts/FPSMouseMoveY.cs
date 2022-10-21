@@ -31,7 +31,6 @@ public class FPSMouseMoveY : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        brain= CinemachineCore.Instance.FindPotentialTargetBrain(TPSVirtualCamera);
        
 
     }
@@ -43,16 +42,15 @@ public class FPSMouseMoveY : MonoBehaviour
         {
             return;
         }
-
+        
         //controller = PlayerInputTest.GetControllerUse();
-        controller = true;
-        var blendtime = brain.ActiveBlend;
-        debugBlend = blendtime.BlendWeight;
-       // TPSCameraEulerY = TPSCamera.transform.rotation.x;
+         // TPSCameraEulerY = TPSCamera.transform.rotation.x;
 
        
             b_Charge = PlayerInputTest.GetChargeMode();
-            if ((Input.GetMouseButtonDown(0))&&b_Charge == false || Gamepad.current.rightTrigger.ReadValue() > deadZone&&b_Charge==false)//&&controller || Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode && !controller)    //マウスの左クリックが押された
+        if (!controller)
+        {
+            if ((Input.GetMouseButtonDown(0)))//&&controller || Gamepad.current.rightTrigger.ReadValue() > deadZone)&&!b_AimMode && !controller)    //マウスの左クリックが押された
             {
                 b_AimMode = true;
                 b_Charge = true;
@@ -60,9 +58,20 @@ public class FPSMouseMoveY : MonoBehaviour
                 MouseMoveY = 0;
                 //TPSCameraEulerY = TPSCamera.transform.rotation.x;
                 //MouseMoveY = TPSCameraEulerY;
-               // this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                // this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            }
         }
-            //if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
+        else
+        {
+
+            if (Gamepad.current.rightTrigger.ReadValue() > deadZone && b_Charge == false)
+            {
+                b_AimMode = true;
+                b_Charge = true;
+                //MouseMoveY = TPSCamera.transform.eulerAngles.x;
+                MouseMoveY = 0;
+            }
+        }    //if (Input.GetMouseButtonUp(0))// && controller || Gamepad.current.rightTrigger.ReadValue() < deadZone&&b_AimMode && !controller)  //マウスの左クリックが外れたとき
             //{
             //    if (b_AimMode)
             //        b_AimMode = false;
@@ -82,9 +91,9 @@ public class FPSMouseMoveY : MonoBehaviour
         if (b_Charge)
         {
             //TPSCameraEulerY = TPSCamera.transform.rotation.x;
-            if (!PlayerRotation.GetControllerUse())
+            if (!controller)
             MouseMoveY -= Input.GetAxis("Mouse Y") * FPSSensi*Time.deltaTime;
-            if(PlayerRotation.GetControllerUse())
+            if(controller)
             {
                 if(Gamepad.current.rightStick.ReadValue().y>deadZone)
                 MouseMoveY -= ControllerSensi;
@@ -106,34 +115,69 @@ public class FPSMouseMoveY : MonoBehaviour
         if (!b_Charge)
         {
             // MouseMoveY = 0;
-
-            if (blendtime.BlendWeight > 0.98f)
+            if (TPSVirtualCamera == null)
             {
-            //MouseMoveY = 0;
-            //this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+                //MouseMoveY = 0;
+                //this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
 
 
-            if (MouseMoveY < 1)
-            {
-                MouseMoveY += 0.5f;
-                this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                if (MouseMoveY < 1)
+                {
+                    MouseMoveY += 0.5f;
+                    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
+                }
+                else if (MouseMoveY > 1)
+                {
+                    MouseMoveY -= 0.5f;
+                    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+
+                }
+                else
+                {
+                    this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                    MouseMoveY = 0;
+
+                }
             }
-            else if (MouseMoveY > 1)
-            {
-                MouseMoveY -= 0.5f;
-                this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            else { 
+            brain = CinemachineCore.Instance.FindPotentialTargetBrain(TPSVirtualCamera);
+
+            controller = PlayerInputTest.GetControllerUse();
+            var blendtime = brain.ActiveBlend;
+            debugBlend = blendtime.BlendWeight;
+
+                if (blendtime.BlendWeight > 0.98f)
+                {
+                    //MouseMoveY = 0;
+                    //this.transform.eulerAngles = new Vector3(-MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
 
-            }
-            else
-            {
-                this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
-                MouseMoveY = 0;
 
-            }
-              }
+                    if (MouseMoveY < 1)
+                    {
+                        MouseMoveY += 0.5f;
+                        this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+                    }
+                    else if (MouseMoveY > 1)
+                    {
+                        MouseMoveY -= 0.5f;
+                        this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+
+                    }
+                    else
+                    {
+                        this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                        MouseMoveY = 0;
+
+                    }
+                }
+             }
             //MouseMoveY = TPSCamera.transform.eulerAngles.x;
             //this.transform.eulerAngles = new Vector3(MouseMoveY, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
 
