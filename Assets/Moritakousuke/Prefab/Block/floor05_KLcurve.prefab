@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3580437787500166492}
   - component: {fileID: 1609107209474918806}
   m_Layer: 0
-  m_Name: floor06_3
+  m_Name: floor05_KLcurve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
