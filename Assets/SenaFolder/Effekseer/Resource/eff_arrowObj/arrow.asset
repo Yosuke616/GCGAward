@@ -23,7 +23,7 @@ MonoBehaviour:
   - path: arrow_center.asset
     asset: {fileID: 11400000, guid: e1f31ec439056e24d82c7110e1543ac7, type: 2}
   - path: eff_top.asset
-    asset: {fileID: 11400000, guid: 998ab5076f1062e4c9590595ed867274, type: 2}
+    asset: {fileID: 0}
   materialResources: []
   curveResources: []
   Scale: 1

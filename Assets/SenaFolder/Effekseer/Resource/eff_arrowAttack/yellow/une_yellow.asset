@@ -17,7 +17,7 @@ MonoBehaviour:
   soundResources: []
   modelResources:
   - path: eff.asset
-    asset: {fileID: 11400000, guid: f7244e0efddf15149b9d2e39bc4cef93, type: 2}
+    asset: {fileID: 0}
   materialResources: []
   curveResources: []
   Scale: 1

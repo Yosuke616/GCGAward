@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Effekseer;
 
 public class CBow : MonoBehaviour
 {
@@ -157,9 +158,21 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_CHARGE:
                 g_state = STATE_BOW.BOW_CHARGE;
                 CreateArrow();      // 矢を生成する
+
+                // 弦の形を変更する
+                GameObject objString = transform.Find("eff_string").gameObject;
+                EffekseerEmitter effString;
+                effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
+                effString.enabled = true;
+                effString = objString.GetComponent<CEffectManager>().GetEmitterEff(0);
+                effString.enabled = false;
+
+                // カーソルを動かす
                 for (int i = 0; i < objCursur.Length; ++i)
-                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE);  // カーソルを動かす
-                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);       // スライダーを動かす
+                    objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.MOVE); 
+                
+                // チャージスライダーを動かす
+                scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MOVE);      
 
                 // 威力分を加える
                 int nUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
