@@ -49,7 +49,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: e0696689f5a236149a7b3dacd1986496, type: 2}
+  effectAsset: {fileID: 11400000, guid: a76e621117c2319439d56e1e722c5dd5, type: 2}
   playOnStart: 1
   isLooping: 1
 --- !u!114 &974395332907821656
@@ -67,7 +67,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: 163ac33d9e9c02c47bb1059e38cd7b56, type: 2}
+  effectAsset: {fileID: 11400000, guid: b8ef8e4b7a75d6d42983077f64351d7e, type: 2}
   playOnStart: 1
   isLooping: 1
 --- !u!114 &2776429089171662903

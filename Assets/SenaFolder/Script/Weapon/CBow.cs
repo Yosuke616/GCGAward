@@ -63,6 +63,8 @@ public class CBow : MonoBehaviour
     //private int nUseHP = 0;                 // 矢を撃つのに使用するHP
     private bool isShot = false;            // 矢を撃ったかどうか
     private AudioSource audioSource;
+    private GameObject objString;
+    private EffekseerEmitter effString;
     #endregion
 
     // Start is called before the first frame update
@@ -160,12 +162,13 @@ public class CBow : MonoBehaviour
                 CreateArrow();      // 矢を生成する
 
                 // 弦の形を変更する
-                GameObject objString = transform.Find("eff_string").gameObject;
-                EffekseerEmitter effString;
+                //ChangeStringShape();
+                objString = transform.Find("eff_string").gameObject;
                 effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
                 effString.enabled = true;
                 effString = objString.GetComponent<CEffectManager>().GetEmitterEff(0);
                 effString.enabled = false;
+
 
                 // カーソルを動かす
                 for (int i = 0; i < objCursur.Length; ++i)
@@ -208,6 +211,12 @@ public class CBow : MonoBehaviour
             // チャージリセット状態
             case STATE_BOW.BOW_RESET:
                 g_state = STATE_BOW.BOW_RESET;
+
+                effString = objString.GetComponent<CEffectManager>().GetEmitterEff(0);
+                effString.enabled = true;
+                effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
+                effString.enabled = false;
+
                 // 矢を発射していなければHPバーをリセットする
                 if (!isShot)
                 {
@@ -417,4 +426,19 @@ public class CBow : MonoBehaviour
         return maxDecStep;
     }
     #endregion
+    
+    /*
+    * @brief 弦の形を変更する
+    */
+    //#region change string shape
+    //private void ChangeStringShape(bool flg)
+    //{
+    //    GameObject objString = transform.Find("eff_string").gameObject;
+    //    EffekseerEmitter effString;
+    //    effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
+    //    effString.enabled = true;
+    //    effString = objString.GetComponent<CEffectManager>().GetEmitterEff((0);
+    //    effString.enabled = false;
+    //}
+    //#endregion
 }
