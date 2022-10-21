@@ -4309,7 +4309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
       propertyPath: nAdjustHp
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6078688453297845047, guid: 7aa7848c7f0fd854088c04305941b155, type: 3}
       propertyPath: nAtkDecHp
