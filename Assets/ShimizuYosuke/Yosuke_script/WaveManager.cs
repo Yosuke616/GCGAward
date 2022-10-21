@@ -30,8 +30,8 @@ public class WaveManager : MonoBehaviour
         //スコアを0にする
         nScore = 0;
         //スコアのテキストを紐づける
-        GameObject obj = transform.FindChild("Canvas").gameObject;
-        scoreText = obj.transform.FindChild("Score").gameObject.GetComponent<Text>();
+        GameObject obj = transform.Find("Canvas").gameObject;
+        scoreText = obj.transform.Find("Score").gameObject.GetComponent<Text>();
 
         //敵の数は初期数は3
         nMaxEnemy = nEnemyNum = 3;
