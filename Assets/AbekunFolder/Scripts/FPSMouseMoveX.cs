@@ -33,17 +33,30 @@ public class FPSMouseMoveX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        controller = PlayerInputTest.GetControllerUse();
         if (Mathf.Approximately(Time.timeScale, 0f))
         {
             return;
         }
-        if (((Input.GetMouseButtonDown(0)) || Gamepad.current.rightTrigger.ReadValue() > deadZone))    //マウスの左クリックが押された
+        if (!controller)
         {
-            b_AimMode = true;
-            //b_Charge = true;
-            MouseMoveX = TPSTarget.transform.eulerAngles.y;
-            //    this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, MouseMoveX, this.transform.eulerAngles.z);
+            if (Input.GetMouseButtonDown(0))     //マウスの左クリックが押された
+            {
+                b_AimMode = true;
+                //b_Charge = true;
+                MouseMoveX = TPSTarget.transform.eulerAngles.y;
+                //    this.transform.eulerAngles = new Vector3(TPSTarget.transform.eulerAngles.x, MouseMoveX, this.transform.eulerAngles.z);
+            }
+        }
+        else
+        {
+            if (Gamepad.current.rightTrigger.ReadValue() > deadZone)
+            {
+                b_AimMode = true;
+                //b_Charge = true;
+                MouseMoveX = TPSTarget.transform.eulerAngles.y;
+
+            }
         }
         //controller = PlayerInputTest.GetControllerUse();
         
