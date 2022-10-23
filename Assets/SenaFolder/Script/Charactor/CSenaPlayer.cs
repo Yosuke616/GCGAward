@@ -27,7 +27,7 @@ public class CSenaPlayer : CCharactorManager
         InitHP();      // HPの初期化
         //InitAtk();      // 攻撃力の初期化
         playerState = CHARACTORSTATE.CHARACTOR_ALIVE;     // 生存状態に設定する
-        SetHPBar();     // HPバーUIの情報を取得する
+        //SetHPBar();     // HPバーUIの情報を取得する
     }
     #endregion
 
@@ -121,7 +121,7 @@ public class CSenaPlayer : CCharactorManager
     #region dec front hp bar
     public void DecFrontHPBar(int num)
     {
-        AddFrontBar(num);
+        //AddFrontBar(num);
     }
     #endregion
 

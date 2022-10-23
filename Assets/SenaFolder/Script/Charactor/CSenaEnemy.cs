@@ -26,7 +26,7 @@ public class CSenaEnemy : CCharactorManager
     {
         InitHP();       // HP‚Ì‰Šú‰»
         InitAtk();      // UŒ‚—Í‚Ì‰Šú‰»
-        SetHPBar();
+        //SetHPBar();
         objPlayer = GameObject.FindWithTag("Player");
         //scScore = sceneManager.GetComponent<CScore>();      // ƒXƒRƒA‚Ìî•ñ‚ğæ“¾‚·‚é
     }

@@ -98,7 +98,6 @@ public class CBow : MonoBehaviour
         #region charge action
         if (Input.GetMouseButtonDown(0))
         {
-           
             ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
         }
         #endregion
@@ -178,7 +177,8 @@ public class CBow : MonoBehaviour
 
                 // 威力分を加える
                 int nUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-                objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nUseHP);
+                objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(-1 * nUseHP);
+
                 nOldStep = nCurrentAtkStep;
 
                 // 効果音再生
@@ -190,10 +190,13 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_SHOT:
                 g_state = STATE_BOW.BOW_SHOT;
                 isShot = true;
-                audioSource.PlayOneShot(seShot);
-                objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
+                audioSource.PlayOneShot(seShot);        // 効果音の再生
+                //objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
+                //objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nShotUseHP);
+
                 int nShotUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-                objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nShotUseHP);
+                // PlayerのHPを発射に使うHP+威力調整に使うHP分減らす
+                objPlayer.GetComponent<CCharactorManager>().ChangeHP(-1 * nShotUseHP);
                 int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
                 objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue);        // 矢を発射する
                 break;
@@ -220,8 +223,7 @@ public class CBow : MonoBehaviour
                 if (!isShot)
                 {
                     int nResetUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-                    objPlayer.GetComponent<CSenaPlayer>().CalcFrontBarNum();
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(nResetUseHP);
+                    objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(nResetUseHP);
                 }
                 else
                     isShot = false;
@@ -257,7 +259,7 @@ public class CBow : MonoBehaviour
                 if (nOldStep != nCurrentAtkStep)
                 {
                     int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nChargeUseHP);
+                    objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(-1 * nChargeUseHP);
                 }
                 if (fChargeTime > (currentChargeStep + 1) * fValChargeTime)
                 {

@@ -17,8 +17,8 @@ public class CCharactorManager : MonoBehaviour
     #region serialize field
     [Header("キャラクターの最大HP")]
     [SerializeField, Range(1, 100)] public int nMaxHp;        // キャラクターのHPの最大値
-    [SerializeField] public GameObject HPFrontBarGroup;
-    [SerializeField] public GameObject HPBGBarGroup;
+    [SerializeField] public GameObject HPFrontBar;
+    [SerializeField] public GameObject HPBGBar;
     [Header("HPバーの分割数")]
     [SerializeField] public int nValNum;        // 1マスのHP量
     //[Header("攻撃力のデフォルト値")]
@@ -73,9 +73,9 @@ public class CCharactorManager : MonoBehaviour
         //cBGHPBar = HPBGBar.GetComponent<CBGHPBar>();
         for (int num = 0; num < nValNum; ++num)
         {
-            objFrontHPBar[num] = HPFrontBarGroup.transform.GetChild(num).gameObject;
+            objFrontHPBar[num] = HPFrontBar.transform.GetChild(num).gameObject;
             objFrontHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
-            objBGHPBar[num] = HPBGBarGroup.transform.GetChild(num).gameObject;
+            objBGHPBar[num] = HPBGBar.transform.GetChild(num).gameObject;
             objBGHPBar[num].GetComponent<CHPBar>().SetHpBarParam(num, nMaxHp / nValNum);
         }
     }
@@ -204,9 +204,9 @@ public class CCharactorManager : MonoBehaviour
     #region change hp
     public void ChangeHp(int num)
     {
-        AddFrontBar(num);
-        SetHpBarAnim();
-        AddBGBar(num);
+        //AddFrontBar(num);
+        //SetHpBarAnim();
+        //AddBGBar(num);
     }
     #endregion
 
@@ -226,6 +226,24 @@ public class CCharactorManager : MonoBehaviour
     public int GetAtk()
     {
         return nCurrentAtk;
+    }
+    #endregion
+
+    // HPを変更する
+    #region change hp
+    public void ChangeHP(int num)
+    {
+        nCurrentHp += num;
+        HPBGBar.GetComponent<CHPBarBackGround>().MoveBar(num);
+    }
+    #endregion
+
+    // HPを変更する
+    #region change hp
+    public void ChangeHPFront(int num)
+    {
+        nCurrentHp += num;
+        HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
     }
     #endregion
 }
