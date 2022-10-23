@@ -25,14 +25,16 @@ public class RayToGround : MonoBehaviour
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
         NP = GameObject.Find("Spawn").GetComponent<NumPower>();
 
+        CreateEnemy = WM.GetEnemyObj();
+
         //敵の生成
-        CreateEnemy = GameObject.Find("Enemy");
+        //CreateEnemy = GameObject.Find("Enemy");
 
         ///プレイヤーの生成
         //最初の一回だけプライヤーの場所はランダムにする
         if (WM.GetWave() == 1) {
 
-            GameObject player = GameObject.Find("Player");
+            GameObject player = WM.GetPlayerObj();
 
             if (Number == NP.GetPlayerPos()) {
                 //自身の真下にレイを飛ばす
@@ -42,7 +44,7 @@ public class RayToGround : MonoBehaviour
                 //int layerMask = ~(1 << 13);
                 if (Physics.Raycast(ray, out hit, Distance))
                 {
-                    Instantiate(player, hit.point, Quaternion.identity);
+                    Instantiate(player,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
                 }
             }
 
@@ -96,7 +98,7 @@ public class RayToGround : MonoBehaviour
                     else
                     {
                         //オブジェクトを作り出そう
-                        GameObject Enemy = Instantiate(CreateEnemy, hit.point, Quaternion.identity);
+                        GameObject Enemy = Instantiate(CreateEnemy,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
                         cnt = 1;
                     }
                 }
