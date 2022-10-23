@@ -242,7 +242,7 @@ public class CCharactorManager : MonoBehaviour
     #region change hp
     public void ChangeHPFront(int num)
     {
-        nCurrentHp += num;
+        //nCurrentHp += num;
         HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
     }
     #endregion

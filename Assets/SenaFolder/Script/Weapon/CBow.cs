@@ -207,6 +207,7 @@ public class CBow : MonoBehaviour
                 for (int i = 0; i < objCursur.Length; ++i)
                     objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを止める
                 scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MAXCHARGE);       // スライダーを止める
+
                 //Debug.Log("ChargeMax");
                 break;
 
@@ -255,9 +256,12 @@ public class CBow : MonoBehaviour
                 fChargeTime += Time.deltaTime;
                 TellChargeTime();       // チャージ時間をスライダーに伝える
 
+                Debug.Log("現在のステップ:" + nCurrentAtkStep);
                 // 段階数が変わった時HPバーを修正する
                 if (nOldStep != nCurrentAtkStep)
                 {
+                    Debug.Log("前ステップ:" + nOldStep);
+                    Debug.Log("StepChange");
                     int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
                     objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(-1 * nChargeUseHP);
                 }
@@ -287,7 +291,7 @@ public class CBow : MonoBehaviour
                 if (nOldStep != nCurrentAtkStep)
                 {
                     int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nChargeUseHP);
+                    objPlayer.GetComponent<CSenaPlayer>().ChangeHPFront(-1 * nChargeUseHP);
                 }
                 nOldStep = nCurrentAtkStep;
 
