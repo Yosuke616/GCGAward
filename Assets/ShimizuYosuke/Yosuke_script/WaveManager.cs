@@ -26,6 +26,10 @@ public class WaveManager : MonoBehaviour
     private int nHeadShot;
     //倒した敵の数
     private int nBreakEnemyNum;
+    //プレイヤーオブジェクト
+    [SerializeField] private GameObject Player;
+    //敵オブジェクト
+    [SerializeField] private GameObject Enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -133,6 +137,17 @@ public class WaveManager : MonoBehaviour
     //敵の数を0にする関数
     public void SetEnemyNum0() {
         nEnemyNum = 0;
+    }
+
+    //プレイヤーのオブジェクトを送る
+    public GameObject GetPlayerObj()
+    {
+        return Player;
+    }
+
+    //敵オブジェクトを送る
+    public GameObject GetEnemyObj() {
+        return Enemy;
     }
 
     //敵を全て倒したときに呼ぶ疑似初期化

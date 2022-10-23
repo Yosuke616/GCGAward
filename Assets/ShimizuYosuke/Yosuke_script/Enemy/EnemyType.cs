@@ -83,11 +83,8 @@ public class EnemyType : MonoBehaviour
     //チェイスフラグ
     private bool Chase;
 
-    //
-
-    //後で消す
     //頭
-    [SerializeField] private GameObject head;
+    private GameObject head;
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +113,8 @@ public class EnemyType : MonoBehaviour
         Chase = false;
         //元に戻すフラグはオフにしておく
         Change_Rot = false;
+        //頭の設定
+        head = transform.GetChild(0).gameObject;
 
         //ゲーム開始時点でその場所に当たり判定を生成する
         var Obj = new GameObject("StartPos");
@@ -131,9 +130,13 @@ public class EnemyType : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //プレイヤーの取得
+        player = GameObject.FindGameObjectWithTag("Player");
+
         //後で消す
         //頭オブジェクトが消えたら自身も消す
         if (head = null) {
+            Destroy(this.gameObject);
             return;
         }
 
@@ -272,8 +275,10 @@ public class EnemyType : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
             //プレイヤーの方向に向かってくる---------------------------------------------------------------------------------------
             Quaternion lookRotation = Quaternion.LookRotation(player.transform.position - this.transform.position, Vector3.up);
+            Debug.Log(234567);
 
             lookRotation.z = 0;
             lookRotation.x = 0;
