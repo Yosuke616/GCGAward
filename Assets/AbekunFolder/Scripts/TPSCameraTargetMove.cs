@@ -80,7 +80,7 @@ public class TPSCameraTargetMove : MonoBehaviour
         if (!PlayerInputTest.GetChargeMode() && ChargeFlg == false)
         {
             ChargeFlg = true;
-            MouseMove.x = FPSMouseMoveX.GetMouseMoveX() + 0.5f;
+            //MouseMove.x = FPSMouseMoveX.GetMouseMoveX() + 0.5f;
             MouseMove.y = 0.6f;
         }
         MouseX = MouseMove.x - 0.5f;

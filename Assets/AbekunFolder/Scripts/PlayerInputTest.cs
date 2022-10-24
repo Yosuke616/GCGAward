@@ -51,7 +51,8 @@ public class PlayerInputTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     // Update is called once per frame
@@ -351,6 +352,7 @@ public class PlayerInputTest : MonoBehaviour
             TPSCamera.Priority = 100;
             FPSCamera.Priority = 0;
         }
+        if(!b_Charge)
         PlayerRotY = rotYDif;
 
     }

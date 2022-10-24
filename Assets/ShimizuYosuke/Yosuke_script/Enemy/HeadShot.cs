@@ -7,15 +7,10 @@ public class HeadShot : MonoBehaviour
     //敵オブジェクト
     [SerializeField] private GameObject enemy; 
 
-    //スコアを加算する為のやつ
-    [SerializeField] private GameObject score;
-    private CountText scScore;     // スコアの情報格納用
-
     // Start is called before the first frame update
     void Start()
     {
         Vector3 pos = this.transform.position;
-        scScore = score.GetComponent<CountText>();
         pos = enemy.transform.position;
         pos.y = enemy.transform.position.y + 1;
         this.transform.position = pos;
@@ -44,7 +39,8 @@ public class HeadShot : MonoBehaviour
 
         if (collision.gameObject.tag == "Arrow") {
             //スコアを加算させる
-            scScore.AddScore(100000);
+            WaveManager WM = GameObject.Find("Wavemanager").GetComponent<WaveManager>();
+            WM.AddScore(1000);
 
             //オブジェクトを消滅させる
             Destroy(collision.gameObject);      // 矢を消滅させる

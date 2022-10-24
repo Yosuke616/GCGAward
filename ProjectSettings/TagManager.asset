@@ -11,13 +11,10 @@ TagManager:
   - Enemy
   - Head
   - Enemy_Start_Pos
-
-  - Enemy_Spawn
-
   - Slope
-
-  - Cursur
-
+  - Spawn_Enemy
+  - Parent_Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -39,7 +39,7 @@ public class AutoEnemy : MonoBehaviour
             ray.AddComponent<RayToGround>();
             ray.AddComponent<RayView>();
             ray.GetComponent<RayToGround>().SetNumber(nEnemy);
-            ray.tag = "Enemy_Start_Pos";
+            ray.tag = "Spawn_Enemy";
             nEnemy++;
         }
 

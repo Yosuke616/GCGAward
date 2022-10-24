@@ -22,6 +22,8 @@ public class NumPower : MonoBehaviour
         SetList(WM.GetEnemyNum());
 
         SetPlayerPos();
+
+        WM.SetEnemyNum0();
     }
 
     // Start is called before the first frame update
