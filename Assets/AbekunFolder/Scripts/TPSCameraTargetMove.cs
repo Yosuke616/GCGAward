@@ -6,15 +6,16 @@ public class TPSCameraTargetMove : MonoBehaviour
 {
     [SerializeField] public Transform PlayerTransform;
     [SerializeField] private float TPSCameraDistance;
-    [SerializeField] private Vector2 FPSMouseSensi;
-    public Vector2 MouseMove = Vector2.zero;
+    [SerializeField] public static Vector2 TPSMouseSensi;
+    [SerializeField] private Vector2 TPSMouseMove;
+    public static Vector2 MouseMove = Vector2.zero;
     private Vector3 pos = Vector3.zero;
     private Vector3 nowPos;
     private static float MouseX;
     [Header("コントローラー感度")]
-    [SerializeField] private Vector2 RightStickSensi;
+    [SerializeField] public static Vector2 RightStickSensi;
     [Header("コントローラーデッドゾーン")]
-    [SerializeField] private float DeadZone;
+    [SerializeField] public static float RightStickDeadZone;
     [Header("デバッグ用")]
     [SerializeField] private Vector2 RightStick;
     [SerializeField] private float RoghtStickRot;
@@ -40,7 +41,7 @@ public class TPSCameraTargetMove : MonoBehaviour
         }
         if (!PlayerRotation.GetControllerUse())
         {
-            MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * FPSMouseSensi.x, Input.GetAxis("Mouse Y")) * Time.deltaTime * FPSMouseSensi.y ;
+            MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * TPSMouseSensi.x, Input.GetAxis("Mouse Y")) * Time.deltaTime * TPSMouseSensi.y ;
 
             WheelAxis = Input.GetAxis("Mouse ScrollWheel");
             TPSCameraDistance += WheelAxis;
@@ -48,20 +49,20 @@ public class TPSCameraTargetMove : MonoBehaviour
         else
         {
             RightStick = Gamepad.current.rightStick.ReadValue();
-            if (Mathf.Abs(RightStick.x) < DeadZone)
+            if (Mathf.Abs(RightStick.x) < RightStickDeadZone)
             {
                 RightStick.x = 0;
             }
-            if (Mathf.Abs(RightStick.y) < DeadZone)
+            if (Mathf.Abs(RightStick.y) < RightStickDeadZone)
             {
                 RightStick.y = 0;
             }
             MouseMove -= new Vector2(-RightStick.x * RightStickSensi.x * Time.deltaTime, RightStick.y * RightStickSensi.y * Time.deltaTime);
-            if(Gamepad.current.dpad.ReadValue().y<-DeadZone)
+            if(Gamepad.current.dpad.ReadValue().y<-RightStickDeadZone)
             {
                 TPSCameraDistance -= 0.1f;
             }
-            if (Gamepad.current.dpad.ReadValue().y>DeadZone)
+            if (Gamepad.current.dpad.ReadValue().y>RightStickDeadZone)
             {
                 TPSCameraDistance += 0.1f;
             }
@@ -80,14 +81,15 @@ public class TPSCameraTargetMove : MonoBehaviour
         if (!PlayerInputTest.GetChargeMode() && ChargeFlg == false)
         {
             ChargeFlg = true;
-            //MouseMove.x = FPSMouseMoveX.GetMouseMoveX() + 0.5f;
-            MouseMove.y = 0.6f;
+            MouseMove.x = FPSCameraTarget2.MouseMove.x;
+            MouseMove.y = 1.2f- FPSCameraTarget2.MouseMove.y;
+
         }
         MouseX = MouseMove.x - 0.5f;
         // 座標の更新
         transform.position = pos + PlayerTransform.position;
         // transform.LookAt(PlayerTransform.position);
-
+        TPSMouseMove = MouseMove;
     }
     public static float GetMouseX()
     {
@@ -105,5 +107,11 @@ public class TPSCameraTargetMove : MonoBehaviour
         }
 
         return degree;
+    }
+    public static void SetTPSSetting(Vector2 MSensi, Vector2 CSensi, float Dead)
+    {
+        TPSMouseSensi = MSensi;
+        RightStickSensi = CSensi;
+        RightStickDeadZone = Dead;
     }
 }

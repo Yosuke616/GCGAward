@@ -21,8 +21,9 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera TPSCamera;    //TPSカメラ
   //  [SerializeField] CinemachineVirtualCamera TRASECamera;    //TRASEカメラ
     [Header("コントローラーデッドゾーン")]
-    [SerializeField] private float deadZone = 0.5f;
+    [SerializeField] public static float TriggerDeadZone = 0.5f;
     [SerializeField]
+    private bool ChargeFlg = false;
     private static bool b_Charge = false;
     [SerializeField]
     private static bool b_AimMode = false;
@@ -295,13 +296,13 @@ public class PlayerInputTest : MonoBehaviour
         
         if (!controller)
         {
-            if (Input.GetMouseButtonDown(0) && b_Charge == false)//(Gamepad.current.rightTrigger.ReadValue() > deadZone) && !b_AimMode && !controller)    //マウスの左クリックが押された
+            if (Input.GetMouseButtonDown(0) && b_Charge == false)//(Gamepad.current.rightTrigger.ReadValue() > TriggerDeadZone) && !b_AimMode && !controller)    //マウスの左クリックが押された
             {
 
                 b_Charge = true;
                 b_AimMode = true;
             }
-            if (Input.GetMouseButtonUp(0)&&b_Charge ==true)//|| Gamepad.current.rightTrigger.ReadValue() < deadZone && b_AimMode && !controller)  //マウスの左クリックが外れたとき
+            if (Input.GetMouseButtonUp(0)&&b_Charge ==true)//|| Gamepad.current.rightTrigger.ReadValue() < TriggerDeadZone && b_AimMode && !controller)  //マウスの左クリックが外れたとき
             {
 
                 if (b_AimMode)
@@ -309,20 +310,20 @@ public class PlayerInputTest : MonoBehaviour
                 if (b_Charge)
                     b_Charge = false;
             }
-            if ((Input.GetMouseButtonDown(1)))// || Gamepad.current.leftTrigger.ReadValue() > deadZone) && b_Charge && !controller)    //マウスの右クリックが押された
+            if ((Input.GetMouseButtonDown(1)))// || Gamepad.current.leftTrigger.ReadValue() > TriggerDeadZone) && b_Charge && !controller)    //マウスの右クリックが押された
             {
 
                 b_Charge = false;
             }
         }
         if (controller) { 
-            if ((Gamepad.current.rightTrigger.ReadValue() > deadZone) && !b_AimMode)    //マウスの左クリックが押された
+            if ((Gamepad.current.rightTrigger.ReadValue() > TriggerDeadZone) && !b_AimMode)    //マウスの左クリックが押された
             {
                 
                 b_Charge = true;
                 b_AimMode = true;
             }
-            if ((Gamepad.current.rightTrigger.ReadValue() < deadZone) && b_AimMode)  //マウスの左クリックが外れたとき
+            if ((Gamepad.current.rightTrigger.ReadValue() < TriggerDeadZone) && b_AimMode)  //マウスの左クリックが外れたとき
             {
                 
                 if (b_AimMode)
@@ -330,7 +331,7 @@ public class PlayerInputTest : MonoBehaviour
                 if (b_Charge)
                     b_Charge = false;
             }
-            if ((Gamepad.current.buttonEast.ReadValue() > deadZone) && b_Charge)    //マウスの右クリックが押された
+            if ((Gamepad.current.buttonEast.ReadValue() > TriggerDeadZone) && b_Charge)    //マウスの右クリックが押された
             {
                
                 //b_Charge = false;
@@ -346,11 +347,13 @@ public class PlayerInputTest : MonoBehaviour
         {
             TPSCamera.Priority = 0;
             FPSCamera.Priority = 100;
+            ChargeFlg = true;
         }
         else
         {
             TPSCamera.Priority = 100;
             FPSCamera.Priority = 0;
+            ChargeFlg = false;
         }
         if(!b_Charge)
         PlayerRotY = rotYDif;
@@ -371,5 +374,9 @@ public class PlayerInputTest : MonoBehaviour
     public static bool GetChargeMode()
     {
         return b_Charge;
+    }
+    public static void SetTriggerDeadZone(float Dead)
+    {
+        TriggerDeadZone = Dead;
     }
 }
