@@ -29,7 +29,9 @@ public class WaveManager : MonoBehaviour
     //プレイヤーオブジェクト
     [SerializeField] private GameObject Player;
     //敵オブジェクト
-    [SerializeField] private GameObject Enemy;
+    [SerializeField] private GameObject WalkEnemy;
+    [SerializeField] private GameObject NineEnemy;
+    [SerializeField] private GameObject EighteenEnemy;
 
     // Start is called before the first frame update
     void Start()
@@ -145,9 +147,19 @@ public class WaveManager : MonoBehaviour
         return Player;
     }
 
-    //敵オブジェクトを送る
-    public GameObject GetEnemyObj() {
-        return Enemy;
+    //歩く敵オブジェクトを送る
+    public GameObject GetWalkEnemyObj() {
+        return WalkEnemy;
+    }
+
+    //90敵オブジェクトを送る
+    public GameObject GetNineEnemyObj() {
+        return NineEnemy;
+    }
+
+    //180敵オブジェクトを送る
+    public GameObject GetEighteenEnemyObj() {
+        return EighteenEnemy;
     }
 
     //敵を全て倒したときに呼ぶ疑似初期化
