@@ -35,6 +35,7 @@ public class RayToGround : MonoBehaviour
         if (WM.GetWave() == 1) {
 
             GameObject player = WM.GetPlayerObj();
+            player = GameObject.FindGameObjectWithTag("Player");
 
             if (Number == NP.GetPlayerPos()) {
                 //©g‚Ì^‰º‚ÉƒŒƒC‚ğ”ò‚Î‚·
@@ -44,7 +45,9 @@ public class RayToGround : MonoBehaviour
                 //int layerMask = ~(1 << 13);
                 if (Physics.Raycast(ray, out hit, Distance))
                 {
-                    Instantiate(player,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
+                    player.transform.position = hit.transform.position;
+                    player.transform.position += new Vector3(0,5,0);
+                    //Instantiate(player,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
                 }
             }
 
