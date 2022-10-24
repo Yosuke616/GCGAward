@@ -6,15 +6,15 @@ public class FPSCameraTarget2 : MonoBehaviour
 {
     [SerializeField] public Transform PlayerTransform;
     [SerializeField] private float FPSCameraDistance;
-    [SerializeField] private Vector2 FPSMouseSensi;
-    public Vector2 MouseMove = Vector2.zero;
+    [SerializeField] public static Vector2 FPSMouseSensi;
+    public static Vector2 MouseMove = Vector2.zero;
     private Vector3 pos = Vector3.zero;
     private Vector3 nowPos;
     private static float MouseX;
     [Header("コントローラー感度")]
-    [SerializeField] private Vector2 LeftstickSensi;
+    [SerializeField] public  static Vector2 LeftstickSensi;
     [Header("コントローラーデッドゾーン")]
-    [SerializeField] private float DeadZone;
+    [SerializeField] public static float DeadZone;
     [Header("デバッグ用")]
     [SerializeField] private Vector2 Leftstick;
     [SerializeField] private float RoghtStickRot;
@@ -36,6 +36,13 @@ public class FPSCameraTarget2 : MonoBehaviour
         MouseAxis.y = Input.GetAxis("Mouse Y");
         if (PlayerInputTest.GetChargeMode())
         {
+            MouseMove.x = TPSCameraTargetMove.MouseMove.x ;
+            if(TPSCameraTargetMove.MouseMove.y<0.6)
+            {
+                //MouseMove.y = 0.6f-TPSCameraTargetMove.MouseMove.y;
+
+            }
+            MouseMove.y = 1.2f-TPSCameraTargetMove.MouseMove.y;
             ChargeFlg = false;
         }
         if (!PlayerRotation.GetControllerUse())
@@ -56,7 +63,7 @@ public class FPSCameraTarget2 : MonoBehaviour
             {
                 Leftstick.y = 0;
             }
-            MouseMove -= new Vector2(-Leftstick.x * LeftstickSensi.x * Time.deltaTime, Leftstick.y * LeftstickSensi.y * Time.deltaTime);
+            MouseMove += new Vector2(Leftstick.x * LeftstickSensi.x * Time.deltaTime, Leftstick.y * LeftstickSensi.y * Time.deltaTime);
             if (Gamepad.current.dpad.ReadValue().y < -DeadZone)
             {
                // FPSCameraDistance -= 0.1f;
@@ -80,12 +87,12 @@ public class FPSCameraTarget2 : MonoBehaviour
         if (!PlayerInputTest.GetChargeMode() && ChargeFlg == false)
         {
             ChargeFlg = true;
-           // MouseMove.x = FPSMouseMoveX.GetMouseMoveX() + 0.5f;
-            MouseMove.y = 0.6f;
+            //MouseMove.x = TPSCameraTargetMove.MouseMove.x + 0.5f;
+            //MouseMove.y = 0.6f;
         }
         MouseX = MouseMove.x - 0.5f;
         // 座標の更新
-        transform.position = pos + PlayerTransform.position;
+        transform.position = pos +  new Vector3( PlayerTransform.position.x, PlayerTransform.position.y-1, PlayerTransform.position.z);
         // transform.LookAt(PlayerTransform.position);
 
     }
@@ -105,5 +112,11 @@ public class FPSCameraTarget2 : MonoBehaviour
         }
 
         return degree;
+    }
+    public static void SetFPSSetting(Vector2 MSensi, Vector2 CSensi, float Dead)
+    {
+        FPSMouseSensi = MSensi;
+        LeftstickSensi = CSensi;
+        DeadZone = Dead;
     }
 }

@@ -64,6 +64,7 @@ public class Player_Walk : MonoBehaviour
     [SerializeField] private Vector3 velocity;              // 移動方向
     [SerializeField] private float moveSpeed = 5.0f;        // 移動速度
     [SerializeField] private float applySpeed = 0.2f;       // 回転の適用速度
+    [SerializeField] private int Rot = 0;
     //[SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
     private void Awake()
     {
@@ -136,7 +137,7 @@ public class Player_Walk : MonoBehaviour
         {
             if (PlayerRotation.GetPlayerMove())
             {
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                // transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 eState = PLAYER_STATE.WALK_STATE;
             }
 
@@ -146,7 +147,7 @@ public class Player_Walk : MonoBehaviour
                 //this.animator.SetBool(key_isWalk, true);
                 //this.animator.SetBool(key_isRun, false);
 
-
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     eState = PLAYER_STATE.RUN_STATE;
@@ -159,22 +160,7 @@ public class Player_Walk : MonoBehaviour
             {
                 moveSpeed = 7.5f;
 
-                //if (Input.GetKey(KeyCode.W))
-                //{
-                //   transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                //}
-                //if (Input.GetKey(KeyCode.A))
-                //{
-                //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                //}
-                //if (Input.GetKey(KeyCode.S))
-                //{
-                //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                //}
-                //if (Input.GetKey(KeyCode.D))
-                //{
-                //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                //}
+                
                 if (PlayerRotation.GetPlayerMove())
                 {
                     transform.position += transform.forward * moveSpeed * Time.deltaTime;
@@ -182,47 +168,49 @@ public class Player_Walk : MonoBehaviour
 
             }
         }
-        else
-        {
-            moveSpeed = 4.0f;
-            if (PlayerRotation.GetPlayerMove())
+            if (PlayerInputTest.GetChargeMode())
             {
-                switch (PlayerRotation.GetPlayerRotation())
+                moveSpeed = 4.0f;
+                if (PlayerRotation.GetPlayerMove())
                 {
-                    case 0:
-                        transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                        break;
-                    case 1:
-                        transform.position += transform.forward * moveSpeed/2 * Time.deltaTime;
-                        transform.position += transform.right * moveSpeed/2 * Time.deltaTime;
+                Rot = PlayerRotation.GetPlayerRotation();
+                    switch (Rot)
+                    {
+                        case 0:
+                            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                            break;
+                        case 1:
+                            transform.position += transform.forward * moveSpeed / 2 * Time.deltaTime;
+                            transform.position += transform.right * moveSpeed / 2 * Time.deltaTime;
 
-                        break;
-                    case 2:
-                        transform.position += transform.right * moveSpeed * Time.deltaTime;
-                        break;
-                    case 3:
-                        transform.position += transform.right * moveSpeed/2 * Time.deltaTime;
-                        transform.position -= transform.forward * moveSpeed/2 * Time.deltaTime;
+                            break;
+                        case 2:
+                            transform.position += transform.right * moveSpeed * Time.deltaTime;
+                            break;
+                        case 3:
+                            transform.position += transform.right * moveSpeed / 2 * Time.deltaTime;
+                            transform.position -= transform.forward * moveSpeed / 2 * Time.deltaTime;
 
-                        break;
-                    case 4:
-                        transform.position -= transform.forward * moveSpeed * Time.deltaTime;
-                        break;
-                    case 5:
-                        transform.position -= transform.forward * moveSpeed/2 * Time.deltaTime;
-                        transform.position -= transform.right * moveSpeed/2 * Time.deltaTime;
+                            break;
+                        case 4:
+                            transform.position -= transform.forward * moveSpeed * Time.deltaTime;
+                            break;
+                        case 5:
+                            transform.position -= transform.forward * moveSpeed / 2 * Time.deltaTime;
+                            transform.position -= transform.right * moveSpeed / 2 * Time.deltaTime;
 
-                        break;
-                    case 6:
-                        transform.position -= transform.right * moveSpeed * Time.deltaTime;
-                        break;
-                    case 7:
-                        transform.position -= transform.right * moveSpeed/2 * Time.deltaTime;
-                        transform.position += transform.forward * moveSpeed/2 * Time.deltaTime;
-                        break;
-                    default:
-                        break;
-                }
+                            break;
+                        case 6:
+                            transform.position -= transform.right * moveSpeed * Time.deltaTime;
+                            break;
+                        case 7:
+                            transform.position -= transform.right * moveSpeed / 2 * Time.deltaTime;
+                            transform.position += transform.forward * moveSpeed / 2 * Time.deltaTime;
+                            break;
+                        default:
+                            break;
+                    }
+                
             }
         }
 
