@@ -17,13 +17,24 @@ public class CHPBar : MonoBehaviour
     #region variable
     [System.NonSerialized]
     public Slider scHPSlider;
-    private int nNumber;                // 何番目のHPバーか
+    [System.NonSerialized]
+    public int nNumber;                // 何番目のHPバーか
     [System.NonSerialized]
     public int nCurrentValue;          // 現在のスライダーの値
     [System.NonSerialized]
     public int nMaxValue;
     [System.NonSerialized]
     public GameObject objPlayer;
+    [System.NonSerialized]
+    public float fSetValue;     // セットする最終数値
+    [System.NonSerialized]
+    public bool isStaging = false;     // 減少演出中か
+    [System.NonSerialized]
+    public float fDecNum;
+    [System.NonSerialized]
+    public float fStartValue;
+    [System.NonSerialized]
+    public float fCurrentValue;
     #endregion
 
     // Start is called before the first frame update
@@ -37,7 +48,7 @@ public class CHPBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("value" + nCurrentValue);
+        
     }
 
     /*
@@ -86,5 +97,4 @@ public class CHPBar : MonoBehaviour
     }
     #endregion
 
-   
 }

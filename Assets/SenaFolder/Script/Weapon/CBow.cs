@@ -63,6 +63,8 @@ public class CBow : MonoBehaviour
     //private int nUseHP = 0;                 // 矢を撃つのに使用するHP
     private bool isShot = false;            // 矢を撃ったかどうか
     private AudioSource audioSource;
+    private GameObject objString;
+    private EffekseerEmitter effString;
     #endregion
 
     // Start is called before the first frame update
@@ -96,7 +98,6 @@ public class CBow : MonoBehaviour
         #region charge action
         if (Input.GetMouseButtonDown(0))
         {
-           
             ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
         }
         #endregion
@@ -134,7 +135,7 @@ public class CBow : MonoBehaviour
         //Debug.Log("Step:" + nCurrentAtkStep);
         #endregion
 
-        Debug.Log("威力段階数" + nCurrentAtkStep);
+        //Debug.Log("威力段階数" + nCurrentAtkStep);
     }
     #endregion
 
@@ -160,8 +161,8 @@ public class CBow : MonoBehaviour
                 CreateArrow();      // 矢を生成する
 
                 // 弦の形を変更する
-                GameObject objString = transform.Find("eff_string").gameObject;
-                EffekseerEmitter effString;
+                //ChangeStringShape();
+                objString = transform.Find("eff_string").gameObject;
                 effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
                 effString.enabled = true;
                 effString = objString.GetComponent<CEffectManager>().GetEmitterEff(0);
@@ -176,7 +177,8 @@ public class CBow : MonoBehaviour
 
                 // 威力分を加える
                 int nUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-                objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nUseHP);
+                objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(-1 * nUseHP);
+
                 nOldStep = nCurrentAtkStep;
 
                 // 効果音再生
@@ -188,10 +190,13 @@ public class CBow : MonoBehaviour
             case STATE_BOW.BOW_SHOT:
                 g_state = STATE_BOW.BOW_SHOT;
                 isShot = true;
-                audioSource.PlayOneShot(seShot);
-                objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
+                audioSource.PlayOneShot(seShot);        // 効果音の再生
+                //objPlayer.GetComponent<CCharactorManager>().SetHpBarAnim();
+                //objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nShotUseHP);
+
                 int nShotUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-                objPlayer.GetComponent<CSenaPlayer>().DecBGHPBar(-1 * nShotUseHP);
+                // PlayerのHPを発射に使うHP+威力調整に使うHP分減らす
+                objPlayer.GetComponent<CCharactorManager>().ChangeHP(-1 * nShotUseHP);
                 int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
                 objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue);        // 矢を発射する
                 break;
@@ -202,18 +207,24 @@ public class CBow : MonoBehaviour
                 for (int i = 0; i < objCursur.Length; ++i)
                     objCursur[i].GetComponent<CCursur>().setCursur(CCursur.KIND_CURSURMOVE.STOP);  // カーソルを止める
                 scChargeSlider.setSlider(CChargeSlider.KIND_CHRGSLIDERMOVE.MAXCHARGE);       // スライダーを止める
-                Debug.Log("ChargeMax");
+
+                //Debug.Log("ChargeMax");
                 break;
 
             // チャージリセット状態
             case STATE_BOW.BOW_RESET:
                 g_state = STATE_BOW.BOW_RESET;
+
+                effString = objString.GetComponent<CEffectManager>().GetEmitterEff(0);
+                effString.enabled = true;
+                effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
+                effString.enabled = false;
+
                 // 矢を発射していなければHPバーをリセットする
                 if (!isShot)
                 {
                     int nResetUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
-                    objPlayer.GetComponent<CSenaPlayer>().CalcFrontBarNum();
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(nResetUseHP);
+                    objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(nResetUseHP);
                 }
                 else
                     isShot = false;
@@ -245,11 +256,14 @@ public class CBow : MonoBehaviour
                 fChargeTime += Time.deltaTime;
                 TellChargeTime();       // チャージ時間をスライダーに伝える
 
+                Debug.Log("現在のステップ:" + nCurrentAtkStep);
                 // 段階数が変わった時HPバーを修正する
                 if (nOldStep != nCurrentAtkStep)
                 {
+                    Debug.Log("前ステップ:" + nOldStep);
+                    Debug.Log("StepChange");
                     int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nChargeUseHP);
+                    objPlayer.GetComponent<CCharactorManager>().ChangeHPFront(-1 * nChargeUseHP);
                 }
                 if (fChargeTime > (currentChargeStep + 1) * fValChargeTime)
                 {
@@ -277,7 +291,7 @@ public class CBow : MonoBehaviour
                 if (nOldStep != nCurrentAtkStep)
                 {
                     int nChargeUseHP = nAdjustHp * (nCurrentAtkStep - nOldStep);
-                    objPlayer.GetComponent<CSenaPlayer>().DecFrontHPBar(-1 * nChargeUseHP);
+                    objPlayer.GetComponent<CSenaPlayer>().ChangeHPFront(-1 * nChargeUseHP);
                 }
                 nOldStep = nCurrentAtkStep;
 
@@ -417,4 +431,19 @@ public class CBow : MonoBehaviour
         return maxDecStep;
     }
     #endregion
+    
+    /*
+    * @brief 弦の形を変更する
+    */
+    //#region change string shape
+    //private void ChangeStringShape(bool flg)
+    //{
+    //    GameObject objString = transform.Find("eff_string").gameObject;
+    //    EffekseerEmitter effString;
+    //    effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
+    //    effString.enabled = true;
+    //    effString = objString.GetComponent<CEffectManager>().GetEmitterEff((0);
+    //    effString.enabled = false;
+    //}
+    //#endregion
 }

@@ -14,11 +14,14 @@ public class CSenaPlayer : CCharactorManager
     [SerializeField] private GameObject DeadEffect;
     [SerializeField] private GameObject objWeapon;              // 武器オブジェクト
     [SerializeField] private GameObject GameOverUI;
+    [SerializeField] private GameObject HPNumUI;                // HPバーの数字表記UI
     #endregion
 
     // 変数宣言
     #region variable
     private CHARACTORSTATE playerState;
+    private CHPText hpText;
+    private GameObject[] objHPTexts;
     #endregion
     // Start is called before the first frame update
     #region init
@@ -27,7 +30,13 @@ public class CSenaPlayer : CCharactorManager
         InitHP();      // HPの初期化
         //InitAtk();      // 攻撃力の初期化
         playerState = CHARACTORSTATE.CHARACTOR_ALIVE;     // 生存状態に設定する
-        SetHPBar();     // HPバーUIの情報を取得する
+        //SetHPBar();     // HPバーUIの情報を取得する
+
+        // HPの数字表示UIオブジェクトを取得する
+        var children = new GameObject[HPNumUI.transform.childCount];
+        for(int i = 0; i < children.Length; ++i)
+            children[i] = HPNumUI.transform.GetChild(i).gameObject;
+        objHPTexts = children;
     }
     #endregion
 
@@ -41,7 +50,7 @@ public class CSenaPlayer : CCharactorManager
         if (Input.GetKeyDown(KeyCode.K))
             nCurrentHp = 0;
 
-        Debug.Log("HP" + nCurrentHp);
+        //Debug.Log("HP" + nCurrentHp);
         //Debug.Log("PlayerAtk" + nCurrentAtk);
     }
     #endregion
@@ -66,8 +75,11 @@ public class CSenaPlayer : CCharactorManager
                     nCurrentHp = 0;
                 }
                 #endregion
-                CalcBarNum();
-                CalcFrontBarNum();
+
+                //CalcFrontBarNum();
+                // HPが変更された場合、HP数字表示UIを変更する
+                if (nCurrentHp != nOldHp)
+                   
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
                     ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
@@ -76,6 +88,7 @@ public class CSenaPlayer : CCharactorManager
             case CHARACTORSTATE.CHARACTOR_DEAD:
                 break;
         }
+        nOldHp = nCurrentHp;    
     }
     #endregion
 
@@ -111,12 +124,12 @@ public class CSenaPlayer : CCharactorManager
      * @brief 前面のHPバーを変更する
      * @param num 変更する量
      * @sa 弓がチャージされたとき
-     * @details 消費されるHPに応じてFrontHPBarのnChangeHPBar番目の数値を変更する
+     * @details 消費されるHPに応じてFrontHPBarのnChangeBGHPBar番目の数値を変更する
 　  */
     #region dec front hp bar
     public void DecFrontHPBar(int num)
     {
-        AddFrontBar(num);
+        //AddFrontBar(num);
     }
     #endregion
 
@@ -124,7 +137,7 @@ public class CSenaPlayer : CCharactorManager
      * @brief 背面のHPバーを変更する
      * @param num 変更する量
      * @sa 弓がチャージされたとき
-     * @details 消費されるHPに応じてBGHPBarのnChangeHPBar番目の数値を変更する
+     * @details 消費されるHPに応じてBGHPBarのnChangeBGHPBar番目の数値を変更する
 　  */
     #region dec bg hp bar
     public void DecBGHPBar(int num)
@@ -142,7 +155,7 @@ public class CSenaPlayer : CCharactorManager
     #region reset hp bar
     //public void ResetHPBar()
     //{
-    //    objFrontHPBar[nChangeHPBar].GetComponent<CFrontHPBar>().ResetBarValue();
+    //    objFrontHPBar[nChangeBGHPBar].GetComponent<CFrontHPBar>().ResetBarValue();
     //}
     #endregion
 
@@ -179,4 +192,14 @@ public class CSenaPlayer : CCharactorManager
         ChangeHp(num);
     }
     #endregion
+
+    public override void ChangeHPFront(int num)
+    {
+        //nCurrentHp += num;
+        for(int i = 0; i < objHPTexts.Length; ++i)
+        {
+            objHPTexts[i].GetComponent<CHPText>().ChangeHPNum(num);
+        }
+        HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
+    }
 }

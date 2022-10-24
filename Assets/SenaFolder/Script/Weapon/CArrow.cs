@@ -12,6 +12,7 @@ public class CArrow : MonoBehaviour
     private int nArrowNum;          // 何番目の矢か
     private int nArrowAtk;          // 攻撃力
     private int nOldStep = 0;
+    private BoxCollider boxCollision;
     #endregion
 
     #region serialize field
@@ -27,6 +28,8 @@ public class CArrow : MonoBehaviour
         // 弓のオブジェクトを取得
         objBow = GameObject.FindWithTag("Weapon");
         nArrowNum = 0;
+        boxCollision = GetComponent<BoxCollider>();
+        boxCollision.enabled = false;           // 当たり判定を無効にする
         //ChangeEffectColor(objEffSide, effSide, 2);
     }
 
@@ -43,7 +46,7 @@ public class CArrow : MonoBehaviour
                 ChangeEffectColor(objEff[i], nStep, nOldStep);
         }
         nOldStep = nStep;
-        Debug.Log("取得した段階数" + nStep);
+        //Debug.Log("取得した段階数" + nStep);
     }
     /*
     * @brief 矢を発射する
@@ -59,6 +62,7 @@ public class CArrow : MonoBehaviour
         nArrowAtk = nAtk;
         Vector3 direction = -transform.up;
         rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // 矢を発射する
+        boxCollision.enabled = true;            // 当たり判定を有効にする
         //Debug.Log("arrowForce" + arrowForce);
     }
     #endregion
