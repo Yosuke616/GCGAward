@@ -25,7 +25,7 @@ public class RayToGround : MonoBehaviour
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
         NP = GameObject.Find("Spawn").GetComponent<NumPower>();
 
-        CreateEnemy = WM.GetEnemyObj();
+        //CreateEnemy = WM.GetEnemyObj();
 
         //敵の生成
         //CreateEnemy = GameObject.Find("Enemy");
@@ -71,7 +71,7 @@ public class RayToGround : MonoBehaviour
         WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
         //敵のタグを敵にする
-        CreateEnemy.tag = "Enemy";
+        //CreateEnemy.tag = "Enemy";
 
         //リストの数字を入れる
         numlist = NP.GetNumList();
@@ -97,6 +97,16 @@ public class RayToGround : MonoBehaviour
                     }
                     else
                     {
+                        //乱数を使って作る敵の種類を決める
+                        int rnd = Random.Range(0,2);
+                        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+
+                        switch (rnd) {
+                            case 0: CreateEnemy = WM.GetNineEnemyObj(); break;
+                            case 1: CreateEnemy = WM.GetEighteenEnemyObj(); break;
+                            case 2: CreateEnemy = WM.GetWalkEnemyObj(); break;
+                        }
+
                         //オブジェクトを作り出そう
                         GameObject Enemy = Instantiate(CreateEnemy,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
                         cnt = 1;
@@ -114,7 +124,7 @@ public class RayToGround : MonoBehaviour
         }
 
         //敵のタグを変える
-        CreateEnemy.tag = "Parent_Enemy";
+        //CreateEnemy.tag = "Parent_Enemy";
 
     }
 }

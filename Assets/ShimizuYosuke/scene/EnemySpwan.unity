@@ -892,7 +892,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 6729998890747504931, guid: 4c65ecd0cca74f747961b185f2dcae0e, type: 3}
-  Enemy: {fileID: 6873662595756609855, guid: b5db2101812c7e240ab84e0139dfdb49, type: 3}
+  WalkEnemy: {fileID: 7601884725608562504, guid: 5de2149def3b1ff4ca4f508c2fba89cb, type: 3}
+  NineEnemy: {fileID: 7601884725608562504, guid: 16ae9b0be138a1c42835146044dc67a6, type: 3}
+  EighteenEnemy: {fileID: 7601884725608562504, guid: 7559d64ec7fc2d241877b613f5467f23, type: 3}
 --- !u!4 &602743125
 Transform:
   m_ObjectHideFlags: 0

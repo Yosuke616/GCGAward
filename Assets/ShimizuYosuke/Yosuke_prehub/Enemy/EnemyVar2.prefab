@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 6873662595756609828}
   m_Layer: 0
   m_Name: EnemyVar2
-  m_TagString: Enemy
+  m_TagString: Parent_Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8

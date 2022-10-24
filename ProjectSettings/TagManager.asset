@@ -14,6 +14,7 @@ TagManager:
   - Slope
   - Spawn_Enemy
   - Parent_Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
