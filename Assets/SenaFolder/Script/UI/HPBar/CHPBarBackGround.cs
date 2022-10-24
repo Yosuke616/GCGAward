@@ -8,8 +8,8 @@ public class CHPBarBackGround : MonoBehaviour
     #region serialize field
     [Header("演出開始時間")]
     [SerializeField] private float fStartTime;
-    [Header("演出継続時間"),Range(0.01f, 2.0f)]
-    [SerializeField] private float fStagingTime;
+    [Header("1秒に減るHPの量"),Range(1, 10)]
+    [SerializeField] private float fValuePerSec;
     #endregion
 
     #region variable
@@ -34,6 +34,7 @@ public class CHPBarBackGround : MonoBehaviour
 
         // フラグの初期化
         isMove = false;
+        fPerChangeValue = 60.0f / 5.0f;
     }
 
     // Update is called once per frame
@@ -41,7 +42,7 @@ public class CHPBarBackGround : MonoBehaviour
     {
         if (isMove)
         {
-            slider.value -= fPerChangeValue;
+            slider.value -= fPerChangeValue * Time.deltaTime;
 
             if (slider.value <= fChangeValue)
                 isMove = false;
@@ -60,9 +61,7 @@ public class CHPBarBackGround : MonoBehaviour
         //if (num < 0)
         // 変更先の値を格納する
         fChangeValue = slider.value + num;
-        // 1フレームで変更する量を計算する
-        fPerChangeValue = Mathf.Abs(num) / (60.0f * fStagingTime);
-        Debug.Log("バーが動きます");
+        //Debug.Log("バーが動きます");
         StartCoroutine("setSliderMove");
     }
     #endregion 
