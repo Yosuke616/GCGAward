@@ -62,6 +62,9 @@ public class WalkEnemy : MonoBehaviour
     //頭
     private GameObject head;
 
+    //ウェーブマネージャー取得
+    WaveManager WM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,6 +110,7 @@ public class WalkEnemy : MonoBehaviour
         Obj.GetComponent<BoxCollider>().enabled = false;
         Obj.tag = "Enemy_Start_Pos";
 
+        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
     }
 
     // Update is called once per frame
@@ -279,13 +283,12 @@ public class WalkEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Arrow")
         {
             //スコアを加算させる
-            WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
             WM.AddScore(100);
-
-
+            Destroy(this.gameObject);
+            WM.AddBreakEnemy();
+            WM.DecEnemy();
 
             //HPを回復させる
-            GameObject obj = GameObject.Find("unitychan");
 
         }
 
