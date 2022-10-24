@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: -4313625857623516898}
   m_Layer: 0
   m_Name: wall01_2
-  m_TagString: Untagged
+  m_TagString: Slope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
