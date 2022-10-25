@@ -48,7 +48,7 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField]private bool b_Left = false;
     [SerializeField]private bool b_Right = true;
     [SerializeField] private int PlayerDirect = 0;
-    private static float PlayerRotY = 0.0f;
+    private static float PlayerRotY = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +61,7 @@ public class PlayerInputTest : MonoBehaviour
     {
         if (Gamepad.current == null) b_Controller = true;
         controller = PlayerRotation.GetControllerUse();
-        
+
         Vector3 pos = this.transform.position;
         Quaternion myRotation = this.transform.rotation;
         //myRotation = Quaternion.identity;
@@ -82,7 +82,7 @@ public class PlayerInputTest : MonoBehaviour
             //‰ñ“]‚·‚é‚Æ‚«A·•ª‚ðŽæ‚Á‚ÄÅ’Z‚ÌŒü‚«‚Å‰ñ“]‚³‚¹‚éB
             //‚±‚ÌŽž’ˆÓ‚·‚×‚«“_‚ªA-180‚Æ180‚ð‹¤—L‚µ‚Ä‚¢‚é‚½‚ßAÅ’Z‚ÌŒü‚«‚Ì’Tõ‚É‚Íâ‘Î’l‚ð—˜—p‚·‚éB
 
-            TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+            TPSCameraEulerY = Mathf.Round(TPSCamera.transform.eulerAngles.y*10)/10;
             if (playerEulerY - TPSCameraEulerY > 180)
             {
                // playerEulerY -= 360;
@@ -95,12 +95,13 @@ public class PlayerInputTest : MonoBehaviour
 
             if(playerEulerY<TPSCameraEulerY)
             {
-                rotYDif = -(this.transform.eulerAngles.y - TPSCamera.transform.eulerAngles.y);
+                rotYDif = -(this.transform.eulerAngles.y -TPSCamera.transform.eulerAngles.y);
+             
 
             }
             else
             {
-                rotYDif = -(this.transform.eulerAngles.y - (TPSCamera.transform.eulerAngles.y-360));
+                rotYDif = -(this.transform.eulerAngles.y -(TPSCamera.transform.eulerAngles.y-360));
             }
             if(rotYDif>360)
             {
@@ -124,6 +125,8 @@ public class PlayerInputTest : MonoBehaviour
             }
             if (rotYDif < 1 && rotYDif > -1)
                 rotYDif = 0;
+              rotYDif = Mathf.Round(rotYDif);
+            
 //            if (Input.GetKey(KeyCode.W))
 //            {
 //                PlayerMoveFlg = true;
@@ -379,4 +382,5 @@ public class PlayerInputTest : MonoBehaviour
     {
         TriggerDeadZone = Dead;
     }
+   
 }

@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class Player_Walk : MonoBehaviour
 {
@@ -148,10 +149,18 @@ public class Player_Walk : MonoBehaviour
                 //this.animator.SetBool(key_isRun, false);
 
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (!PlayerRotation.GetControllerUse())
                 {
-                    eState = PLAYER_STATE.RUN_STATE;
-                    //this.animator.SetBool(key_isRun, true);
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        eState = PLAYER_STATE.RUN_STATE;
+                        //this.animator.SetBool(key_isRun, true);
+                    }
+                }
+                else 
+                {
+                    if (Gamepad.current.leftTrigger.ReadValue() > PlayerSettings.LTDeadZoneGetter)
+                        eState = PLAYER_STATE.RUN_STATE;
                 }
             }
 
