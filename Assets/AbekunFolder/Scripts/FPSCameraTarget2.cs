@@ -34,7 +34,7 @@ public class FPSCameraTarget2 : MonoBehaviour
     {
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
-        if (PlayerInputTest.GetChargeMode())
+        if (PlayerInputTest.GetChargeMode()&&ChargeFlg==true)
         {
             MouseMove.x = TPSCameraTargetMove.MouseMove.x ;
             if(TPSCameraTargetMove.MouseMove.y<0.6)
@@ -64,23 +64,16 @@ public class FPSCameraTarget2 : MonoBehaviour
                 Leftstick.y = 0;
             }
             MouseMove += new Vector2(Leftstick.x * LeftstickSensi.x * Time.deltaTime, Leftstick.y * LeftstickSensi.y * Time.deltaTime);
-            if (Gamepad.current.dpad.ReadValue().y < -DeadZone)
-            {
-               // FPSCameraDistance -= 0.1f;
-            }
-            if (Gamepad.current.dpad.ReadValue().y > DeadZone)
-            {
-                //FPSCameraDistance += 0.1f;
-            }
+           
 
         }
         FPSCameraDistance = Mathf.Clamp(FPSCameraDistance, 1.0f, 5);
-        MouseMove.y = Mathf.Clamp(MouseMove.y, -0.4f + 0.5f, 0.4f + 0.5f);
+        MouseMove.y = Mathf.Clamp(MouseMove.y, -0.15f + 0.5f, 0.3f + 0.5f);
         //MouseMove += new Vector2(Input.GetAxis("Mouse X")*FPSMouseSensi, Input.GetAxis("Mouse Y")*FPSMouseSensi);
         // ãÖñ ç¿ïWånïœä∑
-        pos.x = FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Cos((MouseMove.x+1) * Mathf.PI);
+        pos.x = FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Cos((MouseMove.x+1.0f) * Mathf.PI);
         pos.y = -FPSCameraDistance * Mathf.Cos(MouseMove.y * Mathf.PI);
-        pos.z = -FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Sin((MouseMove.x+1) * Mathf.PI);
+        pos.z = -FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Sin((MouseMove.x+1.0f) * Mathf.PI);
         //pos *= nowPos.z;
 
         //pos.y += nowPos.y;

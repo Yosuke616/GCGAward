@@ -46,7 +46,11 @@ public class PlayerRotation : MonoBehaviour
         {
             playerMove = false;
             this.transform.LookAt(FPSTargetMove);
-            this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y,0);
+            if(this.transform.rotation.x>0)
+            {
+                this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            }
+            //this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y,0);
             if (ControllerUse)
             {
                 ControllerLeftStick = Gamepad.current.leftStick.ReadValue();
@@ -164,6 +168,8 @@ public class PlayerRotation : MonoBehaviour
         }
         else
         {
+            this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y,0);
+
             if (PlayerYRot > 181)
             {
                 PlayerYRot -= 360;
@@ -326,10 +332,8 @@ public class PlayerRotation : MonoBehaviour
                 {
                     RotDif = RotDif - 360;
                 }
-                if (RotDif > 1 || RotDif < -1)
-                {
                     this.transform.eulerAngles += new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
-                }
+                
             }
             else
             {

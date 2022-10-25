@@ -43,7 +43,7 @@ public class TPSCameraTargetMove : MonoBehaviour
         {
             MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * TPSMouseSensi.x, Input.GetAxis("Mouse Y")) * Time.deltaTime * TPSMouseSensi.y ;
 
-            WheelAxis = Input.GetAxis("Mouse ScrollWheel");
+            WheelAxis = -Input.GetAxis("Mouse ScrollWheel");
             TPSCameraDistance += WheelAxis;
         }
         else
@@ -60,11 +60,11 @@ public class TPSCameraTargetMove : MonoBehaviour
             MouseMove -= new Vector2(-RightStick.x * RightStickSensi.x * Time.deltaTime, RightStick.y * RightStickSensi.y * Time.deltaTime);
             if(Gamepad.current.dpad.ReadValue().y<-RightStickDeadZone)
             {
-                TPSCameraDistance -= 0.1f;
+                TPSCameraDistance += 0.1f;
             }
             if (Gamepad.current.dpad.ReadValue().y>RightStickDeadZone)
             {
-                TPSCameraDistance += 0.1f;
+                TPSCameraDistance -= 0.1f;
             }
 
         }
