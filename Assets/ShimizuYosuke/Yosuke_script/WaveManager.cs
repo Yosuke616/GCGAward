@@ -43,7 +43,6 @@ public class WaveManager : MonoBehaviour
         scoreText = obj.transform.Find("Score").gameObject.GetComponent<Text>();
         enemyText = obj.transform.Find("Enemy").gameObject.GetComponent<Text>();
         waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
-        MaxEnemy = obj.transform.Find("Max").gameObject.GetComponent<Text>();
 
         //敵の数は初期数は3
         nMaxEnemy = nEnemyNum = 3;
@@ -90,6 +89,20 @@ public class WaveManager : MonoBehaviour
             GameObject obj = GameObject.FindGameObjectWithTag("Enemy");
             Destroy(obj);
         }
+    }
+
+    //ヘッドショットの数を取得する
+    public int GetHeadShot() {
+        return nHeadShot;
+    }
+
+    //倒した敵の数を取得する
+    public int GetBreakEnemy() {
+        return nBreakEnemyNum;
+    }
+
+    public int GetScore() {
+        return nScore;
     }
 
     //ウェーブ数を取得する

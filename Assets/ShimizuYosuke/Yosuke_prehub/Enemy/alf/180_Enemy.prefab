@@ -42,10 +42,10 @@ GameObject:
   - component: {fileID: 3301036964677654963}
   - component: {fileID: 3301036964677654958}
   - component: {fileID: 3301036964677654961}
-  - component: {fileID: 3301036964677654960}
   - component: {fileID: 104367204754497311}
+  - component: {fileID: 1633869020826924067}
   m_Layer: 0
-  m_Name: 90_Enemy
+  m_Name: 180_Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 13
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3301036964677654961
 Rigidbody:
@@ -98,22 +98,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &3301036964677654960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3301036964677654962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 247186e5105c223409eb0a887bdefd40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet_Speed: 20
-  BULLET_DELTTIME: 300
-  bChase: 1
-  ACTTIME: 180
 --- !u!65 &104367204754497311
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -127,6 +111,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: -0.06, y: 0.72, z: 0}
+--- !u!114 &1633869020826924067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3301036964677654962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6e88af59b22d74bbdb479f4c1f9a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet_Speed: 20
+  BULLET_DELTTIME: 300
+  bChase: 1
+  ACTTIME: 180
 --- !u!1 &3301036964970476584
 GameObject:
   m_ObjectHideFlags: 0

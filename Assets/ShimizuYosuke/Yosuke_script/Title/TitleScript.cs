@@ -140,8 +140,8 @@ public class TitleScript : MonoBehaviour
                 Str_Chil.SetActive(true);
                 //かっこの場所を変更する
                 if (bChangeFlg) {
-                    Right_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x + 135.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x - 80.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x + 240.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x - 250.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
                 break;
@@ -153,8 +153,8 @@ public class TitleScript : MonoBehaviour
                 Tuto_Chil.SetActive(true);
                 //かっこの場所を変更する
                 if (bChangeFlg) {
-                    Right_Bracket.transform.position = new Vector3(Tutorial_Btn.transform.position.x + 135.0f, Tutorial_Btn.transform.position.y, Tutorial_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(Tutorial_Btn.transform.position.x - 125.0f, Tutorial_Btn.transform.position.y, Tutorial_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(Tutorial_Btn.transform.position.x + 335.0f, Tutorial_Btn.transform.position.y, Tutorial_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Tutorial_Btn.transform.position.x - 325.0f, Tutorial_Btn.transform.position.y, Tutorial_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
                 break;
@@ -164,8 +164,8 @@ public class TitleScript : MonoBehaviour
                 Opt_Chil.SetActive(true);
                 //かっこの場所を変更する
                 if (bChangeFlg) {
-                    Right_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x + 130.0f, Option_Btn.transform.position.y+20.0f, Option_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x - 75.0f, Option_Btn.transform.position.y+20.0f, Option_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x + 260.0f, Option_Btn.transform.position.y-20.0f, Option_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x - 250.0f, Option_Btn.transform.position.y-20.0f, Option_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
                 break;
@@ -176,8 +176,8 @@ public class TitleScript : MonoBehaviour
                 //かっこの場所を変更する
                 if (bChangeFlg)
                 {
-                    Right_Bracket.transform.position = new Vector3(End_Btn.transform.position.x + 100.0f, End_Btn.transform.position.y+20.0f, End_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(End_Btn.transform.position.x - 75.0f, End_Btn.transform.position.y+20.0f, End_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(End_Btn.transform.position.x + 175.0f, End_Btn.transform.position.y+15.0f, End_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(End_Btn.transform.position.x - 125.0f, End_Btn.transform.position.y+15.0f, End_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
                 break;
