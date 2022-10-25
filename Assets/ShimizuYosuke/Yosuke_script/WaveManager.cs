@@ -33,6 +33,12 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject NineEnemy;
     [SerializeField] private GameObject EighteenEnemy;
 
+    private void Awake()
+    {
+        //60fps
+        Application.targetFrameRate = 60;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +51,7 @@ public class WaveManager : MonoBehaviour
         waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
 
         //敵の数は初期数は3
-        nMaxEnemy = nEnemyNum = 3;
+        nMaxEnemy = nEnemyNum = 30;
         //ウェーブ数は1にする
         nWaveNum = 1;
         //ヘッドショットは0にする
@@ -196,13 +202,9 @@ public class WaveManager : MonoBehaviour
         rNP.SetList(nMaxEnemy);
 
         //敵を生成しなおす
-        List<GameObject> RTGlist = new List<GameObject>();
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Spawn_Enemy");
-        foreach (GameObject obj in gameObjects) {
-            RTGlist.Add(obj);
-        }
-
-        foreach (GameObject obj in RTGlist) {
+        AutoEnemy AE = GameObject.Find("Spawn").GetComponent<AutoEnemy>();
+        
+        foreach (GameObject obj in AE.GetList()) {
             obj.GetComponent<RayToGround>().ReCreateEnemy();
         }
 

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AutoEnemy : MonoBehaviour
 {
-    //タグを検索して"Ground"のタグを付けている奴を入れるリストを作成する
-    List<GameObject> GroundList = new List<GameObject>();
 
     //生成したいオブジェクト
     [SerializeField]private GameObject CreateObj;
+
+    private List<GameObject> spawnList = new List<GameObject>();
 
     [Header("どのくらいの高さに生成するかを決める")]
     [SerializeField] private float Create_Height = 100;
@@ -19,12 +19,8 @@ public class AutoEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //タグを検索して"Ground"のタグを付けている奴を入れるリストを作成する
         GameObject[] tags = GameObject.FindGameObjectsWithTag("Ground");
-        //foreachで"Ground"のタグの物にリストを作る
-        foreach (GameObject obj in tags) {
-            GroundList.Add(obj);
-            cnt++;
-        }
 
         //番号振り分けスクリプトをアタッチする
         this.gameObject.AddComponent<NumPower>();
@@ -33,14 +29,17 @@ public class AutoEnemy : MonoBehaviour
         int nEnemy = 0;
 
         //リストに入ったオブジェクトの上空にオブジェクトを作る
-        foreach (GameObject obj in GroundList) {
+        foreach (GameObject obj in tags) {
             GameObject ray = Instantiate(CreateObj,new Vector3(obj.transform.position.x, Create_Height, obj.transform.position.z), Quaternion.identity);
             //レイを飛ばすためのスクリプトをアタッチする
             ray.AddComponent<RayToGround>();
             ray.AddComponent<RayView>();
             ray.GetComponent<RayToGround>().SetNumber(nEnemy);
             ray.tag = "Spawn_Enemy";
+            spawnList.Add(ray);
             nEnemy++;
+            cnt++;
+
         }
 
     }
@@ -51,11 +50,11 @@ public class AutoEnemy : MonoBehaviour
         
     }
 
-    private void RemoveListbyID(GameObject id,List<GameObject> list) {
-        GroundList.Remove(id);
-    }
-
     public int GetNum() {
         return cnt;
+    }
+
+    public List<GameObject> GetList() {
+        return spawnList;
     }
 }
