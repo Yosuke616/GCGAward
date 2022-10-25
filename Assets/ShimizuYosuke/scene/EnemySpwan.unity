@@ -1092,6 +1092,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   applySpeed: 0.2
+  Rot: 0
 --- !u!114 &398885726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,15 +1107,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FPSTargetMove: {fileID: 1675889135}
   PlayerYRot: 0
-  rightTurn: 1
   RotDif: 0
+  PlayerMoveFlg: 0
   Direct: 0
-  Controller: 0
   ControllerDeadZone: 0.5
   ControllerLeftStick: {x: 0, y: 0}
   ControllerLeftStickInput: 0
   controllerRot: 0
-  FPS: {fileID: 1675889135}
 --- !u!114 &398885727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,7 +1162,7 @@ MonoBehaviour:
   PlayerRot: 1
   FPSCamera: {fileID: 1921290217}
   TPSCamera: {fileID: 825664526}
-  deadZone: 0.5
+  ChargeFlg: 0
   b_Controller: 0
   TPSTarget: {fileID: 704142604}
   PlayerAngleY: 0
@@ -1606,9 +1605,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 398885724}
-  WalkEnemy: {fileID: 7601884725608562504, guid: 5de2149def3b1ff4ca4f508c2fba89cb, type: 3}
+  WalkEnemy: {fileID: 3301036964677654962, guid: 07e4ce802d65dd54098b89d3fdaef1ec, type: 3}
   NineEnemy: {fileID: 3301036964677654962, guid: b408808dce97bae4b90f7b6fcb0bee77, type: 3}
-  EighteenEnemy: {fileID: 7601884725608562504, guid: 7559d64ec7fc2d241877b613f5467f23, type: 3}
+  EighteenEnemy: {fileID: 3301036964677654962, guid: b7be0d1934a50014ba2240c3dd030e40, type: 3}
 --- !u!4 &602743125
 Transform:
   m_ObjectHideFlags: 0
@@ -2841,15 +2840,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FPSTargetMove: {fileID: 1921290218}
   PlayerYRot: 0
-  rightTurn: 1
   RotDif: 0
+  PlayerMoveFlg: 0
   Direct: 0
-  Controller: 0
   ControllerDeadZone: 0.5
   ControllerLeftStick: {x: 0, y: 0}
   ControllerLeftStickInput: 0
   controllerRot: 0
-  FPS: {fileID: 1675889135}
 --- !u!4 &1033132746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2917265250218046461, guid: 24050438177d51a40aeee098b7fd767f, type: 3}
@@ -4742,6 +4739,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2917265250218046461, guid: 24050438177d51a40aeee098b7fd767f, type: 3}
   m_PrefabInstance: {fileID: 17024474}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1500757128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1500757130}
+  - component: {fileID: 1500757129}
+  m_Layer: 0
+  m_Name: PlayerSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1500757129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500757128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d59ce52532687e4b9c7fbf565014cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Controller: 0
+  TPSMouseSensiX: 1
+  TPSMouseSensiY: 1
+  FPSMouseSensiX: 1
+  FPSMouseSensiY: 1
+  TPSControllerSensiX: 1
+  TPSControllerSensiY: 1
+  TPSControllerDeadZone: 0.1
+  FPSControllerSensiX: 1
+  FPSControllerSensiY: 1
+  FPSControllerDeadZone: 0.5
+  TriggerDeadZone: 0.5
+--- !u!4 &1500757130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500757128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.0368896, y: 5.677206, z: 19.039612}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1501489084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2917265250218046461, guid: 24050438177d51a40aeee098b7fd767f, type: 3}
@@ -5001,6 +5054,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4288539276822920033, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
+      propertyPath: FPS
+      value: 
+      objectReference: {fileID: 1675889135}
+    - target: {fileID: 4288539276822920033, guid: ccd7a68dfb2b5e8438d675a1263c53de, type: 3}
       propertyPath: objPlayer
       value: 
       objectReference: {fileID: 398885724}
@@ -5119,10 +5176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 398885734}
   FPSCameraDistance: 30
-  FPSMouseSensi: {x: 1, y: 1}
-  MouseMove: {x: 0, y: 0}
-  LeftstickSensi: {x: 1, y: 1}
-  DeadZone: 0
   Leftstick: {x: 0, y: 0}
   RoghtStickRot: 0
   MouseAxis: {x: 0, y: 0}
