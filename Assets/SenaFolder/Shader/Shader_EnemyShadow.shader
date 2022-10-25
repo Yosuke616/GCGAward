@@ -14,39 +14,51 @@ Shader "Unlit/Shader_EnemyShadow"
         Blend SrcAlpha OneMinusSrcAlpha
         ZTest Always
 
+        //// Pass01
+        //Pass
+        //{
+        //  /*  ColorMask 0
+        //    ZTest Always
+        //    ZWrite Off*/
+        //    Stencil
+        //    {
+        //        Ref[_Mask]
+        //        Comp Equal
+        //    }
         // Pass01
         Pass
         {
-          /*  ColorMask 0
-            ZTest Always
-            ZWrite Off*/
+            // Pass01
             Stencil
             {
-                Ref[_Mask]
+                Ref 1
+                Comp Equal
+                Pass IncrSat
+            }
+            ColorMask 0
+            ZTest Always
+            ZWrite Off
+
+        // Pass02
+      /*  Pass
+        {
+            Stencil
+            {
+                Ref 3
+                Comp Always
+                Pass Replace
+            }
+        }*/
+        // Pass03
+       /* Pass
+        {
+            Stencil
+            {
+                Ref 2
                 Comp Equal
             }
-
-        //// Pass02
-        //Pass
-        //{
-        //    ColorMask 0
-        //    Stencil
-        //    {
-        //        Ref 3
-        //        Comp Always
-        //        Pass Replace
-        //    }
-        //}
-
-        //// Pass03
-        //Pass
-        //{
-        //    ZTest Always
-        //    Stencil
-        //    {
-        //        Ref 2
-        //        Comp Equal
-        //    }
+            ZTest Always
+        }*/
         CGPROGRAM
         // •`‰æ
         #pragma vertex vert_img
@@ -61,7 +73,7 @@ Shader "Unlit/Shader_EnemyShadow"
             fixed4 col = fixed4(1.0f, 0.49f, 0.44f, alpha);
             return col;
         }
-        ENDCG
+            ENDCG
         }
     }
 }
