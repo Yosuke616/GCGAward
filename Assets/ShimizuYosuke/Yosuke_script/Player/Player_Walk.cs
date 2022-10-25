@@ -66,6 +66,10 @@ public class Player_Walk : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;        // 移動速度
     [SerializeField] private float applySpeed = 0.2f;       // 回転の適用速度
     [SerializeField] private int Rot = 0;
+    public static bool DashFlg = false;
+    public static bool WalkFlg = false;
+    public static bool ChargeFlg = false;
+
     //[SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
     private void Awake()
     {
@@ -145,6 +149,7 @@ public class Player_Walk : MonoBehaviour
             if (eState == PLAYER_STATE.WALK_STATE)
             {
                 moveSpeed = 3.5f;
+                WalkFlg = true;
                 //this.animator.SetBool(key_isWalk, true);
                 //this.animator.SetBool(key_isRun, false);
 
@@ -163,12 +168,16 @@ public class Player_Walk : MonoBehaviour
                         eState = PLAYER_STATE.RUN_STATE;
                 }
             }
+            else
+            {
+                WalkFlg = false;
+            }
 
 
             if (eState == PLAYER_STATE.RUN_STATE)
             {
                 moveSpeed = 5.0f;
-
+                DashFlg = true;
                 
                 if (PlayerRotation.GetPlayerMove())
                 {
@@ -176,13 +185,19 @@ public class Player_Walk : MonoBehaviour
                 }
 
             }
+            else
+            {
+                DashFlg = false;
+            }
         }
             if (PlayerInputTest.GetChargeMode())
             {
                 moveSpeed = 2.5f;
+                ChargeFlg = true;
                 if (PlayerRotation.GetPlayerMove())
                 {
-                Rot = PlayerRotation.GetPlayerRotation();
+                WalkFlg = true;
+                    Rot = PlayerRotation.GetPlayerRotation();
                     switch (Rot)
                     {
                         case 0:
@@ -220,7 +235,15 @@ public class Player_Walk : MonoBehaviour
                             break;
                     }
                 
+                }
+                else
+            {
+                WalkFlg = false;
             }
+            }
+        else
+        {
+            ChargeFlg = false;
         }
 
         //===============================================================================================================================

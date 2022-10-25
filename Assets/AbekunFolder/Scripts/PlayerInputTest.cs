@@ -334,12 +334,13 @@ public class PlayerInputTest : MonoBehaviour
                 if (b_Charge)
                     b_Charge = false;
             }
-            if ((Gamepad.current.buttonEast.ReadValue() > TriggerDeadZone) && b_Charge)    //マウスの右クリックが押された
+            if ((Gamepad.current.bButton.isPressed) && b_Charge)    //マウスの右クリックが押された
             {
                
-                //b_Charge = false;
+                b_Charge = false;
                 b_AimMode = true;
             }
+           
             
         }
         else
