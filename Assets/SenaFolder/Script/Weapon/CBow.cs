@@ -31,6 +31,7 @@ public class CBow : MonoBehaviour
     [SerializeField, Range(0.1f, 1.0f)] private float arrowSize;
     [SerializeField] private GameObject objPlayer;          // プレイヤーオブジェクト
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
+    [SerializeField] private GameObject objCoolDownUI;      // クールダウンUI
     [Header("一矢撃つごとに消費するHP量")]
     [SerializeField] public int nAtkDecHp;      // 一矢でのHP消費量
     [Header("威力調整に使うHP量")]
@@ -90,6 +91,7 @@ public class CBow : MonoBehaviour
         isAdjust = false;       // 使用HP未調整状態にする
         audioSource = GetComponent<AudioSource>();
         fTimer = 0.0f;
+        objCoolDownUI.SetActive(false);
     }
     #endregion
 
@@ -251,6 +253,7 @@ public class CBow : MonoBehaviour
             // クールダウン状態
             case STATE_BOW.BOW_COLLDOWN:
                 g_state = STATE_BOW.BOW_COLLDOWN;
+                objCoolDownUI.SetActive(true);
                 fTimer = 0.0f;              // タイマーの初期化
                 break;
         }
@@ -327,10 +330,12 @@ public class CBow : MonoBehaviour
                 fTimer += Time.deltaTime;              // タイマー更新
 
                 // クールダウンタイムが終了したら通常状態に戻る
-                if(fTimer > fDownTime)
+                if (fTimer > fDownTime)
                 {
                     ChangeState(STATE_BOW.BOW_NORMAL);
+                    objCoolDownUI.SetActive(false);
                 }
+                objCoolDownUI.GetComponent<CCoolDownUI>().GetCoolDownTime(fTimer);
                 break;
         }
     }
