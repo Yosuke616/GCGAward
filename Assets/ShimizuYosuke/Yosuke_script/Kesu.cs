@@ -54,7 +54,7 @@ public class Kesu : MonoBehaviour
                 this.animator.SetBool(key_isDeath, false);
             }
 
-            if (Input.GetMouseButton(0))
+            if (PlayerInputTest.GetChargeMode())
             {
                 this.animator.SetBool(key_isCharge, true);
                 charge = true;
@@ -66,7 +66,7 @@ public class Kesu : MonoBehaviour
                 }
 
             }
-            else if (!Input.GetMouseButton(0))
+            else 
             {
                 charge = false;
                 this.animator.SetBool(key_isCharge, false);
@@ -79,7 +79,7 @@ public class Kesu : MonoBehaviour
 
             if (!charge)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (!Input.GetKey(KeyCode.LeftShift))
                 {
                     if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
                         Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
@@ -105,9 +105,9 @@ public class Kesu : MonoBehaviour
             }
             else
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (!Input.GetKey(KeyCode.LeftShift))
                 {
-                    this.animator.SetBool(key_isRun, true);
+                    //this.animator.SetBool(key_isRun, true);
                 }
 
                 if (Input.GetKey(KeyCode.A))

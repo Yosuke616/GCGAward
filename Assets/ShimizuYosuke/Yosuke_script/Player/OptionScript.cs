@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class OptionScript : MonoBehaviour
 {
     //時間設定
@@ -11,6 +11,7 @@ public class OptionScript : MonoBehaviour
 
     //停止中に動かせるオブジェクト
     [SerializeField] private GameObject Option_UI;
+    private bool pauseFlg = false;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class OptionScript : MonoBehaviour
     void Update()
     {
         nDeltTime++;
+        pauseFlg = true;
         //時間で押せるようにする
         if (nDeltTime > DELTTIME) {
             if (Input.GetKey(KeyCode.Escape)) {
@@ -42,6 +44,30 @@ public class OptionScript : MonoBehaviour
                     Option_UI.SetActive(false);
                 }
                 nDeltTime = 0;
+            }
+            if (PlayerInputTest.GetControllerUse())
+            {
+
+
+                if (Gamepad.current.startButton.isPressed&&pauseFlg)
+                {
+                    pauseFlg = false;
+                    if (Mathf.Approximately(Time.timeScale, 1f))
+                    {
+                        Time.timeScale = 0f;
+                        Option_UI.SetActive(true);
+                    }
+                    else
+                    {
+                        Time.timeScale = 1f;
+                        Option_UI.SetActive(false);
+                    }
+                    nDeltTime = 0;
+                }
+                else
+                {
+                    
+                }
             }
         }
     }
