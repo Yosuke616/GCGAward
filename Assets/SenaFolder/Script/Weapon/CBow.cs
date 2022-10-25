@@ -16,6 +16,7 @@ public class CBow : MonoBehaviour
         BOW_SHOT,             // 発射されている状態
         BOW_CHARGEMAX,        // 最大チャージ状態
         BOW_RESET,            // チャージリセット状態
+        BOW_COLLDOWN,         // クールダウン状態
     }
     #endregion
 
@@ -30,6 +31,7 @@ public class CBow : MonoBehaviour
     [SerializeField, Range(0.1f, 1.0f)] private float arrowSize;
     [SerializeField] private GameObject objPlayer;          // プレイヤーオブジェクト
     [SerializeField] private CChargeSlider scChargeSlider;       // チャージ時間を表すスライダー
+    [SerializeField] private GameObject objCoolDownUI;      // クールダウンUI
     [Header("一矢撃つごとに消費するHP量")]
     [SerializeField] public int nAtkDecHp;      // 一矢でのHP消費量
     [Header("威力調整に使うHP量")]
@@ -46,6 +48,8 @@ public class CBow : MonoBehaviour
     [SerializeField] private AudioClip[] seUpStep;
     [Header("発射音")]
     [SerializeField] private AudioClip seShot;
+    [Header("クールダウンタイム")]
+    [SerializeField] private float fDownTime;
     #endregion
 
     #region variable
@@ -65,6 +69,7 @@ public class CBow : MonoBehaviour
     private AudioSource audioSource;
     private GameObject objString;
     private EffekseerEmitter effString;
+    private float fTimer;
     #endregion
 
     // Start is called before the first frame update
@@ -85,6 +90,8 @@ public class CBow : MonoBehaviour
 
         isAdjust = false;       // 使用HP未調整状態にする
         audioSource = GetComponent<AudioSource>();
+        fTimer = 0.0f;
+        objCoolDownUI.SetActive(false);
     }
     #endregion
 
@@ -96,9 +103,12 @@ public class CBow : MonoBehaviour
         UpdateState(g_state);
         // 左クリックでチャージ
         #region charge action
-        if (Input.GetMouseButtonDown(0))
+        if (g_state != STATE_BOW.BOW_COLLDOWN)
         {
-            ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
+            if (Input.GetMouseButtonDown(0))
+            {
+                ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
+            }
         }
         #endregion
         // チャージ中に左クリックが離されたらチャージ解除
@@ -110,7 +120,8 @@ public class CBow : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
-                ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
+                //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+                //ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
                 Destroy(objArrow[nCurrentArrowSetNum].gameObject);
             }
 
@@ -118,11 +129,13 @@ public class CBow : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
-                ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
+                //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+                //ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
             }
         }
         #endregion
-        //Debug.Log(g_state);
+        Debug.Log(g_state);
+        Debug.Log("fTimer:" + fTimer);
         //Debug.Log("Charge" + (int)fChargeTime);
         
         // 消費するHP量の調整
@@ -198,7 +211,8 @@ public class CBow : MonoBehaviour
                 // PlayerのHPを発射に使うHP+威力調整に使うHP分減らす
                 objPlayer.GetComponent<CCharactorManager>().ChangeHP(-1 * nShotUseHP);
                 int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
-                objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue);        // 矢を発射する
+                objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue); // 矢を発射する
+                ChangeState(STATE_BOW.BOW_RESET);    // リセットする
                 break;
 
             // 最大チャージ状態
@@ -220,6 +234,9 @@ public class CBow : MonoBehaviour
                 effString = objString.GetComponent<CEffectManager>().GetEmitterEff(1);
                 effString.enabled = false;
 
+                ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+
+
                 // 矢を発射していなければHPバーをリセットする
                 if (!isShot)
                 {
@@ -231,6 +248,13 @@ public class CBow : MonoBehaviour
                 //objPlayer.GetComponent<CSenaPlayer>().ResetHPBar();
                 ResetCharge();      // チャージをリセットする
                 nCurrentAtkStep = 0;            // 段階数をリセットする
+                break;
+
+            // クールダウン状態
+            case STATE_BOW.BOW_COLLDOWN:
+                g_state = STATE_BOW.BOW_COLLDOWN;
+                objCoolDownUI.SetActive(true);
+                fTimer = 0.0f;              // タイマーの初期化
                 break;
         }
     }
@@ -299,6 +323,19 @@ public class CBow : MonoBehaviour
 
             // チャージリセット状態
             case STATE_BOW.BOW_RESET:
+                break;
+
+            // クールダウン状態
+            case STATE_BOW.BOW_COLLDOWN:
+                fTimer += Time.deltaTime;              // タイマー更新
+
+                // クールダウンタイムが終了したら通常状態に戻る
+                if (fTimer > fDownTime)
+                {
+                    ChangeState(STATE_BOW.BOW_NORMAL);
+                    objCoolDownUI.SetActive(false);
+                }
+                objCoolDownUI.GetComponent<CCoolDownUI>().GetCoolDownTime(fTimer);
                 break;
         }
     }
