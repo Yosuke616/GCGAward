@@ -43,9 +43,15 @@ public class NumPower : MonoBehaviour
         //リストをクリアする
         RndNumList.Clear();
 
+        int u = 0;
+
+        int rnd = Random.Range(23,AE.GetNum());
         for (int i = 0;i < nNum;i++) {
-            int rnd = Random.Range(0,AE.GetNum());
-            RndNumList.Add(rnd);
+            u += rnd;
+            if (u > AE.GetNum()) {
+                u = 3;
+            }
+            RndNumList.Add(u);
         }
 
     }
