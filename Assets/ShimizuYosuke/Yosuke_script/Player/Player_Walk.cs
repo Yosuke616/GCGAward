@@ -144,7 +144,7 @@ public class Player_Walk : MonoBehaviour
 
             if (eState == PLAYER_STATE.WALK_STATE)
             {
-                moveSpeed = 5.0f;
+                moveSpeed = 3.5f;
                 //this.animator.SetBool(key_isWalk, true);
                 //this.animator.SetBool(key_isRun, false);
 
@@ -167,7 +167,7 @@ public class Player_Walk : MonoBehaviour
 
             if (eState == PLAYER_STATE.RUN_STATE)
             {
-                moveSpeed = 7.5f;
+                moveSpeed = 5.0f;
 
                 
                 if (PlayerRotation.GetPlayerMove())
@@ -179,7 +179,7 @@ public class Player_Walk : MonoBehaviour
         }
             if (PlayerInputTest.GetChargeMode())
             {
-                moveSpeed = 4.0f;
+                moveSpeed = 2.5f;
                 if (PlayerRotation.GetPlayerMove())
                 {
                 Rot = PlayerRotation.GetPlayerRotation();
