@@ -45,9 +45,15 @@ public class RayToGround : MonoBehaviour
                 //int layerMask = ~(1 << 13);
                 if (Physics.Raycast(ray, out hit, Distance))
                 {
-                    player.transform.position = hit.transform.position;
-                    player.transform.position += new Vector3(0,5,0);
-                    //Instantiate(player,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
+                    if (hit.collider.CompareTag("Enemy")||hit.collider.CompareTag("Head")) {
+
+                    }
+                    else{
+                        player.transform.position = hit.transform.position;
+                        player.transform.position += new Vector3(0,5,0);
+                        //Instantiate(player,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
+                    }
+
                 }
             }
 
@@ -94,7 +100,7 @@ public class RayToGround : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, Distance))
                 {
                     //既に敵オブジェクトが生み出されていたら生み出さない
-                    if (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Player"))
+                    if (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Player")|| hit.collider.CompareTag("Head"))
                     {
 
                     }
