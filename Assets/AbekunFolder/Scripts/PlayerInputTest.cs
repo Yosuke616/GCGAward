@@ -81,7 +81,7 @@ public class PlayerInputTest : MonoBehaviour
 
             //‰ñ“]‚·‚é‚Æ‚«A·•ª‚ðŽæ‚Á‚ÄÅ’Z‚ÌŒü‚«‚Å‰ñ“]‚³‚¹‚éB
             //‚±‚ÌŽž’ˆÓ‚·‚×‚«“_‚ªA-180‚Æ180‚ð‹¤—L‚µ‚Ä‚¢‚é‚½‚ßAÅ’Z‚ÌŒü‚«‚Ì’Tõ‚É‚Íâ‘Î’l‚ð—˜—p‚·‚éB
-
+            playerEulerY = Mathf.Round(this.transform.eulerAngles.y * 10) / 10;
             TPSCameraEulerY = Mathf.Round(TPSCamera.transform.eulerAngles.y*10)/10;
             if (playerEulerY - TPSCameraEulerY > 180)
             {
@@ -95,13 +95,13 @@ public class PlayerInputTest : MonoBehaviour
 
             if(playerEulerY<TPSCameraEulerY)
             {
-                rotYDif = -(this.transform.eulerAngles.y -TPSCamera.transform.eulerAngles.y);
+                rotYDif = -(playerEulerY - TPSCameraEulerY);
              
 
             }
             else
             {
-                rotYDif = -(this.transform.eulerAngles.y -(TPSCamera.transform.eulerAngles.y-360));
+                rotYDif = -(playerEulerY-TPSCameraEulerY-360);
             }
             if(rotYDif>360)
             {

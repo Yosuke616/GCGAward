@@ -88,7 +88,7 @@ public class Player_Walk : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //‰½‚à‰Ÿ‚µ‚Ä‚¢‚È‚¢‚Æ‚«‚Í‘Ò‹@
         if (!Input.anyKey)

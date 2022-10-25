@@ -17,7 +17,10 @@ public class FPSTargetMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //this.transform.LookAt(FPS);
-        this.transform.position =new Vector3(objPlayer.transform.position.x, objPlayer.transform.position.y+TargetHeight, objPlayer.transform.position.z);
+        if (PlayerInputTest.GetChargeMode())
+        {
+            this.transform.LookAt(FPS);
+        }
+            this.transform.position =new Vector3(objPlayer.transform.position.x, objPlayer.transform.position.y+TargetHeight, objPlayer.transform.position.z);
     }
 }

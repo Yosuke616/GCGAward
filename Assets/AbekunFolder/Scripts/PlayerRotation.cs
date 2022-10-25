@@ -8,7 +8,7 @@ public class PlayerRotation : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] Transform FPSTargetMove;
     [SerializeField] float PlayerYRot = 0.0f;
-    private float Rotation = 0.0f;
+    [SerializeField]private float Rotation = 0.0f;
     //[SerializeField] private bool rightTurn = true;
     [SerializeField] private float RotDif = 0;
     [SerializeField] private static bool playerMove = false;
@@ -22,7 +22,9 @@ public class PlayerRotation : MonoBehaviour
     [SerializeField] float ControllerLeftStickInput;
     [SerializeField] private float controllerRot;
     private static int RotationPlayer = 0;
+    [SerializeField] private bool ChangeDirectFlg = false;
     //private float playerRot = 0;
+    [SerializeField] private Vector3 FixedAngle;
     //[SerializeField] Transform FPS;
     void Start()
     {
@@ -35,7 +37,32 @@ public class PlayerRotation : MonoBehaviour
             //ControllerUse = true;
         }
     }
+    private void FixedUpdate()
+    {
+        if (PlayerInputTest.GetChargeMode())
+        {
+            //playerMove = false;
+            this.transform.LookAt(FPSTargetMove);
+            if (this.transform.rotation.x > 0)
+            {
+                  this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            }
+        }
+        else
+        {
+            
 
+            if (playerMove)
+            {
+                this.transform.eulerAngles += FixedAngle;
+               }
+            else
+            {
+                this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, 0);
+                //this.transform.eulerAngles += new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -45,10 +72,10 @@ public class PlayerRotation : MonoBehaviour
         if (PlayerInputTest.GetChargeMode())
         {
             playerMove = false;
-            this.transform.LookAt(FPSTargetMove);
-            if(this.transform.rotation.x>0)
+            //this.transform.LookAt(FPSTargetMove);
+            if(this.transform.rotation.x<0)
             {
-                this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+              //  this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
             }
             //this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y,0);
             if (ControllerUse)
@@ -168,8 +195,7 @@ public class PlayerRotation : MonoBehaviour
         }
         else
         {
-            this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y,0);
-
+            
             if (PlayerYRot > 181)
             {
                 PlayerYRot -= 360;
@@ -332,8 +358,26 @@ public class PlayerRotation : MonoBehaviour
                 {
                     RotDif = RotDif - 360;
                 }
-                    this.transform.eulerAngles += new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
-                
+
+                if(RotDif>10||RotDif<-10)
+                {
+                    ChangeDirectFlg = true;
+                }
+                if(PlayerYRot+Rotation == 0|| PlayerYRot + Rotation == 360)
+                {
+                    ChangeDirectFlg = false;
+                }
+
+                if (ChangeDirectFlg)
+                {
+                    //this.transform.eulerAngles += new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
+                    FixedAngle = new Vector3(0.0f, (RotDif * 0.1f), 0.0f);
+                }
+                else
+                {
+                    FixedAngle = new Vector3(0.0f, (RotDif), 0.0f);
+                }
+
             }
             else
             {

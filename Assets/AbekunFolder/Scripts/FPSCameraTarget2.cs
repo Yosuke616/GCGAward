@@ -21,6 +21,7 @@ public class FPSCameraTarget2 : MonoBehaviour
     [SerializeField] private Vector2 MouseAxis;
     [SerializeField] private float WheelAxis;
     private bool ChargeFlg = false;
+    private Vector3 MovePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +29,22 @@ public class FPSCameraTarget2 : MonoBehaviour
         MouseMove.x = 0;
         nowPos = transform.position;
     }
-
+    private void FixedUpdate()
+    {
+        //transform.LookAt(PlayerTransform);
+        
+    }
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+        transform.LookAt(PlayerTransform.position);
+        transform.position =  pos + new Vector3(PlayerTransform.position.x, PlayerTransform.position.y - 1, PlayerTransform.position.z);
+
+
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
         if (PlayerInputTest.GetChargeMode()&&ChargeFlg==true)
@@ -85,9 +98,7 @@ public class FPSCameraTarget2 : MonoBehaviour
         }
         MouseX = MouseMove.x - 0.5f;
         // ç¿ïWÇÃçXêV
-        transform.position = pos +  new Vector3( PlayerTransform.position.x, PlayerTransform.position.y-1, PlayerTransform.position.z);
-        // transform.LookAt(PlayerTransform.position);
-
+        
     }
     public static float GetMouseX()
     {
