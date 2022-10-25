@@ -25,6 +25,7 @@ public class PlayerRotation : MonoBehaviour
     [SerializeField] private bool ChangeDirectFlg = false;
     //private float playerRot = 0;
     [SerializeField] private Vector3 FixedAngle;
+    [SerializeField] private float PlayerEulerX;
     //[SerializeField] Transform FPS;
     void Start()
     {
@@ -43,9 +44,16 @@ public class PlayerRotation : MonoBehaviour
         {
             //playerMove = false;
             this.transform.LookAt(FPSTargetMove);
-            if (this.transform.rotation.x > 0)
+            PlayerEulerX = Mathf.Round(this.transform.eulerAngles.x);
+
+            if (PlayerEulerX > 180)
             {
-                  this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+                
+            }
+            else
+            {
+                this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
             }
         }
         else
@@ -66,6 +74,7 @@ public class PlayerRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         ControllerUse = Controller;
         
         PlayerYRot = PlayerInputTest.GetPlayerYRotation();
