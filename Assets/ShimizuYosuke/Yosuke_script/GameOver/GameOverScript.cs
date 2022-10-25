@@ -42,7 +42,7 @@ public class GameOverScript : MonoBehaviour
     private bool bUseFlg;
 
     //スコア(仮)からスコアを引っ張てっくる
-    private Kariscore KS; 
+    private WaveManager WM; 
 
     //必要になってくるボタンを追加する
     public enum RESULT_BUTTON {
@@ -69,17 +69,17 @@ public class GameOverScript : MonoBehaviour
         Wave = WaveRun.GetComponent<Text>();
         Total = TotalScore.GetComponent<Text>();
 
-        KS = GameObject.Find("EventSystem").GetComponent<Kariscore>();
+        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
         int num;
         //文字を数字に変える
-        num = KS.GetHead();
+        num = WM.GetHeadShot();
         Head.text = num.ToString();
-        num = KS.GetBreak();
+        num = WM.GetBreakEnemy();
         Break.text = num.ToString();
-        num = KS.GetWave();
+        num = WM.GetWave();
         Wave.text = num.ToString();
-        num = KS.GetTotal();
+        num = WM.GetScore();
         Total.text = num.ToString();
 
     }
@@ -87,17 +87,20 @@ public class GameOverScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+            Debug.Log(2345676543);
         if (bUseFlg) {
             //スコア表示
             int num;
             //文字を数字に変える
-            num = KS.GetHead();
+            num = WM.GetHeadShot();
+            Debug.Log(num);
             Head.text = num.ToString();
-            num = KS.GetBreak();
+            num = WM.GetBreakEnemy();
             Break.text = num.ToString();
-            num = KS.GetWave();
+            num = WM.GetWave();
             Wave.text = num.ToString();
-            num = KS.GetTotal();
+            num = WM.GetScore();
             Total.text = num.ToString();
 
             //ボタンをデフォルトの大きさにしていく

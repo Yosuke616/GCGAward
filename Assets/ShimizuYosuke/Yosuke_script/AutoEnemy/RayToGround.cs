@@ -50,7 +50,7 @@ public class RayToGround : MonoBehaviour
                     }
                     else{
                         player.transform.position = hit.transform.position;
-                        player.transform.position += new Vector3(0,5,0);
+                        player.transform.position += new Vector3(0,3,0);
                         //Instantiate(player,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);
                     }
 
