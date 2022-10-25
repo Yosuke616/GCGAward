@@ -108,6 +108,11 @@ public class EighteenRot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+
         //元の角度に戻す
         if (Change_Rot)
         {
@@ -179,8 +184,6 @@ public class EighteenRot : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             player = GameObject.FindGameObjectWithTag("Player");
-
-            Debug.Log(123457);
 
             //プレイヤーの方向に向かってくる---------------------------------------------------------------------------------------
             Quaternion lookRotation = Quaternion.LookRotation(player.transform.position - this.transform.position, Vector3.up);

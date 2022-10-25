@@ -34,9 +34,17 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject NineEnemy;
     [SerializeField] private GameObject EighteenEnemy;
 
+
     // ステージ情報オブジェクト
     [Header("スコア→敵の数→ウェーブでUIを格納")]
     [SerializeField] private TextMeshProUGUI[] StageUIText; 
+
+    private void Awake()
+    {
+        //60fps
+        Application.targetFrameRate = 60;
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,14 +52,16 @@ public class WaveManager : MonoBehaviour
         //スコアを0にする
         nScore = 0;
         //スコアのテキストを紐づける
+
         //GameObject obj = transform.Find("Canvas").gameObject;
         //scoreText = obj.transform.Find("Score").gameObject.GetComponent<Text>();
         //enemyText = obj.transform.Find("Enemy").gameObject.GetComponent<Text>();
         //waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
         //MaxEnemy = obj.transform.Find("Max").gameObject.GetComponent<Text>();
 
+
         //敵の数は初期数は3
-        nMaxEnemy = nEnemyNum = 3;
+        nMaxEnemy = nEnemyNum = 30;
         //ウェーブ数は1にする
         nWaveNum = 1;
         //ヘッドショットは0にする
@@ -85,7 +95,30 @@ public class WaveManager : MonoBehaviour
             MimicryStart();
         }
 
+        //実際の敵の数と数値が違っていたら消す
+        GameObject[] tags = GameObject.FindGameObjectsWithTag("Enemy");
 
+        Debug.Log(tags.Length);
+        Debug.Log(nEnemyNum);
+
+        if (tags.Length > nEnemyNum) {
+            GameObject obj = GameObject.FindGameObjectWithTag("Enemy");
+            Destroy(obj);
+        }
+    }
+
+    //ヘッドショットの数を取得する
+    public int GetHeadShot() {
+        return nHeadShot;
+    }
+
+    //倒した敵の数を取得する
+    public int GetBreakEnemy() {
+        return nBreakEnemyNum;
+    }
+
+    public int GetScore() {
+        return nScore;
     }
 
     //ウェーブ数を取得する
@@ -179,13 +212,9 @@ public class WaveManager : MonoBehaviour
         rNP.SetList(nMaxEnemy);
 
         //敵を生成しなおす
-        List<GameObject> RTGlist = new List<GameObject>();
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Spawn_Enemy");
-        foreach (GameObject obj in gameObjects) {
-            RTGlist.Add(obj);
-        }
-
-        foreach (GameObject obj in RTGlist) {
+        AutoEnemy AE = GameObject.Find("Spawn").GetComponent<AutoEnemy>();
+        
+        foreach (GameObject obj in AE.GetList()) {
             obj.GetComponent<RayToGround>().ReCreateEnemy();
         }
 

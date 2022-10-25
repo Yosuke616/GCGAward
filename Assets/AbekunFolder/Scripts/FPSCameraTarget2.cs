@@ -21,6 +21,7 @@ public class FPSCameraTarget2 : MonoBehaviour
     [SerializeField] private Vector2 MouseAxis;
     [SerializeField] private float WheelAxis;
     private bool ChargeFlg = false;
+    private Vector3 MovePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,13 +29,25 @@ public class FPSCameraTarget2 : MonoBehaviour
         MouseMove.x = 0;
         nowPos = transform.position;
     }
-
+    private void FixedUpdate()
+    {
+        //transform.LookAt(PlayerTransform);
+        
+    }
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+        transform.LookAt(PlayerTransform.position);
+        transform.position =  pos + new Vector3(PlayerTransform.position.x, PlayerTransform.position.y - 1, PlayerTransform.position.z);
+
+
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
-        if (PlayerInputTest.GetChargeMode())
+        if (PlayerInputTest.GetChargeMode()&&ChargeFlg==true)
         {
             MouseMove.x = TPSCameraTargetMove.MouseMove.x ;
             if(TPSCameraTargetMove.MouseMove.y<0.6)
@@ -64,23 +77,16 @@ public class FPSCameraTarget2 : MonoBehaviour
                 Leftstick.y = 0;
             }
             MouseMove += new Vector2(Leftstick.x * LeftstickSensi.x * Time.deltaTime, Leftstick.y * LeftstickSensi.y * Time.deltaTime);
-            if (Gamepad.current.dpad.ReadValue().y < -DeadZone)
-            {
-               // FPSCameraDistance -= 0.1f;
-            }
-            if (Gamepad.current.dpad.ReadValue().y > DeadZone)
-            {
-                //FPSCameraDistance += 0.1f;
-            }
+           
 
         }
         FPSCameraDistance = Mathf.Clamp(FPSCameraDistance, 1.0f, 5);
-        MouseMove.y = Mathf.Clamp(MouseMove.y, -0.4f + 0.5f, 0.4f + 0.5f);
+        MouseMove.y = Mathf.Clamp(MouseMove.y, -0.15f + 0.5f, 0.3f + 0.5f);
         //MouseMove += new Vector2(Input.GetAxis("Mouse X")*FPSMouseSensi, Input.GetAxis("Mouse Y")*FPSMouseSensi);
         // 球面座標系変換
-        pos.x = FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Cos((MouseMove.x+1) * Mathf.PI);
+        pos.x = FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Cos((MouseMove.x+1.0f) * Mathf.PI);
         pos.y = -FPSCameraDistance * Mathf.Cos(MouseMove.y * Mathf.PI);
-        pos.z = -FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Sin((MouseMove.x+1) * Mathf.PI);
+        pos.z = -FPSCameraDistance * Mathf.Sin(MouseMove.y * Mathf.PI) * Mathf.Sin((MouseMove.x+1.0f) * Mathf.PI);
         //pos *= nowPos.z;
 
         //pos.y += nowPos.y;
@@ -92,9 +98,7 @@ public class FPSCameraTarget2 : MonoBehaviour
         }
         MouseX = MouseMove.x - 0.5f;
         // 座標の更新
-        transform.position = pos +  new Vector3( PlayerTransform.position.x, PlayerTransform.position.y-1, PlayerTransform.position.z);
-        // transform.LookAt(PlayerTransform.position);
-
+        
     }
     public static float GetMouseX()
     {

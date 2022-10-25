@@ -48,7 +48,7 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField]private bool b_Left = false;
     [SerializeField]private bool b_Right = true;
     [SerializeField] private int PlayerDirect = 0;
-    private static float PlayerRotY = 0.0f;
+    private static float PlayerRotY = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +61,7 @@ public class PlayerInputTest : MonoBehaviour
     {
         if (Gamepad.current == null) b_Controller = true;
         controller = PlayerRotation.GetControllerUse();
-        
+
         Vector3 pos = this.transform.position;
         Quaternion myRotation = this.transform.rotation;
         //myRotation = Quaternion.identity;
@@ -81,8 +81,8 @@ public class PlayerInputTest : MonoBehaviour
 
             //回転するとき、差分を取って最短の向きで回転させる。
             //この時注意すべき点が、-180と180を共有しているため、最短の向きの探索には絶対値を利用する。
-
-            TPSCameraEulerY = TPSCamera.transform.eulerAngles.y;
+            playerEulerY = Mathf.Round(this.transform.eulerAngles.y * 10) / 10;
+            TPSCameraEulerY = Mathf.Round(TPSCamera.transform.eulerAngles.y*10)/10;
             if (playerEulerY - TPSCameraEulerY > 180)
             {
                // playerEulerY -= 360;
@@ -95,12 +95,13 @@ public class PlayerInputTest : MonoBehaviour
 
             if(playerEulerY<TPSCameraEulerY)
             {
-                rotYDif = -(this.transform.eulerAngles.y - TPSCamera.transform.eulerAngles.y);
+                rotYDif = -(playerEulerY - TPSCameraEulerY);
+             
 
             }
             else
             {
-                rotYDif = -(this.transform.eulerAngles.y - (TPSCamera.transform.eulerAngles.y-360));
+                rotYDif = -(playerEulerY-TPSCameraEulerY-360);
             }
             if(rotYDif>360)
             {
@@ -124,6 +125,8 @@ public class PlayerInputTest : MonoBehaviour
             }
             if (rotYDif < 1 && rotYDif > -1)
                 rotYDif = 0;
+              rotYDif = Mathf.Round(rotYDif);
+            
 //            if (Input.GetKey(KeyCode.W))
 //            {
 //                PlayerMoveFlg = true;
@@ -331,12 +334,13 @@ public class PlayerInputTest : MonoBehaviour
                 if (b_Charge)
                     b_Charge = false;
             }
-            if ((Gamepad.current.buttonEast.ReadValue() > TriggerDeadZone) && b_Charge)    //マウスの右クリックが押された
+            if ((Gamepad.current.bButton.isPressed) && b_Charge)    //マウスの右クリックが押された
             {
                
-                //b_Charge = false;
+                b_Charge = false;
                 b_AimMode = true;
             }
+           
             
         }
         else
@@ -379,4 +383,5 @@ public class PlayerInputTest : MonoBehaviour
     {
         TriggerDeadZone = Dead;
     }
+   
 }

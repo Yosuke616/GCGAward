@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ShimizuYosuke/scene/TitleScene2.unity
     guid: 8f561d90f73b5b549a97ed29296cf13b
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 7fd741c926597d448a8c7d121ff34afa
   m_configObjects: {}

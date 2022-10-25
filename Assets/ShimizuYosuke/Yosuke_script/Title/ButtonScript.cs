@@ -26,15 +26,22 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler
         {
             TS.SetButton(0);
             TS.SetButtonAny();
+        } else if (this.gameObject.name == "Tutorial") {
+            TS.SetButton(1);
+            TS.SetButtonAny();
         }
         else if (this.gameObject.name == "Option")
         {
-            TS.SetButton(1);
+            TS.SetButton(2);
             TS.SetButtonAny();
         }
         else if (this.gameObject.name == "End")
         {
-            TS.SetButton(2);
+            TS.SetButton(3);
+            TS.SetButtonAny();
+        }
+        else {
+            TS.SetButton(4);
             TS.SetButtonAny();
         }
     }

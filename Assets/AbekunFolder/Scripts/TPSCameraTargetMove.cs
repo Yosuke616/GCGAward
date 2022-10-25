@@ -33,6 +33,11 @@ public class TPSCameraTargetMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+        transform.LookAt(PlayerTransform);
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
         if(PlayerInputTest.GetChargeMode())
@@ -43,7 +48,7 @@ public class TPSCameraTargetMove : MonoBehaviour
         {
             MouseMove -= new Vector2(-Input.GetAxis("Mouse X") * TPSMouseSensi.x, Input.GetAxis("Mouse Y")) * Time.deltaTime * TPSMouseSensi.y ;
 
-            WheelAxis = Input.GetAxis("Mouse ScrollWheel");
+            WheelAxis = -Input.GetAxis("Mouse ScrollWheel");
             TPSCameraDistance += WheelAxis;
         }
         else
@@ -60,11 +65,11 @@ public class TPSCameraTargetMove : MonoBehaviour
             MouseMove -= new Vector2(-RightStick.x * RightStickSensi.x * Time.deltaTime, RightStick.y * RightStickSensi.y * Time.deltaTime);
             if(Gamepad.current.dpad.ReadValue().y<-RightStickDeadZone)
             {
-                TPSCameraDistance -= 0.1f;
+                TPSCameraDistance += 0.1f;
             }
             if (Gamepad.current.dpad.ReadValue().y>RightStickDeadZone)
             {
-                TPSCameraDistance += 0.1f;
+                TPSCameraDistance -= 0.1f;
             }
 
         }
@@ -90,6 +95,10 @@ public class TPSCameraTargetMove : MonoBehaviour
         transform.position = pos + PlayerTransform.position;
         // transform.LookAt(PlayerTransform.position);
         TPSMouseMove = MouseMove;
+    }
+    private void FixedUpdate()
+    {
+        
     }
     public static float GetMouseX()
     {

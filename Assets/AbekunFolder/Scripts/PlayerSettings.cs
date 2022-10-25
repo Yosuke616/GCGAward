@@ -28,7 +28,8 @@ public class PlayerSettings : MonoBehaviour
 
     [Header("ControllerTriggerSetting")]
     [SerializeField, Range(0.1f, 0.9f)] private float TriggerDeadZone = 0.5f;
-   
+
+    public static float LTDeadZoneGetter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,7 @@ public class PlayerSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        LTDeadZoneGetter = TriggerDeadZone;
         if (Gamepad.current == null)
         {
             Controller = false;
@@ -55,5 +56,6 @@ public class PlayerSettings : MonoBehaviour
         TPSCameraTargetMove.SetTPSSetting(new Vector2(TPSMouseSensiX, TPSMouseSensiY), new Vector2(TPSControllerSensiX, TPSControllerSensiY), TPSControllerDeadZone);
         
     }
+    
     
 }

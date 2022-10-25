@@ -10,6 +10,7 @@ public class TitleScript : MonoBehaviour
 {
     //オブジェクトの設定
     [SerializeField] GameObject Start_Btn;
+    [SerializeField] GameObject Tutorial_Btn;
     [SerializeField] GameObject Option_Btn;
     [SerializeField] GameObject End_Btn;
 
@@ -34,12 +35,14 @@ public class TitleScript : MonoBehaviour
 
     //デフォルトの場所
     private Vector3 Str_Pos;
+    private Vector3 Tuto_Pos;
     private Vector3 Opt_Pos;
     private Vector3 End_Pos;
 
     //必要になってくるボタンを追加していく
     public enum TITLE_BUTTON {
         START_BUTTON,
+        TUTORIAL_BUTTON,
         OPTION_BUTTON,
         END_BUTTON,
 
@@ -63,6 +66,7 @@ public class TitleScript : MonoBehaviour
 
         //デフォルトの場所を保存しておく
         Str_Pos = Start_Btn.transform.position;
+        Tuto_Pos = Tutorial_Btn.transform.position;
         Opt_Pos = Option_Btn.transform.position;
         End_Pos = End_Btn.transform.position;
         nCnt = 0;
@@ -108,17 +112,21 @@ public class TitleScript : MonoBehaviour
 
         //大きさもデフォルトに変える
         Start_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        Tutorial_Btn.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
         Option_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         End_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         //場所をデフォルトに保存しておく
         Start_Btn.transform.position = Str_Pos;
+        Tutorial_Btn.transform.position = Tuto_Pos;
         Option_Btn.transform.position = Opt_Pos;
         End_Btn.transform.position = End_Pos;
         //日本語を非表示にしておく
         GameObject Str_Chil = Start_Btn.transform.GetChild(0).gameObject;
+        GameObject Tuto_Chil = Tutorial_Btn.transform.GetChild(0).gameObject;
         GameObject Opt_Chil = Option_Btn.transform.GetChild(0).gameObject;
         GameObject End_Chil = End_Btn.transform.GetChild(0).gameObject;
         Str_Chil.SetActive(false);
+        Tuto_Chil.SetActive(false);
         Opt_Chil.SetActive(false);
         End_Chil.SetActive(false);
 
@@ -127,38 +135,72 @@ public class TitleScript : MonoBehaviour
             case TITLE_BUTTON.START_BUTTON:
                 //座標を少し右にずらす
                 Start_Btn.transform.position = new Vector3(Str_Pos.x - 100.0f, Str_Pos.y, Str_Pos.z);
-                Start_Btn.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                Start_Btn.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
                 //日本語を出す
                 Str_Chil.SetActive(true);
                 //かっこの場所を変更する
                 if (bChangeFlg) {
-                    Right_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x + 220.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x - 130.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x + 240.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Start_Btn.transform.position.x - 250.0f, Start_Btn.transform.position.y, Start_Btn.transform.position.z);
+                    bChangeFlg = false;
+                }
+                break;
+            case TITLE_BUTTON.TUTORIAL_BUTTON:
+                //座標を左にずらす
+                Tutorial_Btn.transform.position = new Vector3(Tuto_Pos.x - 100.0f,Tuto_Pos.y,Tuto_Pos.z);
+                Tutorial_Btn.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                //日本語を出す
+                Tuto_Chil.SetActive(true);
+                //かっこの場所を変更する
+                if (bChangeFlg) {
+                    Right_Bracket.transform.position = new Vector3(Tutorial_Btn.transform.position.x + 335.0f, Tutorial_Btn.transform.position.y, Tutorial_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Tutorial_Btn.transform.position.x - 325.0f, Tutorial_Btn.transform.position.y, Tutorial_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
                 break;
             case TITLE_BUTTON.OPTION_BUTTON:
                 Option_Btn.transform.position = new Vector3(Opt_Pos.x - 100.0f, Opt_Pos.y, Opt_Pos.z);
-                Option_Btn.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                Option_Btn.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                 Opt_Chil.SetActive(true);
                 //かっこの場所を変更する
                 if (bChangeFlg) {
-                    Right_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x + 220.0f, Option_Btn.transform.position.y, Option_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x - 145.0f, Option_Btn.transform.position.y, Option_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x + 260.0f, Option_Btn.transform.position.y-20.0f, Option_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(Option_Btn.transform.position.x - 250.0f, Option_Btn.transform.position.y-20.0f, Option_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
                 break;
             case TITLE_BUTTON.END_BUTTON:
                 End_Btn.transform.position = new Vector3(End_Pos.x - 100.0f, End_Pos.y, End_Pos.z);
-                End_Btn.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                End_Btn.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                 End_Chil.SetActive(true);
                 //かっこの場所を変更する
                 if (bChangeFlg)
                 {
-                    Right_Bracket.transform.position = new Vector3(End_Btn.transform.position.x + 200.0f, End_Btn.transform.position.y, End_Btn.transform.position.z);
-                    Left_Bracket.transform.position = new Vector3(End_Btn.transform.position.x - 150.0f, End_Btn.transform.position.y, End_Btn.transform.position.z);
+                    Right_Bracket.transform.position = new Vector3(End_Btn.transform.position.x + 175.0f, End_Btn.transform.position.y+15.0f, End_Btn.transform.position.z);
+                    Left_Bracket.transform.position = new Vector3(End_Btn.transform.position.x - 125.0f, End_Btn.transform.position.y+15.0f, End_Btn.transform.position.z);
                     bChangeFlg = false;
                 }
+                break;
+            case TITLE_BUTTON.MAX_BUTTON:
+                //大きさもデフォルトに変える
+                Start_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                Tutorial_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                Option_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                End_Btn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                //場所をデフォルトに保存しておく
+                Start_Btn.transform.position = Str_Pos;
+                Tutorial_Btn.transform.position = Tuto_Pos;
+                Option_Btn.transform.position = Opt_Pos;
+                End_Btn.transform.position = End_Pos;
+                //日本語を非表示にしておく
+                Str_Chil = Start_Btn.transform.GetChild(0).gameObject;
+                Tuto_Chil = Tutorial_Btn.transform.GetChild(0).gameObject;
+                Opt_Chil = Option_Btn.transform.GetChild(0).gameObject;
+                End_Chil = End_Btn.transform.GetChild(0).gameObject;
+                Str_Chil.SetActive(false);
+                Tuto_Chil.SetActive(false);
+                Opt_Chil.SetActive(false);
+                End_Chil.SetActive(false);
                 break;
             default: break;
         }
@@ -174,6 +216,9 @@ public class TitleScript : MonoBehaviour
             {
                 case TITLE_BUTTON.START_BUTTON:
                     SceneManager.LoadScene("YosukeScene");
+                    break;
+                case TITLE_BUTTON.TUTORIAL_BUTTON:
+                    SceneManager.LoadScene("GameScene");
                     break;
                 case TITLE_BUTTON.OPTION_BUTTON:
                     if (Mathf.Approximately(Time.timeScale, 1f))
