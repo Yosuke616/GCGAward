@@ -146,7 +146,7 @@ public class NineRot : MonoBehaviour
                 //一定時間ごとに180度回転させる
                 this.transform.Rotate(new Vector3(0, 1, 0));
                 Act_Num++;
-                if (Act_Num >= 180)
+                if (Act_Num >= 90)
                 {
                     Act_Num = 0;
                     bAct = false;
@@ -180,8 +180,6 @@ public class NineRot : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             player = GameObject.FindGameObjectWithTag("Player");
-
-            Debug.Log(123457);
 
             //プレイヤーの方向に向かってくる---------------------------------------------------------------------------------------
             Quaternion lookRotation = Quaternion.LookRotation(player.transform.position - this.transform.position, Vector3.up);
