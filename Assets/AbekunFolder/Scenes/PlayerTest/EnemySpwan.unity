@@ -299,18 +299,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d59ce52532687e4b9c7fbf565014cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Controller: 0
-  TPSMouseSensiX: 1
-  TPSMouseSensiY: 1
-  FPSMouseSensiX: 1
-  FPSMouseSensiY: 1
-  TPSControllerSensiX: 1
-  TPSControllerSensiY: 1
-  TPSControllerDeadZone: 0.1
-  FPSControllerSensiX: 1
-  FPSControllerSensiY: 1
-  FPSControllerDeadZone: 0.5
+  Controller: 1
+  TPSMouseSensiX: 5
+  TPSMouseSensiY: 5
+  FPSMouseSensiX: 5
+  FPSMouseSensiY: 5
+  TPSControllerSensiX: 5
+  TPSControllerSensiY: 5
+  FPSControllerSensiX: 5
+  FPSControllerSensiY: 5
   TriggerDeadZone: 0.5
+  StickDeadZone: 0.5
 --- !u!4 &71583620
 Transform:
   m_ObjectHideFlags: 0

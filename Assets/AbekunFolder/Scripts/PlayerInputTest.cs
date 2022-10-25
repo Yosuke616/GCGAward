@@ -59,6 +59,10 @@ public class PlayerInputTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
         if (Gamepad.current == null) b_Controller = true;
         controller = PlayerRotation.GetControllerUse();
 

@@ -156,7 +156,7 @@ public class Player_Walk : MonoBehaviour
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 if (!PlayerRotation.GetControllerUse())
                 {
-                    if (Input.GetKey(KeyCode.LeftShift))
+                    if (!Input.GetKey(KeyCode.LeftShift))
                     {
                         eState = PLAYER_STATE.RUN_STATE;
                         //this.animator.SetBool(key_isRun, true);
@@ -164,7 +164,7 @@ public class Player_Walk : MonoBehaviour
                 }
                 else 
                 {
-                    if (Gamepad.current.leftTrigger.ReadValue() > PlayerSettings.LTDeadZoneGetter)
+                    if (Gamepad.current.leftTrigger.ReadValue() < PlayerSettings.LTDeadZoneGetter)
                         eState = PLAYER_STATE.RUN_STATE;
                 }
             }

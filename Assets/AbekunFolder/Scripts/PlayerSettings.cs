@@ -19,17 +19,18 @@ public class PlayerSettings : MonoBehaviour
     [Header("TPSControllerSetting")]
     [SerializeField, Range(0.1f,10)] private float TPSControllerSensiX = 1.0f;
     [SerializeField, Range(0.1f, 10)] private float TPSControllerSensiY = 1.0f;
-    [SerializeField, Range(0.1f, 0.9f)] private float TPSControllerDeadZone = 0.5f;
-
+    
     [Header("FPSControllerSetting")]
     [SerializeField, Range(0.1f, 10)] private float FPSControllerSensiX = 1.0f;
     [SerializeField, Range(0.1f,10)] private float FPSControllerSensiY = 1.0f;
-    [SerializeField, Range(0.1f, 0.9f)] private float FPSControllerDeadZone = 0.5f;
-
-    [Header("ControllerTriggerSetting")]
+    
+    [Header("ControllerDeadZoneSetting")]
     [SerializeField, Range(0.1f, 0.9f)] private float TriggerDeadZone = 0.5f;
+    [SerializeField, Range(0.1f, 0.9f)] private float StickDeadZone = 0.5f;
 
     public static float LTDeadZoneGetter = 0;
+
+    [SerializeField]private bool CursorLock = true;
 
     // Start is called before the first frame update
     void Start()
@@ -50,11 +51,29 @@ public class PlayerSettings : MonoBehaviour
         else 
         {
             PlayerRotation.SetControllerUse(Controller);
+            if(Input.GetKeyDown("c"))
+            {
+                Controller = !Controller;
+            }
         }
-        FPSCameraTarget2.SetFPSSetting(new Vector2(FPSMouseSensiX, FPSMouseSensiY), new Vector2(FPSControllerSensiX, FPSControllerSensiY), FPSControllerDeadZone);
+        FPSCameraTarget2.SetFPSSetting(new Vector2(FPSMouseSensiX/5, FPSMouseSensiY/5), new Vector2(FPSControllerSensiX/5, FPSControllerSensiY/5), StickDeadZone);
         PlayerInputTest.SetTriggerDeadZone(TriggerDeadZone);
-        TPSCameraTargetMove.SetTPSSetting(new Vector2(TPSMouseSensiX, TPSMouseSensiY), new Vector2(TPSControllerSensiX, TPSControllerSensiY), TPSControllerDeadZone);
-        
+        TPSCameraTargetMove.SetTPSSetting(new Vector2(TPSMouseSensiX/5, TPSMouseSensiY/5), new Vector2(TPSControllerSensiX/5, TPSControllerSensiY/5), StickDeadZone);
+        if(Input.GetKeyDown("v"))
+        {
+            CursorLock = !CursorLock;
+        }
+        if(!CursorLock)
+        { 
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+        }
     }
     
     
