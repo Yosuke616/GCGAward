@@ -18,7 +18,7 @@ public class FPSTarget : MonoBehaviour
     {
         this.transform.position = FPSTargetMove.transform.position;
 
-        this.transform.position += FPSTargetMove.transform.forward * TargetDistance;
+       // this.transform.position += FPSTargetMove.transform.forward * TargetDistance;
         
        // this.transform.position = new Vector3(this.transform.position.x, FPSTargetMove.transform.position.y + TargetHeight, this.transform.position.z);
     }

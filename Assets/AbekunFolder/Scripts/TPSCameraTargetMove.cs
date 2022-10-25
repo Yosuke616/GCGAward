@@ -33,6 +33,11 @@ public class TPSCameraTargetMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+        transform.LookAt(PlayerTransform);
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
         if(PlayerInputTest.GetChargeMode())
@@ -90,6 +95,10 @@ public class TPSCameraTargetMove : MonoBehaviour
         transform.position = pos + PlayerTransform.position;
         // transform.LookAt(PlayerTransform.position);
         TPSMouseMove = MouseMove;
+    }
+    private void FixedUpdate()
+    {
+        
     }
     public static float GetMouseX()
     {
