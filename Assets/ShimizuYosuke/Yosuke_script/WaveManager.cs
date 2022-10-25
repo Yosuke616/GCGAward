@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class WaveManager : MonoBehaviour
 {
     //スコアを管理する変数
     private int nScore;
     //スコアを表示するためのテキスト変数
-    private Text scoreText;
+    //private Text scoreText;
     //敵の数を表示するためのテキスト変数
-    private Text enemyText;
+    //private Text enemyText;
     //ウェーブ数を表示する
-    private Text waveText;
+    //private Text waveText;
     //MAX敵数
-    private Text MaxEnemy;
+    //private Text MaxEnemy;
 
     //敵の数を管理する変数
     private int nEnemyNum;
@@ -33,17 +34,21 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject NineEnemy;
     [SerializeField] private GameObject EighteenEnemy;
 
+    // ステージ情報オブジェクト
+    [Header("スコア→敵の数→ウェーブでUIを格納")]
+    [SerializeField] private TextMeshProUGUI[] StageUIText; 
+
     // Start is called before the first frame update
     void Start()
     {
         //スコアを0にする
         nScore = 0;
         //スコアのテキストを紐づける
-        GameObject obj = transform.Find("Canvas").gameObject;
-        scoreText = obj.transform.Find("Score").gameObject.GetComponent<Text>();
-        enemyText = obj.transform.Find("Enemy").gameObject.GetComponent<Text>();
-        waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
-        MaxEnemy = obj.transform.Find("Max").gameObject.GetComponent<Text>();
+        //GameObject obj = transform.Find("Canvas").gameObject;
+        //scoreText = obj.transform.Find("Score").gameObject.GetComponent<Text>();
+        //enemyText = obj.transform.Find("Enemy").gameObject.GetComponent<Text>();
+        //waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
+        //MaxEnemy = obj.transform.Find("Max").gameObject.GetComponent<Text>();
 
         //敵の数は初期数は3
         nMaxEnemy = nEnemyNum = 3;
@@ -62,11 +67,11 @@ public class WaveManager : MonoBehaviour
         //
 
         //スコアの表示
-        scoreText.text = string.Format("{0}", nScore);
+        StageUIText[0].text = string.Format("{0}", nScore);
         //敵数の表示
-        enemyText.text = string.Format("{0}",nEnemyNum);
+        StageUIText[1].text = string.Format("{0}",nEnemyNum);
         //ウェーブ数の表示
-        waveText.text = string.Format("{0}",nWaveNum);
+        StageUIText[2].text = string.Format("{0}",nWaveNum);
         //最大的数の表示
         //MaxEnemy.text = string.Format("{0}",nMaxEnemy);
 
