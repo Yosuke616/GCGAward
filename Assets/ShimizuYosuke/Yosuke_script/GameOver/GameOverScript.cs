@@ -88,7 +88,6 @@ public class GameOverScript : MonoBehaviour
     void Update()
     {
 
-            Debug.Log(2345676543);
         if (bUseFlg) {
             //スコア表示
             int num;
