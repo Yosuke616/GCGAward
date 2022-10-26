@@ -31,7 +31,7 @@ public class PlayerSettings : MonoBehaviour
     public static float LTDeadZoneGetter = 0;
 
     [SerializeField]private bool CursorLock = true;
-
+    public static bool ChangeCursorView = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +63,11 @@ public class PlayerSettings : MonoBehaviour
         {
             CursorLock = !CursorLock;
         }
+        if(ChangeCursorView)
+        {
+            ChangeCursorView = false;
+            CursorLock = !CursorLock;
+        }
         if(!CursorLock)
         { 
             Cursor.visible = true;
@@ -75,6 +80,9 @@ public class PlayerSettings : MonoBehaviour
 
         }
     }
-    
+    public static void ChangeCursorLock()
+    {
+        ChangeCursorView = true;
+    }
     
 }

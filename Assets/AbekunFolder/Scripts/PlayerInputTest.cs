@@ -66,6 +66,10 @@ public class PlayerInputTest : MonoBehaviour
         if (Gamepad.current == null) b_Controller = true;
         controller = PlayerRotation.GetControllerUse();
 
+        if(Input.GetKeyDown("m"))
+        {
+            PlayerSettings.ChangeCursorLock();
+        }
         Vector3 pos = this.transform.position;
         Quaternion myRotation = this.transform.rotation;
         //myRotation = Quaternion.identity;
