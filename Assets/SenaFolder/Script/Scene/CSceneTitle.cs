@@ -14,7 +14,9 @@ public class CSceneTitle : MonoBehaviour
         QUIT,
         MODE_MAX,
     }
-    [SerializeField] GameObject[] UIObjects; 
+    [SerializeField] GameObject[] UIObjects;
+    [SerializeField] private FadeManager fadeManager;
+
     private MODE mode;
     private MODE oldMode;
     private bool isMouse;
@@ -24,6 +26,7 @@ public class CSceneTitle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fadeManager.SceneIn();
         mode = MODE.START;
         SetUI(mode, true);
         isMouse = false;
@@ -60,7 +63,7 @@ public class CSceneTitle : MonoBehaviour
             SetUI(mode, true);          // 現在のUIを更新する
         }
         oldMode = mode;
-        Debug.Log("MODE:" + mode);
+        //Debug.Log("MODE:" + mode);
     }
 
     #region mouse move
@@ -121,11 +124,11 @@ public class CSceneTitle : MonoBehaviour
         {
             // スタート → ゲーム開始
             case MODE.START:
-                SceneManager.LoadScene("GameScene");
+                fadeManager.SceneOut("GameScene");
                 break;
             // チュートリアル → チュートリアル開始
             case MODE.TUTORIAL:
-                SceneManager.LoadScene("TutorialScene");
+                fadeManager.SceneOut("TutorialScene");
                 break;
 
             // オプション → オプション制御

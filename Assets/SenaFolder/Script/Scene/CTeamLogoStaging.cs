@@ -8,23 +8,26 @@ public class CTeamLogoStaging : MonoBehaviour
 {
     [Header("チームロゴ表示時間")]
     [SerializeField] private float fShowTime;
+    [Header("遷移先シーンの名前")]
+    [SerializeField] private string szSceneName;
+    [SerializeField] private FadeManager fadeManager;
 
-    private float fTimer;
     // Start is called before the first frame update
     void Start()
     {
-        fTimer = 0.0f;
+        fadeManager.SceneIn();
+        StartCoroutine("SceneChange");
     }
 
     // Update is called once per frame
     void Update()
     {
-        fTimer += Time.deltaTime;
+        
+    }
 
-        if(fTimer > fShowTime)
-        {
-            // タイトルシーンに遷移する
-            SceneManager.LoadScene("TitleScene");
-        }
+    private IEnumerator SceneChange()
+    {
+        yield return new WaitForSeconds(fShowTime);
+        fadeManager.SceneOut(szSceneName);
     }
 }
