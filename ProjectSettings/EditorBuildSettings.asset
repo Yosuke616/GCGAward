@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/ShimizuYosuke/scene/TitleScene2.unity
     guid: 8f561d90f73b5b549a97ed29296cf13b
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/TutorialScene.unity
     guid: 7fd741c926597d448a8c7d121ff34afa
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 04501bee01f91fc40bbd84033508d795
+  - enabled: 1
+    path: Assets/SenaFolder/Scene/TitleScene2.unity
+    guid: ec4b3e49fdbfb0942874224eeba375e2
   m_configObjects: {}
