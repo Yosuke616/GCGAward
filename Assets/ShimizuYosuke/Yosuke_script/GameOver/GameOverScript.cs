@@ -139,8 +139,8 @@ public class GameOverScript : MonoBehaviour
         }
 
         if (bChangeFlg) {
-            Right_Bracket.transform.position = new Vector3(obj.transform.position.x + 185.0f, obj.transform.position.y, obj.transform.position.z);
-            Left_Bracket.transform.position = new Vector3(obj.transform.position.x - 50.0f, obj.transform.position.y, obj.transform.position.z);
+            Right_Bracket.transform.position = new Vector3(obj.transform.position.x + 425.0f, obj.transform.position.y+10, obj.transform.position.z);
+            Left_Bracket.transform.position = new Vector3(obj.transform.position.x - 125.0f, obj.transform.position.y+10, obj.transform.position.z);
             bChangeFlg = false;
         }
 

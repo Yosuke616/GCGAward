@@ -19,6 +19,9 @@ public class RayToGround : MonoBehaviour
     private WaveManager WM;
 
     private RaycastHit hit;
+
+    private int rnd = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +88,7 @@ public class RayToGround : MonoBehaviour
         //生み出された敵の数をカウントする変数
         int cnt = 0;
 
+
         foreach (int i in numlist)
         {
             if (Number == i)
@@ -107,13 +111,14 @@ public class RayToGround : MonoBehaviour
                         //int rnd = Random.Range(0,2);
                         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
-                        int rnd = 0;
 
-                        switch (rnd) {
+                        switch (WM.GetRnd()) {
                             case 0: CreateEnemy = WM.GetNineEnemyObj(); break;
                             case 1: CreateEnemy = WM.GetEighteenEnemyObj(); break;
                             case 2: CreateEnemy = WM.GetWalkEnemyObj(); break;
                         }
+
+                        WM.SetRnd();
 
                         //オブジェクトを作り出そう
                         GameObject Enemy = Instantiate(CreateEnemy,new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z), Quaternion.identity);

@@ -22,8 +22,6 @@ public class AutoEnemy : MonoBehaviour
         //タグを検索して"Ground"のタグを付けている奴を入れるリストを作成する
         GameObject[] tags = GameObject.FindGameObjectsWithTag("Ground_Spawn");
 
-        //番号振り分けスクリプトをアタッチする
-        this.gameObject.AddComponent<NumPower>();
 
         //敵の番号振り分け用変数
         int nEnemy = 0;
@@ -41,7 +39,8 @@ public class AutoEnemy : MonoBehaviour
             cnt++;
 
         }
-
+        //番号振り分けスクリプトをアタッチする
+        this.gameObject.AddComponent<NumPower>();
     }
 
     // Update is called once per frame
