@@ -19,6 +19,10 @@ public class CSenaEnemy : CCharactorManager
     private GameObject objPlayer;
     private CHARACTORSTATE state;
     private GameObject hitEffect;
+
+    private const string key_isDamage = "isDamage";
+    private const string key_isDeath = "isDeath";
+    private Animator animator;
     #endregion
     // Start is called before the first frame update
     #region init
@@ -29,6 +33,9 @@ public class CSenaEnemy : CCharactorManager
         //SetHPBar();
         objPlayer = GameObject.FindWithTag("Player");
         //scScore = sceneManager.GetComponent<CScore>();      // スコアの情報を取得する
+
+        this.animator = GetComponent<Animator>();
+
     }
     #endregion
 
@@ -103,6 +110,8 @@ public class CSenaEnemy : CCharactorManager
     #region destroy enemy
     private IEnumerator DestroyEnemy(float fTime)
     {
+        //死亡アニメーションを流す
+        this.animator.SetBool(key_isDeath, false);
         yield return new WaitForSeconds(fTime);
         Destroy(gameObject);
     }
@@ -114,6 +123,8 @@ public class CSenaEnemy : CCharactorManager
         // 矢が当たった場合、自身と矢を消滅させる
         if(collision.gameObject.tag == "Arrow")
         {
+            //アニメーションを流す
+            this.animator.SetBool(key_isDamage, true);
             //Debug.Log("<color=green>EnemyHit</color>");
             //scScore.addScore(nAddScore);        // スコアを加算する
             Destroy(collision.gameObject);      // 矢を消滅させる
