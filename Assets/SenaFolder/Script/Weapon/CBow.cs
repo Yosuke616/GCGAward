@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Effekseer;
+using UnityEngine.InputSystem;
 
 public class CBow : MonoBehaviour
 {
@@ -70,6 +71,9 @@ public class CBow : MonoBehaviour
     private GameObject objString;
     private EffekseerEmitter effString;
     private float fTimer;
+    private bool LS = false;
+    private bool RS = false;
+    private bool RT = false;
     #endregion
 
     // Start is called before the first frame update
@@ -105,33 +109,82 @@ public class CBow : MonoBehaviour
         #region charge action
         if (g_state != STATE_BOW.BOW_COLLDOWN)
         {
-            if (Input.GetMouseButtonDown(0))
+            if(PlayerInputTest.GetControllerUse())
             {
-                ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
+                if ((Gamepad.current.rightTrigger.ReadValue()>PlayerSettings.LTDeadZoneGetter)&&!RT)
+                {
+                    ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
+
+                    RT = true;
+                }
             }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    ChangeState(STATE_BOW.BOW_CHARGE);    // チャージ状態に変更する
+                }
+            }
+            
         }
+
         #endregion
         // チャージ中に左クリックが離されたらチャージ解除
         // チャージ中に右クリックが押されたら発射
         #region release action
         if (g_state == STATE_BOW.BOW_CHARGE || g_state == STATE_BOW.BOW_CHARGEMAX)
         {
-            // 左クリックが離されたらチャージ解除
-            if (Input.GetMouseButtonUp(0))
+            if(PlayerInputTest.GetControllerUse())
             {
-                ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
-                //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
-                //ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
-                Destroy(objArrow[nCurrentArrowSetNum].gameObject);
+                // 左クリックが離されたらチャージ解除
+                if (Gamepad.current.bButton.isPressed)
+                {
+                  //  RT = false;
+                    ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
+                                                            //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+                                                            //ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
+                    Destroy(objArrow[nCurrentArrowSetNum].gameObject);
+                }
             }
+            else
+            {
+                // 左クリックが離されたらチャージ解除
+                if (Input.GetMouseButtonDown(1))
+                {
+                    ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
+                                                            //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+                                                            //ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
+                    Destroy(objArrow[nCurrentArrowSetNum].gameObject);
+                }
+            }
+            
 
             // チャージ中に右クリックが押されたら発射
-            if (Input.GetMouseButtonDown(1))
+            if(PlayerInputTest.GetControllerUse()&&(g_state == STATE_BOW.BOW_CHARGE))
             {
-                ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
-                //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
-                //ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
+                if ((Gamepad.current.rightTrigger.ReadValue() < PlayerSettings.LTDeadZoneGetter)&&RT)
+                {
+                    ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
+                                                          //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+                                                          //ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
+                    RT = false;
+                }
             }
+            else if(g_state == STATE_BOW.BOW_CHARGE)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    ChangeState(STATE_BOW.BOW_SHOT);      // 発射状態に変更する
+                                                          //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
+                                                          //ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
+                }
+            }
+            
+            
+        }
+        if ((Gamepad.current.rightTrigger.ReadValue() < PlayerSettings.LTDeadZoneGetter) && RT)
+        {
+            RT = false;
         }
         #endregion
         Debug.Log(g_state);
@@ -140,10 +193,40 @@ public class CBow : MonoBehaviour
         
         // 消費するHP量の調整
         #region adjust dec hp step
-        if (Input.GetKeyDown(KeyCode.Q))
-            AdjustUseHP(false);
-        if (Input.GetKeyDown(KeyCode.E))
-            AdjustUseHP(true);
+        if(PlayerInputTest.GetControllerUse())
+        {
+            
+            if ((Gamepad.current.leftShoulder.ReadValue()>PlayerSettings.LTDeadZoneGetter)&&!LS)
+            {
+                LS = true;
+
+                AdjustUseHP(false);
+            }
+            if((Gamepad.current.leftShoulder.ReadValue()< PlayerSettings.LTDeadZoneGetter) && LS)
+            {
+                LS = false;
+            }
+            if ((Gamepad.current.rightShoulder.ReadValue() > PlayerSettings.LTDeadZoneGetter) && !RS)
+            {
+                RS = true;
+
+                AdjustUseHP(true);
+            }
+            if ((Gamepad.current.rightShoulder.ReadValue() < PlayerSettings.LTDeadZoneGetter) && RS)
+            {
+                RS = false;
+            }
+         
+
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+                AdjustUseHP(false);
+            if (Input.GetKeyDown(KeyCode.E))
+                AdjustUseHP(true);
+
+        }
 
         //Debug.Log("Step:" + nCurrentAtkStep);
         #endregion
