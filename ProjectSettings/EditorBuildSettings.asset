@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/YosukeScene.unity
-    guid: 51e22a3016ed86a4ebefb1dc7d82267a
-  - enabled: 1
+    path: Assets/SenaFolder/Scene/TitleScene2.unity
+    guid: ec4b3e49fdbfb0942874224eeba375e2
+  - enabled: 0
     path: Assets/ShimizuYosuke/scene/TitleScene2.unity
     guid: 8f561d90f73b5b549a97ed29296cf13b
   - enabled: 1
@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 04501bee01f91fc40bbd84033508d795
-  - enabled: 1
-    path: Assets/SenaFolder/Scene/TitleScene2.unity
-    guid: ec4b3e49fdbfb0942874224eeba375e2
+  - enabled: 0
+    path: Assets/Scenes/YosukeScene.unity
+    guid: 51e22a3016ed86a4ebefb1dc7d82267a
   m_configObjects: {}
