@@ -20,7 +20,7 @@ public class AutoEnemy : MonoBehaviour
     void Start()
     {
         //タグを検索して"Ground"のタグを付けている奴を入れるリストを作成する
-        GameObject[] tags = GameObject.FindGameObjectsWithTag("Ground");
+        GameObject[] tags = GameObject.FindGameObjectsWithTag("Ground_Spawn");
 
         //番号振り分けスクリプトをアタッチする
         this.gameObject.AddComponent<NumPower>();
