@@ -182,10 +182,14 @@ public class CBow : MonoBehaviour
             
             
         }
-        if ((Gamepad.current.rightTrigger.ReadValue() < PlayerSettings.LTDeadZoneGetter) && RT)
+        if(PlayerInputTest.GetControllerUse())
         {
-            RT = false;
+            if ((Gamepad.current.rightTrigger.ReadValue() < PlayerSettings.LTDeadZoneGetter) && RT)
+            {
+                RT = false;
+            }
         }
+        
         #endregion
         Debug.Log(g_state);
         Debug.Log("fTimer:" + fTimer);
