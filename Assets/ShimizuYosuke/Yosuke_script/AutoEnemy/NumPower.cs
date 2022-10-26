@@ -19,7 +19,8 @@ public class NumPower : MonoBehaviour
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
         
-        SetList(WM.GetEnemyNum());
+
+        SetList(30);
 
         SetPlayerPos();
 
@@ -45,15 +46,15 @@ public class NumPower : MonoBehaviour
 
         int u = 0;
 
-        int rnd = Random.Range(23,AE.GetNum());
+        int rnd = Random.Range(0,AE.GetNum());
         for (int i = 0;i < nNum;i++) {
             u += rnd;
             if (u > AE.GetNum()) {
-                u = 3;
+                u = 3 + i;
             }
             RndNumList.Add(u);
+        Debug.Log(nNum);
         }
-
     }
 
     private void SetPlayerPos() {

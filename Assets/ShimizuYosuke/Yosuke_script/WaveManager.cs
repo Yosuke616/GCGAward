@@ -34,6 +34,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject NineEnemy;
     [SerializeField] private GameObject EighteenEnemy;
 
+    //敵の種類の保存
+    private int rnd = 0;
 
     // ステージ情報オブジェクト
     [Header("スコア→敵の数→ウェーブでUIを格納")]
@@ -59,9 +61,8 @@ public class WaveManager : MonoBehaviour
         //waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
         //MaxEnemy = obj.transform.Find("Max").gameObject.GetComponent<Text>();
 
-
         //敵の数は初期数は3
-        nMaxEnemy = nEnemyNum = 30;
+        nMaxEnemy = nEnemyNum = 0;
         //ウェーブ数は1にする
         nWaveNum = 1;
         //ヘッドショットは0にする
@@ -252,4 +253,16 @@ public class WaveManager : MonoBehaviour
         nEnemyNum = 0;
 
     }
+
+    public int GetRnd() {
+        return rnd;
+    }
+
+    public void SetRnd() {
+        rnd++;
+        if (rnd > 2) {
+            rnd = 0;
+        }
+    }
+
 }

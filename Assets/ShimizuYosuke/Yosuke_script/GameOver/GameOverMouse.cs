@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class GameOverMouse : MonoBehaviour, IPointerEnterHandler
 {
-    GameOverScript GOS;
+    private GameOverScript GOS;
 
     // Start is called before the first frame update
     void Start()
