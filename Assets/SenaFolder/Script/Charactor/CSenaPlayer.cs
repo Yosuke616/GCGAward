@@ -183,6 +183,8 @@ public class CSenaPlayer : CCharactorManager
         yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
         GameOverUI.SetActive(true);
+        GameOverScript GOS = GameObject.Find("EventSystem").GetComponent<GameOverScript>();
+        GOS.SetUseFlg(true);
     }
     #endregion
 
