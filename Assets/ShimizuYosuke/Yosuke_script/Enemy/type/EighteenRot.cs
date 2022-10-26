@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EighteenRot : MonoBehaviour
 {
+    //アニメーションのフラグ管理
+    private const string key_isRot = "isRot";
+    private const string key_isRun = "isRun";
+    private const string key_isAttack = "isAttack";
+    private Animator animator;
+
     //追いかける対象
     private GameObject player;
 
@@ -57,7 +63,7 @@ public class EighteenRot : MonoBehaviour
     private GameObject head;
 
     //ウェーブマネージャー取得
-    WaveManager WM;
+    private WaveManager WM;
 
     // Start is called before the first frame update
     void Start()
@@ -103,6 +109,8 @@ public class EighteenRot : MonoBehaviour
         Obj.tag = "Enemy_Start_Pos";
 
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+
+        this.animator = this.gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -122,6 +130,10 @@ public class EighteenRot : MonoBehaviour
             {
                 DefaultMove = false;
                 Change_Rot = false;
+                //アニメーションを全てオフに
+                this.animator.SetBool(key_isRot, false);
+                this.animator.SetBool(key_isRun, false);
+                this.animator.SetBool(key_isAttack, false);
             }
         }
 
