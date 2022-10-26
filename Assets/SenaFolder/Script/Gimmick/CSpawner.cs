@@ -21,7 +21,8 @@ public class CSpawner : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R))
         {
-            canSpawn = true;
+            StartSpawn();
+            //canSpawn = true;
         }
 
         if (canSpawn)
