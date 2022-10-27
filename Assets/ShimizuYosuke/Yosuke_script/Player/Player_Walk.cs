@@ -23,17 +23,6 @@ public class Player_Walk : MonoBehaviour
         MAX_STATE
     }
 
-    [Header("音の種類")]
-    [SerializeField] private AudioClip walk;
-    [SerializeField] private AudioClip run;
-    [SerializeField] private AudioClip jump;
-    [SerializeField] private AudioClip fall;
-
-    private AudioSource AS;
-
-    [Header("ピッチの変更")]
-    [SerializeField] private float pitchRange = 0.1f;
-
     /** @brief プレイヤーの移動速度*/
     [Header("プレイヤーのステータス")]
     [SerializeField] float fPlayerWalk = 2.0f;
@@ -85,8 +74,6 @@ public class Player_Walk : MonoBehaviour
         bJumpFlg = false;
         // 自分に設定されているAnimatorコンポーネントを習得する
         //this.animator = GetComponent<Animator>();
-
-        AS = GetComponent<AudioSource>();
 
         eState = 0;
     }
@@ -332,15 +319,4 @@ public class Player_Walk : MonoBehaviour
         }
     }
 
-    public void WalkSound() {
-        AS.pitch = 1.0f + Random.Range(-pitchRange,pitchRange);
-        AS.volume = 0.1f;
-        AS.PlayOneShot(walk);
-    }
-
-    public void RunSound() {
-        AS.pitch = 2.0f + Random.Range(-pitchRange, pitchRange);
-        AS.volume = 0.1f;
-        AS.PlayOneShot(run);
-    }
 }
