@@ -76,8 +76,10 @@ public class CSenaEnemy : CCharactorManager
         {
             // ¶‘¶ó‘Ô‚Ì
             case CHARACTORSTATE.CHARACTOR_ALIVE:
+                //Debug.Log("arrive");
+                //Debug.Log("Œ»İ‚ÌHP:" + nCurrentHp);
                 // HP‚ª0‚É‚È‚Á‚½‚Æ‚«‚É€–Só‘Ô‚É‚·‚é
-                if (nCurrentHp < 0)
+                if (nCurrentHp <= 0)
                     ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
                 break;
             

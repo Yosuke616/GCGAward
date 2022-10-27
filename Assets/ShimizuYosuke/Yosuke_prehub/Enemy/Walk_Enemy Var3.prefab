@@ -675,6 +675,7 @@ GameObject:
   - component: {fileID: 2866342530003344093}
   - component: {fileID: 9105747731362380708}
   - component: {fileID: 25945423899470276}
+  - component: {fileID: 2700784401163567356}
   m_Layer: 0
   m_Name: Walk_Enemy Var3
   m_TagString: Enemy
@@ -777,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd62f73d170fc343921106cc0bd1f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nMaxHp: 20
+  nMaxHp: 10
   HPFrontBar: {fileID: 141503133960541846}
   HPBGBar: {fileID: 2896077831745821030}
   nValNum: 1
@@ -802,6 +803,19 @@ MonoBehaviour:
   ACTTIME: 180
   WALK_SPEED: 5
   MOVE_AREA: 250
+--- !u!114 &2700784401163567356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7198263751198104514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8d5c1c2f8e56b439c6d75ae1ac6d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fLifeTime: 0
 --- !u!1 &7198263751198104528
 GameObject:
   m_ObjectHideFlags: 0
