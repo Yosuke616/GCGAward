@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.InputSystem;
 
 public class GameOverScript : MonoBehaviour
 {
@@ -119,6 +120,14 @@ public class GameOverScript : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 SelectButton();
             }
+            if(PlayerInputTest.GetControllerUse())
+            {
+                if (Gamepad.current.aButton.isPressed)
+                {
+                    SelectButton();
+                }
+            }
+            
         }
     }
 
