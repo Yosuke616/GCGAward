@@ -38,6 +38,14 @@ public class Kesu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DamageTime <= 0)
+        {
+            this.animator.SetBool(key_isDamage, false);
+        }
+        else {
+            DamageTime--;
+        }
+
         if (!PlayerInputTest.GetControllerUse())
         {
             if (!Input.anyKey)
@@ -50,8 +58,6 @@ public class Kesu : MonoBehaviour
                 this.animator.SetBool(key_isLeftkey, false);
                 this.animator.SetBool(key_isCharge, false);
                 this.animator.SetBool(key_isShot, false);
-                this.animator.SetBool(key_isDamage, false);
-                this.animator.SetBool(key_isDeath, false);
             }
 
             if (PlayerInputTest.GetChargeMode())
@@ -171,8 +177,6 @@ public class Kesu : MonoBehaviour
                 this.animator.SetBool(key_isLeftkey, false);
                 this.animator.SetBool(key_isCharge, false);
                 this.animator.SetBool(key_isShot, false);
-                this.animator.SetBool(key_isDamage, false);
-                this.animator.SetBool(key_isDeath, false);
             }
 
             if (PlayerInputTest.GetChargeMode())
@@ -254,23 +258,20 @@ public class Kesu : MonoBehaviour
 
             }
         }
-        if (DamageTime <= 0)
-        {
-            //ƒ_ƒ[ƒW‚ð‚­‚ç‚Á‚½‚©‚Ç‚¤‚©
-            if (Input.GetKey(KeyCode.F1))
-            {
-                this.animator.SetBool(key_isDamage, true);
-                DamageTime = 180;
-            }
-        }
-        else {
-            this.animator.SetBool(key_isDamage, false);
-            DamageTime--;
-        }
+        
 
         if (Input.GetKey(KeyCode.F2)) {
             this.animator.SetBool(key_isDeath, true);
         }
+    }
+
+    public void SetDamageAnim() {
+        this.animator.SetBool(key_isDamage, true);
+        DamageTime = 30;
+    }
+
+    public void SetDeathAnim() {
+        this.animator.SetBool(key_isDeath, true);
     }
 
     public void KEMURI_R() {

@@ -22,6 +22,7 @@ public class CSenaPlayer : CCharactorManager
     private CHARACTORSTATE playerState;
     private CHPText hpText;
     private GameObject[] objHPTexts;
+
     #endregion
     // Start is called before the first frame update
     #region init
@@ -180,7 +181,9 @@ public class CSenaPlayer : CCharactorManager
     #region destroy player
     private IEnumerator DestroyPlayer()
     {
-        yield return new WaitForSeconds(1.0f);
+        Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
+        elf.SetDeathAnim();
+        yield return new WaitForSeconds(5.0f);
         Destroy(gameObject);
         GameOverUI.SetActive(true);
         GameOverScript GOS = GameObject.Find("EventSystem").GetComponent<GameOverScript>();
@@ -204,4 +207,17 @@ public class CSenaPlayer : CCharactorManager
         }
         HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == ("Bullet"))
+        {
+            Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
+            elf.SetDamageAnim();
+
+            ChangeHPFront(-10);
+            ChangeHP(-10);
+        }
+    }
+
 }

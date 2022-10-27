@@ -343,17 +343,4 @@ public class Player_Walk : MonoBehaviour
         AS.volume = 0.1f;
         AS.PlayOneShot(run);
     }
-
-    public void JumpSound() {
-        AS.pitch = 1.0f + Random.Range(-pitchRange, pitchRange);
-        AS.volume = 0.1f;
-        AS.PlayOneShot(jump);
-    }
-
-    public void FallSound() {
-        AS.pitch = 1.0f + Random.Range(-pitchRange, pitchRange);
-        AS.volume = 0.1f;
-        AS.PlayOneShot(fall);
-    }
-
 }
