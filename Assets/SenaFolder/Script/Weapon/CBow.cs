@@ -160,7 +160,7 @@ public class CBow : MonoBehaviour
             
 
             // チャージ中に右クリックが押されたら発射
-            if(PlayerInputTest.GetControllerUse()&&(g_state == STATE_BOW.BOW_CHARGE))
+            if(PlayerInputTest.GetControllerUse()&&(g_state == STATE_BOW.BOW_CHARGE||g_state ==STATE_BOW.BOW_CHARGEMAX))
             {
                 if ((Gamepad.current.rightTrigger.ReadValue() < PlayerSettings.LTDeadZoneGetter)&&RT)
                 {
@@ -170,7 +170,7 @@ public class CBow : MonoBehaviour
                     RT = false;
                 }
             }
-            else if(g_state == STATE_BOW.BOW_CHARGE)
+            else if(!PlayerInputTest.GetControllerUse()&&(g_state == STATE_BOW.BOW_CHARGE||g_state == STATE_BOW.BOW_CHARGEMAX))
             {
                 if (Input.GetMouseButtonUp(0))
                 {
