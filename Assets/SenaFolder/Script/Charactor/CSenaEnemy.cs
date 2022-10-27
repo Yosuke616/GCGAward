@@ -23,6 +23,9 @@ public class CSenaEnemy : CCharactorManager
     private const string key_isDamage = "isDamage";
     private const string key_isDeath = "isDeath";
     private Animator animator;
+
+    private WaveManager WM;
+
     #endregion
     // Start is called before the first frame update
     #region init
@@ -36,6 +39,7 @@ public class CSenaEnemy : CCharactorManager
 
         this.animator = GetComponent<Animator>();
 
+        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
     }
     #endregion
 
@@ -66,6 +70,9 @@ public class CSenaEnemy : CCharactorManager
                 CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
                 //obj.ChangeHPFront(10);
                 obj.ChangeHp(10);
+                WM.AddScore(100);
+                WM.AddBreakEnemy();
+                WM.DecEnemy();
                 StartCoroutine("DestroyEnemy", fDestroyTime);
                 break;
         }
