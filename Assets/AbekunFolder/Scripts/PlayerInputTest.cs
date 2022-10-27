@@ -49,6 +49,7 @@ public class PlayerInputTest : MonoBehaviour
     [SerializeField]private bool b_Right = true;
     [SerializeField] private int PlayerDirect = 0;
     private static float PlayerRotY = 0;
+    [SerializeField] GameObject Bow;
     // Start is called before the first frame update
     void Start()
     {
@@ -307,7 +308,7 @@ public class PlayerInputTest : MonoBehaviour
         
         if (!controller)
         {
-            if (Input.GetMouseButtonDown(0) && b_Charge == false)//(Gamepad.current.rightTrigger.ReadValue() > TriggerDeadZone) && !b_AimMode && !controller)    //マウスの左クリックが押された
+            if (!Bow.GetComponent<CBow>().GetCoolDownFlg() && (Input.GetMouseButtonDown(0) && b_Charge == false))//(Gamepad.current.rightTrigger.ReadValue() > TriggerDeadZone) && !b_AimMode && !controller)    //マウスの左クリックが押された
             {
 
                 b_Charge = true;
@@ -328,7 +329,7 @@ public class PlayerInputTest : MonoBehaviour
             }
         }
         if (controller) { 
-            if ((Gamepad.current.rightTrigger.ReadValue() > TriggerDeadZone) && !b_AimMode)    //マウスの左クリックが押された
+            if (!Bow.GetComponent<CBow>().GetCoolDownFlg()&&((Gamepad.current.rightTrigger.ReadValue() > TriggerDeadZone) && !b_AimMode))    //マウスの左クリックが押された
             {
                 
                 b_Charge = true;
