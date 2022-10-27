@@ -25,7 +25,7 @@ public class PlayerSettings : MonoBehaviour
     [SerializeField, Range(0.1f,10)] private float FPSControllerSensiY = 1.0f;
     
     [Header("ControllerDeadZoneSetting")]
-    [SerializeField, Range(0.1f, 0.9f)] private float TriggerDeadZone = 0.5f;
+    [SerializeField, Range(0.01f, 0.5f)] private float TriggerDeadZone = 0.5f;
     [SerializeField, Range(0.1f, 0.9f)] private float StickDeadZone = 0.5f;
 
     public static float LTDeadZoneGetter = 0;
@@ -35,7 +35,10 @@ public class PlayerSettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (!(Gamepad.current == null))
+        {
+            Controller = true;
+        }
 
     }
 

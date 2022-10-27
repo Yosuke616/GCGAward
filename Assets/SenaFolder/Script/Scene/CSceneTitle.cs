@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class CSceneTitle : MonoBehaviour
 {
@@ -21,11 +22,22 @@ public class CSceneTitle : MonoBehaviour
     private MODE oldMode;
     private bool isMouse;
     private AudioSource audioSource;
+    private bool useController;
+    private float ControllerDeadZone = 0.5f;
+    private bool dpadFlg;
     //private Image[] UIImages;
     //private List<List<Sprite>> SpriteList;
     // Start is called before the first frame update
     void Start()
     {
+        if(Gamepad.current == null)
+        {
+            useController = false; 
+        }
+        else
+        {
+            useController = true;
+        }
         fadeManager.SceneIn();
         mode = MODE.START;
         SetUI(mode, true);
@@ -104,6 +116,42 @@ public class CSceneTitle : MonoBehaviour
         {
             // シーン遷移
             ChangeScene(mode);
+        }
+        if(useController)
+        {
+            // キーボード上キー / コントローラー上ボタン →　上選択
+            if ((Gamepad.current.leftStick.ReadValue().y>ControllerDeadZone||(Gamepad.current.dpad.ReadValue().y>ControllerDeadZone))&&!dpadFlg)
+            {
+                dpadFlg = true;
+                --mode;
+
+                if (mode < MODE.START)
+                {
+                    mode = MODE.QUIT;
+                }
+            }
+
+            // キーボード下キー / コントローラー下ボタン →　上選択
+            if ((Gamepad.current.leftStick.ReadValue().y < -ControllerDeadZone||(Gamepad.current.dpad.ReadValue().y < -ControllerDeadZone)) && !dpadFlg)
+            {
+                dpadFlg = true;
+                ++mode;
+
+                if (mode >= MODE.MODE_MAX)
+                {
+                    mode = MODE.START;
+                }
+            }
+            if(dpadFlg&& ((Gamepad.current.dpad.ReadValue().y == 0)&&(Gamepad.current.leftStick.ReadValue().y ==0)))
+            {
+                dpadFlg = false;
+            }
+            // Enterキー→決定
+            if (Gamepad.current.aButton.isPressed)
+            {
+                // シーン遷移
+                ChangeScene(mode);
+            }
         }
     }
     #endregion
