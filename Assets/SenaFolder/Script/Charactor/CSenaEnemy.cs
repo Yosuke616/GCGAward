@@ -64,8 +64,8 @@ public class CSenaEnemy : CCharactorManager
                 //StartCoroutine("DestroyHitEffect",(objHitEffect,fLifeTime));        // 1•bŒã‚É
                 //HP‚Ì‰ñ•œ
                 CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
+                //obj.ChangeHPFront(10);
                 obj.ChangeHp(10);
-                obj.ChangeHPFront(10);
                 StartCoroutine("DestroyEnemy", fDestroyTime);
                 break;
         }
