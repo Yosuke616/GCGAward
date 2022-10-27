@@ -556,7 +556,7 @@ public class CBow : MonoBehaviour
         return maxDecStep;
     }
     #endregion
-    
+
     /*
     * @brief å∑ÇÃå`ÇïœçXÇ∑ÇÈ
     */
@@ -571,4 +571,12 @@ public class CBow : MonoBehaviour
     //    effString.enabled = false;
     //}
     //#endregion
+
+    #region get cool down flag
+    public bool GetCoolDownFlg()
+    {
+        return g_state == STATE_BOW.BOW_COLLDOWN;
+    }
+    #endregion
+
 }
