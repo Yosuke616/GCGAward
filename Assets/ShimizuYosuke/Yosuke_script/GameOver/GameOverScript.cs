@@ -208,10 +208,10 @@ public class GameOverScript : MonoBehaviour
     private void SelectButton() {
         switch (eButton) {
             case RESULT_BUTTON.RETORY_BUTTON:
-                SceneManager.LoadScene("TitleScene2");
+                SceneManager.LoadScene("GameScene");
                 break;
             case RESULT_BUTTON.TITLE_BUTTON:
-                SceneManager.LoadScene("TitleScene2");
+                SceneManager.LoadScene("NewTitleScene");
                 break;
         }
     }
