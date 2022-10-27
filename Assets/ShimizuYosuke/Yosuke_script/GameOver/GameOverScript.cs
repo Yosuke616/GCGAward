@@ -42,6 +42,8 @@ public class GameOverScript : MonoBehaviour
     //trueで動かせる falseで動かせない
     private bool bUseFlg;
 
+    private bool Cursor = true;
+
     //スコア(仮)からスコアを引っ張てっくる
     private WaveManager WM; 
 
@@ -90,6 +92,10 @@ public class GameOverScript : MonoBehaviour
     {
 
         if (bUseFlg) {
+            if (Cursor) {
+                PlayerSettings.ChangeCursorLock();
+                Cursor = false;
+            }
             //スコア表示
             int num;
             //文字を数字に変える
