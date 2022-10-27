@@ -84,9 +84,15 @@ public class CSenaPlayer : CCharactorManager
                 // HP‚ª0‚É‚È‚Á‚½‚ç€–Só‘Ô‚É•ÏX‚·‚é
                 if (nCurrentHp <= 0)
                     ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
+
+                // ãŒÀ’l
+                if (nCurrentHp > 100)
+                    nCurrentHp = 100;
                 break;
             // €–Só‘Ô‚Ì
             case CHARACTORSTATE.CHARACTOR_DEAD:
+                //@€‚ñ‚¾‚Æ‚«‚ÉHP‚ªŒ¸‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+                nCurrentHp = 0;
                 break;
         }
         nOldHp = nCurrentHp;    
