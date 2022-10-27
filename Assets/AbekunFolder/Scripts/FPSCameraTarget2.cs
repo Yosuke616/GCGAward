@@ -41,9 +41,11 @@ public class FPSCameraTarget2 : MonoBehaviour
         {
             return;
         }
-        transform.LookAt(PlayerTransform.position);
-        transform.position =  pos + new Vector3(PlayerTransform.position.x, PlayerTransform.position.y - 1, PlayerTransform.position.z);
-
+        if (!(PlayerTransform == null))
+        {
+            transform.LookAt(PlayerTransform.position);
+            transform.position = pos + new Vector3(PlayerTransform.position.x, PlayerTransform.position.y - 1, PlayerTransform.position.z);
+        }
 
         MouseAxis.x = Input.GetAxis("Mouse X");
         MouseAxis.y = Input.GetAxis("Mouse Y");
