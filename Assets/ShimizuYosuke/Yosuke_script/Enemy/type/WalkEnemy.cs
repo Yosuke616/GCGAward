@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class WalkEnemy : MonoBehaviour
 {
+    //アニメーションのフラグ管理
+    private const string key_isRot = "isRot";
+    private const string key_isRun = "isRun";
+    private const string key_isAttack = "isAttack";
+    private Animator animator;
+
     //追いかける対象
     private GameObject player;
 
@@ -111,6 +117,8 @@ public class WalkEnemy : MonoBehaviour
         Obj.tag = "Enemy_Start_Pos";
 
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+
+        this.animator = this.gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -128,6 +136,10 @@ public class WalkEnemy : MonoBehaviour
             if (this.transform.eulerAngles == Start_Rot) {
                 DefaultMove = false;
                 Change_Rot = false;
+                //アニメーションを全てオフに
+                this.animator.SetBool(key_isRot, false);
+                this.animator.SetBool(key_isRun, false);
+                this.animator.SetBool(key_isAttack, false);
             }
         }
 
@@ -156,6 +168,9 @@ public class WalkEnemy : MonoBehaviour
                 //移動させるか回転させる
                 if (Rotflg)
                 {
+                    //回転フラグをオンにする
+                    this.animator.SetBool(key_isRot, true);
+
                     //一定時間ごとに180度回転させる
                     this.transform.Rotate(new Vector3(0, 1, 0));
                     Act_Num++;
@@ -184,9 +199,19 @@ public class WalkEnemy : MonoBehaviour
                     }
                 }
             }
+            else {
+                this.animator.SetBool(key_isRot, false);
+            }
         }
         else{
-            if (!Chase) {
+            if (!Chase)
+            {
+                //走りを解除
+                //走って追いかけてくる
+                this.animator.SetBool(key_isRun, false);
+                //歩いて戻す
+                this.animator.SetBool(key_isRot, true);
+
                 //元の場所に戻す
                 ComeBackFlg = true;
                 //内部の当たり判定をアクティブにする
@@ -200,6 +225,9 @@ public class WalkEnemy : MonoBehaviour
 
                 //元の場所に戻る動く
                 transform.position = Vector3.MoveTowards(this.transform.position, Start_Pos, Time.deltaTime);
+            }
+            else {
+                this.animator.SetBool(key_isRot, false);
             }
         }
     }
@@ -237,6 +265,9 @@ public class WalkEnemy : MonoBehaviour
                 {
                     if (hitsOb[0].transform.gameObject.CompareTag("Player"))
                     {
+                        //走って追いかけてくる
+                        this.animator.SetBool(key_isRun, true);
+
                         //デフォルトムーブをオンにする
                         DefaultMove = true;
                         //チェイスフラグをオンにする
@@ -256,6 +287,8 @@ public class WalkEnemy : MonoBehaviour
                         nBullet_Time--;
                         if (nBullet_Time < 0)
                         {
+                            //攻撃アニメーション
+                            this.animator.SetBool(key_isAttack, true);
                             //弾を発射する
                             Vector3 bulletPosition = firePoint.transform.position;
                             //上で取得した場所に弾を出現
@@ -269,7 +302,10 @@ public class WalkEnemy : MonoBehaviour
                             // 出現させたボールを0.8秒後に消す
                             Destroy(newBall, 2.0f);
                             nBullet_Time = BULLET_DELTTIME;
-                         
+
+                        }
+                        else {
+                            this.animator.SetBool(key_isAttack, false);
                         }
                     }
                 }

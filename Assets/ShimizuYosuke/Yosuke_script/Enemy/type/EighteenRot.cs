@@ -159,6 +159,9 @@ public class EighteenRot : MonoBehaviour
             //アクションフラグがオンだったら行動する
             if (bAct)
             {
+                //回転フラグをオンにする
+                this.animator.SetBool(key_isRot, true);
+
                 //一定時間ごとに180度回転させる
                 this.transform.Rotate(new Vector3(0, 1, 0));
                 Act_Num++;
@@ -169,11 +172,21 @@ public class EighteenRot : MonoBehaviour
                     nActTime = 0;
                 }
             }
+            else {
+                //回転フラグをオンにする
+                this.animator.SetBool(key_isRot, false);
+            }
         }
         else
         {
             if (!Chase)
             {
+                //走りを解除
+                //走って追いかけてくる
+                this.animator.SetBool(key_isRun, false);
+                //歩いて戻す
+                this.animator.SetBool(key_isRot, true);
+
                 //元の場所に戻す
                 ComeBackFlg = true;
                 //内部の当たり判定をアクティブにする
@@ -187,6 +200,10 @@ public class EighteenRot : MonoBehaviour
 
                 //元の場所に戻る動く
                 transform.position = Vector3.MoveTowards(this.transform.position, Start_Pos, Time.deltaTime);
+            }
+            else
+            {
+                this.animator.SetBool(key_isRot, false);
             }
         }
     }
@@ -224,6 +241,9 @@ public class EighteenRot : MonoBehaviour
                 {
                     if (hitsOb[0].transform.gameObject.CompareTag("Player"))
                     {
+                        //走って追いかけてくる
+                        this.animator.SetBool(key_isRun, true);
+
                         //デフォルトムーブをオンにする
                         DefaultMove = true;
                         //チェイスフラグをオンにする
@@ -243,6 +263,8 @@ public class EighteenRot : MonoBehaviour
                         nBullet_Time--;
                         if (nBullet_Time < 0)
                         {
+                            //攻撃アニメーション
+                            this.animator.SetBool(key_isAttack, true);
                             //弾を発射する
                             Vector3 bulletPosition = firePoint.transform.position;
                             //上で取得した場所に弾を出現
@@ -257,6 +279,9 @@ public class EighteenRot : MonoBehaviour
                             Destroy(newBall, 2.0f);
                             nBullet_Time = BULLET_DELTTIME;
 
+                        }
+                        else {
+                            this.animator.SetBool(key_isAttack, false);
                         }
                     }
                 }

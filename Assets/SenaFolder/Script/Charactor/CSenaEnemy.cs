@@ -62,6 +62,10 @@ public class CSenaEnemy : CCharactorManager
             case CHARACTORSTATE.CHARACTOR_DEAD:
                 //float fLifeTime = objDamageUI.GetComponent<CDamageUI>().fLifeTime;
                 //StartCoroutine("DestroyHitEffect",(objHitEffect,fLifeTime));        // 1秒後に
+                //HPの回復
+                CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
+                obj.ChangeHp(10);
+                obj.ChangeHPFront(10);
                 StartCoroutine("DestroyEnemy", fDestroyTime);
                 break;
         }
@@ -113,7 +117,7 @@ public class CSenaEnemy : CCharactorManager
     private IEnumerator DestroyEnemy(float fTime)
     {
         //死亡アニメーションを流す
-        this.animator.SetBool(key_isDeath, false);
+        this.animator.SetBool(key_isDeath, true);
         yield return new WaitForSeconds(fTime);
         Destroy(gameObject);
     }

@@ -108,7 +108,7 @@ public class NineRot : MonoBehaviour
         Obj.GetComponent<BoxCollider>().enabled = false;
         Obj.tag = "Enemy_Start_Pos";
 
-        //WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
         this.animator = this.gameObject.GetComponent<Animator>();
 
@@ -292,21 +292,6 @@ public class NineRot : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //矢が当たった場合、自身と矢を消滅させる
-        if (collision.gameObject.tag == "Arrow")
-        {
-            //スコアを加算させる
-            //WM.AddScore(100);
-            //Destroy(this.gameObject);
-            //WM.AddBreakEnemy();
-            //WM.DecEnemy();
-
-
-
-            //HPを回復させる
-
-        }
-
         //元の場所に戻るフラグ
         if (ComeBackFlg)
         {
