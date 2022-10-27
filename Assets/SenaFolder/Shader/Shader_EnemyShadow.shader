@@ -31,13 +31,12 @@ Shader "Unlit/Shader_EnemyShadow"
             // Pass01
             Stencil
             {
-                Ref 1
+                Ref [_Mask]
                 Comp Equal
-                Pass IncrSat
             }
-            ColorMask 0
+            /*ColorMask 0
             ZTest Always
-            ZWrite Off
+            ZWrite Off*/
 
         // Pass02
       /*  Pass
