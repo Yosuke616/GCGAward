@@ -6,6 +6,15 @@ using UnityEngine.InputSystem;
 
 public class Kesu : MonoBehaviour
 {
+    [Header("音の種類")]
+    [SerializeField] private AudioClip walk;
+    [SerializeField] private AudioClip run;
+
+    private AudioSource AS;
+
+    [Header("ピッチの変更")]
+    [SerializeField] private float pitchRange = 0.1f;
+
     [SerializeField] private GameObject kemuri; 
 
     private const string key_isWalk = "isWalk";
@@ -30,6 +39,7 @@ public class Kesu : MonoBehaviour
     void Start()
     {
         this.animator = GetComponent<Animator>();
+        AS = GetComponent<AudioSource>();
         charge = false;
         shotTime = 0;
         DamageTime = 0;
@@ -301,6 +311,20 @@ public class Kesu : MonoBehaviour
 
         obj.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
         obj.AddComponent<KesuDeath>();
+    }
+
+    public void WalkSound()
+    {
+        AS.pitch = 1.0f + Random.Range(-pitchRange, pitchRange);
+        AS.volume = 0.1f;
+        AS.PlayOneShot(walk);
+    }
+
+    public void RunSound()
+    {
+        AS.pitch = 2.0f + Random.Range(-pitchRange, pitchRange);
+        AS.volume = 0.1f;
+        AS.PlayOneShot(run);
     }
 
 }
