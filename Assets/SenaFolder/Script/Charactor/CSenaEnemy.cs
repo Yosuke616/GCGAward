@@ -121,7 +121,7 @@ public class CSenaEnemy : CCharactorManager
     private void OnCollisionEnter(Collision collision)
     {
         // 矢が当たった場合、自身と矢を消滅させる
-        if(collision.gameObject.tag == "Arrow")
+        if (collision.gameObject.tag == "Arrow")
         {
             //アニメーションを流す
             this.animator.SetBool(key_isDamage, true);
@@ -135,10 +135,13 @@ public class CSenaEnemy : CCharactorManager
             // ダメージ通知
             ChangeHp(-1 * DamageNum);
             //if(nCurrentHp > 0)
-                objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
+            objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
             // ヒットカーソルの再生
             GetComponent<CEnemyDamage>().ArrowHit();
-            
+
+        }
+        else {
+            this.animator.SetBool(key_isDamage, false);
         }
     }
     #endregion

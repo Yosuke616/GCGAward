@@ -69,7 +69,7 @@ public class GameOverScript : MonoBehaviour
         Wave = WaveRun.GetComponent<Text>();
         Total = TotalScore.GetComponent<Text>();
 
-        WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        //WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
         int num;
         //•¶š‚ğ”š‚É•Ï‚¦‚é
