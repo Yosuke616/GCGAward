@@ -228,7 +228,7 @@ public class TitleScript : MonoBehaviour
                     }
                     break;
                 case TITLE_BUTTON.END_BUTTON:
-                    UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+                    //UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
                     break;
                 default: break;
             }
