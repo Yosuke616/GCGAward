@@ -71,7 +71,7 @@ public class CArrow : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // ínñ Ç…è’ìÀÇµÇΩÇÁñÓÇè¡ñ≈Ç≥ÇπÇÈ
-        if(collision.gameObject.tag == "Ground")
+        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Ground_Spawn" || collision.gameObject.tag == "Slope")
         {
             Destroy(gameObject);
         }
