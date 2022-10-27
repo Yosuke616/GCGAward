@@ -21,6 +21,7 @@ public class FPSTargetMove : MonoBehaviour
         {
             this.transform.LookAt(FPS);
         }
+        if(!(objPlayer == null))
         this.transform.position =new Vector3(objPlayer.transform.position.x, objPlayer.transform.position.y+TargetHeight, objPlayer.transform.position.z);
         
     }

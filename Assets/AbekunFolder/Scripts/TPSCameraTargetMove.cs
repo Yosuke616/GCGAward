@@ -92,6 +92,7 @@ public class TPSCameraTargetMove : MonoBehaviour
         }
         MouseX = MouseMove.x - 0.5f;
         // ç¿ïWÇÃçXêV
+        if(!(PlayerTransform==null))
         transform.position = pos + PlayerTransform.position;
         // transform.LookAt(PlayerTransform.position);
         TPSMouseMove = MouseMove;
