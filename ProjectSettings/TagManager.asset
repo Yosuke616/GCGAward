@@ -17,6 +17,7 @@ TagManager:
   - Bullet
   - Cursur
   - Ground_Spawn
+  - DeadZone
   layers:
   - Default
   - TransparentFX
