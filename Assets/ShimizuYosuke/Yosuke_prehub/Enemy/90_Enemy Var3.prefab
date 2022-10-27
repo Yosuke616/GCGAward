@@ -797,7 +797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nMaxHp: 10
   HPFrontBar: {fileID: 141503133960541846}
-  HPBGBar: {fileID: 0}
+  HPBGBar: {fileID: 2896077831745821030}
   nValNum: 1
   objDamageUI: {fileID: 9105747732129505315}
   objHitEffect: {fileID: 5432626011110207703, guid: 7aa81aa806d995c43adbb26063affd88, type: 3}
@@ -1291,6 +1291,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9105747731748775821}
     m_Modifications:
+    - target: {fileID: 5711213315313623183, guid: 1e24fe819b3e1bf46a8dd342eab28029, type: 3}
+      propertyPath: fStartTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6228181556367138738, guid: 1e24fe819b3e1bf46a8dd342eab28029, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1465,5 +1469,10 @@ GameObject:
 --- !u!224 &1261159030325025312 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8061043272850538633, guid: 1e24fe819b3e1bf46a8dd342eab28029, type: 3}
+  m_PrefabInstance: {fileID: 9105747732374723241}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2896077831745821030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6228181557603222479, guid: 1e24fe819b3e1bf46a8dd342eab28029, type: 3}
   m_PrefabInstance: {fileID: 9105747732374723241}
   m_PrefabAsset: {fileID: 0}

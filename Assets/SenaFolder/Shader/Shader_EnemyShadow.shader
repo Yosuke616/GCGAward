@@ -69,7 +69,7 @@ Shader "Unlit/Shader_EnemyShadow"
         fixed4 frag(v2f_img i) : SV_Target
         {
             float alpha = tex2D(_MainTex, i.uv).a;
-            fixed4 col = fixed4(1.0f, 0.49f, 0.44f, alpha);
+            fixed4 col = fixed4(1.0f, 0.0f, 0.0f, alpha);
             return col;
         }
             ENDCG
