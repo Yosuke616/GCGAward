@@ -41,5 +41,9 @@ public class CHPText : MonoBehaviour
     {
         nOldNum = nCurrentNum;
         nCurrentNum += num;
+        if (nCurrentNum > 100)
+            nCurrentNum = 100;
+        if (nCurrentNum <= 0)
+            nCurrentNum = 0;
     }
 }
