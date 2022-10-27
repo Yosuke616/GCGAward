@@ -19,6 +19,7 @@ public class CCoolDownUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("クールダウンタイム:" + fCurrentValue);
         image.fillAmount = fCurrentValue;
     }
 

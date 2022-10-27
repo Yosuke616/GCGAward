@@ -191,8 +191,8 @@ public class CBow : MonoBehaviour
         }
         
         #endregion
-        Debug.Log(g_state);
-        Debug.Log("fTimer:" + fTimer);
+        //Debug.Log(g_state);
+        //Debug.Log("fTimer:" + fTimer);
         //Debug.Log("Charge" + (int)fChargeTime);
         
         // 消費するHP量の調整
@@ -296,7 +296,7 @@ public class CBow : MonoBehaviour
 
                 int nShotUseHP = nAtkDecHp + nAdjustHp * nCurrentAtkStep;
                 // PlayerのHPを発射に使うHP+威力調整に使うHP分減らす
-                objPlayer.GetComponent<CCharactorManager>().ChangeHP(-1 * nShotUseHP);
+                objPlayer.GetComponent<CCharactorManager>().ChangeHPBG(-1 * nShotUseHP);
                 int nAtkValue = nDefAtk + nAddAtk * nCurrentAtkStep;                 // 矢の攻撃力
                 objArrow[nCurrentArrowSetNum].GetComponent<CArrow>().Shot((int)fChargeTime, nAtkValue); // 矢を発射する
                 ChangeState(STATE_BOW.BOW_RESET);    // リセットする
@@ -340,6 +340,7 @@ public class CBow : MonoBehaviour
             // クールダウン状態
             case STATE_BOW.BOW_COLLDOWN:
                 g_state = STATE_BOW.BOW_COLLDOWN;
+                Debug.Log("COOLDOWN");
                 objCoolDownUI.SetActive(true);
                 fTimer = 0.0f;              // タイマーの初期化
                 break;
@@ -415,11 +416,11 @@ public class CBow : MonoBehaviour
             // クールダウン状態
             case STATE_BOW.BOW_COLLDOWN:
                 fTimer += Time.deltaTime;              // タイマー更新
-
                 // クールダウンタイムが終了したら通常状態に戻る
                 if (fTimer > fDownTime)
                 {
                     ChangeState(STATE_BOW.BOW_NORMAL);
+                    objCoolDownUI.GetComponent<CCoolDownUI>().GetCoolDownTime(0.0f);
                     objCoolDownUI.SetActive(false);
                 }
                 objCoolDownUI.GetComponent<CCoolDownUI>().GetCoolDownTime(fTimer);

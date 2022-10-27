@@ -191,13 +191,6 @@ public class CSenaPlayer : CCharactorManager
     }
     #endregion
 
-    #region add hp
-    public void AddHp(int num)
-    {
-        ChangeHp(num);
-    }
-    #endregion
-
     public override void ChangeHPFront(int num)
     {
         //nCurrentHp += num;
@@ -216,7 +209,7 @@ public class CSenaPlayer : CCharactorManager
             elf.SetDamageAnim();
 
             ChangeHPFront(-10);
-            ChangeHP(-10);
+            ChangeHPBG(-10);
         }
     }
 

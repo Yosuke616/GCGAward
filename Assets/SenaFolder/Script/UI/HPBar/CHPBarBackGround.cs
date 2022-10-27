@@ -15,8 +15,8 @@ public class CHPBarBackGround : MonoBehaviour
     #region variable
     private float fPerChangeValue;          // 1フレームで変更する量
     private float fChangeValue;             // 変更する量
-    private int nPlayerMaxHp;               // プレイヤーの最大HP
-    private GameObject objPlayer;           // プレイヤーのオブジェクト
+    private int nMaxHp;               // プレイヤーの最大HP
+    private GameObject objParent;           // プレイヤーのオブジェクト
     private Slider slider;
     private bool isMove;                    // スライダーが動いているかどうか
     #endregion
@@ -24,13 +24,18 @@ public class CHPBarBackGround : MonoBehaviour
     void Start()
     {
         // プレイヤーの情報の取得
-        objPlayer = GameObject.FindWithTag("Player").gameObject;        // プレイヤーのオブジェクトを取得する
-        nPlayerMaxHp = objPlayer.GetComponent<CCharactorManager>().nMaxHp;  // プレイヤーの最大HPを取得する
+        objParent = transform.root.gameObject;
+        if(objParent.name == "Canvas")
+        {
+            objParent = GameObject.FindWithTag("Player");
+        }
+
+        nMaxHp = objParent.GetComponent<CCharactorManager>().nMaxHp;  // プレイヤーの最大HPを取得する
 
         // スライダーの値の設定
         slider = GetComponent<Slider>();
-        slider.maxValue = nPlayerMaxHp;         // スライダーの最大値
-        slider.value = nPlayerMaxHp;            // スライダーの現在値
+        slider.maxValue = nMaxHp;         // スライダーの最大値
+        slider.value = nMaxHp;            // スライダーの現在値
 
         // フラグの初期化
         isMove = false;

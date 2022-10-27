@@ -203,15 +203,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -256,23 +256,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7346585247293401861, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
---- !u!114 &6050983743357438913 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2719142943360382212, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
-  m_PrefabInstance: {fileID: 8522287955228409541}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6050983744121640893 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2719142944273738104, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}
   m_PrefabInstance: {fileID: 8522287955228409541}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8522287955228409546
+--- !u!114 &5392451179590661373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -281,14 +270,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6050983744121640893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc0028bece507a4491c4c9ee4d99f51, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bdd5041ef2b238479505d63c9c020e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalColor: {r: 1, g: 0, b: 0, a: 0.6745098}
-  maxChargeColor: {r: 1, g: 0, b: 0, a: 0.69411767}
-  hpBarImage: {fileID: 6050983743357438913}
-  fBarDelay: 1
-  fBarStagingValue: 0.01
+  fStartTime: 1
+  fValuePerSec: 1
 --- !u!224 &6050983744121640898 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2719142944273737991, guid: dfc1d2d0ca40f6e4da94da4365a1364a, type: 3}

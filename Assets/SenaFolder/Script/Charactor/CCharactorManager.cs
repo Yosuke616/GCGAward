@@ -209,6 +209,8 @@ public class CCharactorManager : MonoBehaviour
         //AddFrontBar(num);
         //SetHpBarAnim();
         //AddBGBar(num);
+        ChangeHPFront(num);
+        ChangeHPBG(num);
     }
     #endregion
 
@@ -233,7 +235,7 @@ public class CCharactorManager : MonoBehaviour
 
     // HPÇïœçXÇ∑ÇÈ
     #region change hp
-    public void ChangeHP(int num)
+    public void ChangeHPBG(int num)
     {
         nCurrentHp += num;
         HPBGBar.GetComponent<CHPBarBackGround>().MoveBar(num);
