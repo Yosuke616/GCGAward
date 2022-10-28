@@ -24,7 +24,7 @@ public class ArrowPos : MonoBehaviour
                     if (parent.GetComponent<CBow>().GetChargeFlg())
                     {
                         this.transform.position = parent.transform.position;
-                        this.transform.eulerAngles = new Vector3(parent.transform.eulerAngles.x-90, parent.transform.eulerAngles.y-5, parent.transform.eulerAngles.z);
+                        this.transform.eulerAngles = new Vector3(parent.transform.eulerAngles.x-90, parent.transform.eulerAngles.y-2, parent.transform.eulerAngles.z);
                     }
                 }
             }
