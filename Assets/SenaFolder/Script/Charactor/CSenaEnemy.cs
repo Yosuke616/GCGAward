@@ -148,7 +148,7 @@ public class CSenaEnemy : CCharactorManager
             // ダメージ通知
             ChangeHp(-1 * DamageNum);
             //if(nCurrentHp > 0)
-            objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
+            //objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
             // ヒットカーソルの再生
             GetComponent<CEnemyDamage>().ArrowHit();
 
