@@ -39,7 +39,9 @@ public class WaveManager : MonoBehaviour
 
     // ステージ情報オブジェクト
     [Header("スコア→敵の数→ウェーブでUIを格納")]
-    [SerializeField] private TextMeshProUGUI[] StageUIText; 
+    [SerializeField] private TextMeshProUGUI[] StageUIText;
+
+    private bool bChangeBGM = false;
 
     private void Awake()
     {
@@ -75,7 +77,6 @@ public class WaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //
 
         //スコアの表示
         StageUIText[0].text = string.Format("{0}", nScore);
@@ -263,6 +264,15 @@ public class WaveManager : MonoBehaviour
         if (rnd > 2) {
             rnd = 0;
         }
+    }
+
+    public void SetChange(bool change)
+    {
+        if (bChangeBGM == change) {
+            return;
+        }
+
+        bChangeBGM = change;
     }
 
 }

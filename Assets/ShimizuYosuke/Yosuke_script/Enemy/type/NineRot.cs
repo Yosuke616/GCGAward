@@ -19,7 +19,7 @@ public class NineRot : MonoBehaviour
     [Header("弾のスピード")]
     [SerializeField] private float bullet_Speed = 20.0f;
     [Header("次撃つまでの時間")]
-    [SerializeField] private int BULLET_DELTTIME = 300;
+    [SerializeField] private int BULLET_DELTTIME = 180;
     int nBullet_Time;
     //弾オブジェクトの取得
     private GameObject bullet;
@@ -73,7 +73,7 @@ public class NineRot : MonoBehaviour
         //弾のタグを持っているオブジェクトを取得
         bullet = GameObject.FindGameObjectWithTag("Bullet");
         //弾を撃てるかどうかの初期化
-        nBullet_Time = BULLET_DELTTIME;
+        nBullet_Time = 0;
         //行動するかどうかの時間を0にする
         nActTime = 0;
         //falseで行動しないtrueで行動する
@@ -240,6 +240,12 @@ public class NineRot : MonoBehaviour
                 {
                     if (hitsOb[0].transform.gameObject.CompareTag("Player"))
                     {
+                        //チェイスフラグ
+                        Player_Walk PW = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Walk>();
+                        PW.SetChase(true);
+                        WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+                        //WM.SetChange(false);
+
                         //走って追いかけてくる
                         this.animator.SetBool(key_isRun, true);
 
@@ -280,6 +286,10 @@ public class NineRot : MonoBehaviour
                         }
                         else {
                             this.animator.SetBool(key_isAttack, false);
+                            PW = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Walk>();
+                            PW.SetChase(false);
+                            WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+                            //WM.SetChange(false);
                         }
                     }
                 }

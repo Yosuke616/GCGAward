@@ -59,6 +59,9 @@ public class Player_Walk : MonoBehaviour
     public static bool WalkFlg = false;
     public static bool ChargeFlg = false;
 
+    //プレイヤーチェイスフラグ
+    private bool bChase;
+
     //[SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
     private void Awake()
     {
@@ -76,6 +79,8 @@ public class Player_Walk : MonoBehaviour
         //this.animator = GetComponent<Animator>();
 
         eState = 0;
+
+        bChase = false;
     }
 
     // Update is called once per frame
@@ -317,6 +322,18 @@ public class Player_Walk : MonoBehaviour
                 //this.animator.SetBool(key_isJump, false);
             //}
         }
+    }
+
+    public bool GetChase() {
+        return bChase;
+    }
+
+    public void SetChase(bool chase) {
+        if (bChase == chase) {
+            return;
+        }
+
+        bChase = chase;
     }
 
 }
