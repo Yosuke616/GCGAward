@@ -6,52 +6,56 @@ using Effekseer;
 public class CArrow : MonoBehaviour
 {
     #region variable
-    private Rigidbody rb;           // –î‚Ì„‘Ì
-    private float arrowForce = 0.0f;     // –î‚ğ•ú‚Â—Í
+    
+    private Rigidbody rb;           // çŸ¢ã®å‰›ä½“
+    private float arrowForce = 0.0f;     // çŸ¢ã‚’æ”¾ã¤åŠ›
     private GameObject objBow;
-    private int nArrowNum;          // ‰½”Ô–Ú‚Ì–î‚©
-    private int nArrowAtk;          // UŒ‚—Í
+    public int nArrowNum;          // ä½•ç•ªç›®ã®çŸ¢ã‹
+    private int nArrowAtk;          // æ”»æ’ƒåŠ›
     private int nOldStep = 0;
     private BoxCollider boxCollision;
     #endregion
 
     #region serialize field
-    [SerializeField] private float fFlyDistance;        // –î‚Ì”ò‹——£
-    [Header("•ÏX‚·‚éƒGƒtƒFƒNƒg‚ÌÄ¶ƒIƒuƒWƒFƒNƒg")]
-    [SerializeField] private GameObject[] objEff;       // ƒGƒtƒFƒNƒg‚ÌÄ¶ƒIƒuƒWƒFƒNƒg
+    [SerializeField] private float fFlyDistance;        // çŸ¢ã®é£›è·é›¢
+    [Header("å¤‰æ›´ã™ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
+    [SerializeField] private GameObject[] objEff;       // ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        // ‹|‚ÌƒIƒuƒWƒFƒNƒg‚ğæ“¾
+        // å¼“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
         objBow = GameObject.FindWithTag("Weapon");
         nArrowNum = 0;
         boxCollision = GetComponent<BoxCollider>();
-        boxCollision.enabled = false;           // “–‚½‚è”»’è‚ğ–³Œø‚É‚·‚é
+        boxCollision.enabled = false;           // å½“ãŸã‚Šåˆ¤å®šã‚’ç„¡åŠ¹ã«ã™ã‚‹
         //ChangeEffectColor(objEffSide, effSide, 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        int nStep = objBow.GetComponent<CBow>().GetChargeStep();      // ‹|‚Ìƒ`ƒƒ[ƒW’iŠK”‚ğæ“¾‚·‚é
-
-        // ’iŠK‚ª•Ï‚í‚Á‚Ä‚¢‚½‚çƒGƒtƒFƒNƒg‚ÌF‚ğ•ÏX‚·‚é
+        int nStep = objBow.GetComponent<CBow>().GetChargeStep();      // å¼“ã®ãƒãƒ£ãƒ¼ã‚¸æ®µéšæ•°ã‚’å–å¾—ã™ã‚‹
+        if(objBow.GetComponent<CBow>().GetChargeFlg())
+        {
+            nArrowNum = objBow.GetComponent<CBow>().GetCurrentArrowNum();
+        }
+        // æ®µéšãŒå¤‰ã‚ã£ã¦ã„ãŸã‚‰ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è‰²ã‚’å¤‰æ›´ã™ã‚‹
         if (nStep != nOldStep)
         {
-            // •ÏX‚·‚é‘S‚Ä‚ÌƒGƒtƒFƒNƒg‚ÌF‚ğ•ÏX‚·‚é
+            // å¤‰æ›´ã™ã‚‹å…¨ã¦ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è‰²ã‚’å¤‰æ›´ã™ã‚‹
             for(int i = 0; i < objEff.Length; ++i)
                 ChangeEffectColor(objEff[i], nStep, nOldStep);
         }
         nOldStep = nStep;
-        //Debug.Log("æ“¾‚µ‚½’iŠK”" + nStep);
+        //Debug.Log("å–å¾—ã—ãŸæ®µéšæ•°" + nStep);
     }
     /*
-    * @brief –î‚ğ”­Ë‚·‚é
-    * @param chargeTime ƒ`ƒƒ[ƒW‚³‚ê‚½ŠÔ
-    * @param nAtk UŒ‚—Í
+    * @brief çŸ¢ã‚’ç™ºå°„ã™ã‚‹
+    * @param chargeTime ãƒãƒ£ãƒ¼ã‚¸ã•ã‚ŒãŸæ™‚é–“
+    * @param nAtk æ”»æ’ƒåŠ›
     * @sa CBow::Update()
     */
     #region shoot
@@ -61,8 +65,8 @@ public class CArrow : MonoBehaviour
         arrowForce = chargeTime * fFlyDistance;
         nArrowAtk = nAtk;
         Vector3 direction = -transform.up;
-        rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // –î‚ğ”­Ë‚·‚é
-        boxCollision.enabled = true;            // “–‚½‚è”»’è‚ğ—LŒø‚É‚·‚é
+        rb.AddForce(direction * arrowForce, ForceMode.Impulse);        // çŸ¢ã‚’ç™ºå°„ã™ã‚‹
+        boxCollision.enabled = true;            // å½“ãŸã‚Šåˆ¤å®šã‚’æœ‰åŠ¹ã«ã™ã‚‹
         //Debug.Log("arrowForce" + arrowForce);
     }
     #endregion
@@ -70,17 +74,17 @@ public class CArrow : MonoBehaviour
     #region collision
     private void OnCollisionEnter(Collision collision)
     {
-        // ’n–Ê‚ÉÕ“Ë‚µ‚½‚ç–î‚ğÁ–Å‚³‚¹‚é
-        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Ground_Spawn" || collision.gameObject.tag == "Slope")
+        // åœ°é¢ã«è¡çªã—ãŸã‚‰çŸ¢ã‚’æ¶ˆæ»…ã•ã›ã‚‹
+        if(collision.gameObject.tag == "Ground"|| collision.gameObject.tag == "Ground_Spawn" || collision.gameObject.tag == "Slope")
         {
             Destroy(gameObject);
         }
     }
     #endregion
     /*
-    * @brief ‰½”Ô–Ú‚Ì–î‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
-    * @param num w’è‚·‚é”Ô†
-    * @sa –î‚ğŒ‚‚Á‚½
+    * @brief ä½•ç•ªç›®ã®çŸ¢ã‹ã©ã†ã‹ã‚’è¨­å®šã™ã‚‹
+    * @param num æŒ‡å®šã™ã‚‹ç•ªå·
+    * @sa çŸ¢ã‚’æ’ƒã£ãŸæ™‚
     */
     #region set num
     public void setNum(int index)
@@ -88,11 +92,14 @@ public class CArrow : MonoBehaviour
         nArrowNum = index;
     }
     #endregion
-
+    public int GetNum()
+    {
+        return nArrowNum;
+    }
     /*
-     * @brief UŒ‚—Í‚ğ“`‚¦‚é
-     * @return int UŒ‚—Í
-     * @sa –î‚ª“–‚½‚Á‚½
+     * @brief æ”»æ’ƒåŠ›ã‚’ä¼ãˆã‚‹
+     * @return int æ”»æ’ƒåŠ›
+     * @sa çŸ¢ãŒå½“ãŸã£ãŸæ™‚
    */
     #region get arrow atk
     public int GetArrowAtk()
@@ -102,10 +109,10 @@ public class CArrow : MonoBehaviour
     #endregion
 
     /*
-    * @brief ƒGƒtƒFƒNƒg‚ÌF‚ğ•ÏX‚·‚é
-    * @param GameObject ƒGƒtƒFƒNƒg‚ğŠi”[‚·‚éƒIƒuƒWƒFƒNƒg
-    * @param EffekseerEffectAsset[]@Ä¶‚·‚éƒGƒtƒFƒNƒgƒAƒZƒbƒg”z—ñ
-    * @param int Ä¶‚·‚éƒJƒ‰[”Ô†
+    * @brief ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è‰²ã‚’å¤‰æ›´ã™ã‚‹
+    * @param GameObject ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ ¼ç´ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    * @param EffekseerEffectAsset[]ã€€å†ç”Ÿã™ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¢ã‚»ãƒƒãƒˆé…åˆ—
+    * @param int å†ç”Ÿã™ã‚‹ã‚«ãƒ©ãƒ¼ç•ªå·
     * @sa CBow::Update()
     */
     #region change effect color
