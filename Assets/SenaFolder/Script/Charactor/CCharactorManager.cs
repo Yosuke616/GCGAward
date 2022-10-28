@@ -247,7 +247,8 @@ public class CCharactorManager : MonoBehaviour
     public virtual void ChangeHPFront(int num)
     {
         //nCurrentHp += num;
-        HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
+        //HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
+        HPFrontBar.GetComponent<CHPBarFront>().ResetBar();
     }
     #endregion
 }
