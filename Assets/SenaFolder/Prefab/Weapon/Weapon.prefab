@@ -142,10 +142,10 @@ MonoBehaviour:
   scChargeSlider: {fileID: 0}
   objCoolDownUI: {fileID: 0}
   nAtkDecHp: 1
-  nAdjustHp: 3
+  nAdjustHp: 4
   maxDecStep: 3
-  nAddAtk: 1
-  nDefAtk: 1
+  nAddAtk: 2
+  nDefAtk: 4
   seCharge: {fileID: 8300000, guid: f0b66f75efe28ac4daaa6faba1aaea64, type: 3}
   seUpStep:
   - {fileID: 8300000, guid: cac5647584f753e4e8fec58fcf664964, type: 3}
@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: af186b68d079fe444ac1d1225f41d6c3, type: 3}
   seShot: {fileID: 8300000, guid: 450116fa6ed84e4499d99419d1444860, type: 3}
   fDownTime: 0
+  nCurrentArrowSetNum: 0
 --- !u!82 &2408407233654233714
 AudioSource:
   m_ObjectHideFlags: 0
