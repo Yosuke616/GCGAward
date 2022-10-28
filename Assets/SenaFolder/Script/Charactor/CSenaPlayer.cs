@@ -212,7 +212,6 @@ public class CSenaPlayer : CCharactorManager
         if (collision.gameObject.tag == ("Bullet"))
         {
             Kesu elf = GameObject.Find("idle beushup").GetComponent<Kesu>();
-            Destroy(collision.gameObject);
             elf.SetDamageAnim();
 
             ChangeHPFront(-10);
