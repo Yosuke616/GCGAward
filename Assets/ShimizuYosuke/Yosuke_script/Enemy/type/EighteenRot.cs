@@ -20,6 +20,7 @@ public class EighteenRot : MonoBehaviour
     [SerializeField] private float bullet_Speed = 20.0f;
     [Header("次撃つまでの時間")]
     [SerializeField] private int BULLET_DELTTIME = 300;
+    [SerializeField] private GameObject bulletPrefab;
     int nBullet_Time;
     //弾オブジェクトの取得
     private GameObject bullet;
@@ -268,7 +269,7 @@ public class EighteenRot : MonoBehaviour
                             //弾を発射する
                             Vector3 bulletPosition = firePoint.transform.position;
                             //上で取得した場所に弾を出現
-                            GameObject newBall = Instantiate(bullet, bulletPosition, this.transform.rotation);
+                            GameObject newBall = Instantiate(bulletPrefab, firePoint.transform.position, this.transform.rotation);
                             // 出現させたボールのforward(z軸方向)
                             Vector3 directions = newBall.transform.forward;
                             // 弾の発射方向にnewBallのz方向(ローカル座標)を入れ、弾オブジェクトのrigidbodyに衝撃力を加える
