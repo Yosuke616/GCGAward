@@ -281,7 +281,7 @@ public class EighteenRot : MonoBehaviour
                             // 弾の発射方向にnewBallのz方向(ローカル座標)を入れ、弾オブジェクトのrigidbodyに衝撃力を加える
                             newBall.GetComponent<Rigidbody>().AddForce(direction * bullet_Speed, ForceMode.Impulse);
                             // 出現させたボールの名前を"bullet"に変更
-                            newBall.name = bullet.name;
+                            //newBall.name = bullet.name;
                             // 出現させたボールを0.8秒後に消す
                             Destroy(newBall, 2.0f);
                             nBullet_Time = BULLET_DELTTIME;
