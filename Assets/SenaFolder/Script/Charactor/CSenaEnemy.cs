@@ -69,7 +69,7 @@ public class CSenaEnemy : CCharactorManager
                 //HP‚Ì‰ñ•œ
                 CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
                 //obj.ChangeHPFront(10);
-                obj.ChangeHp(10);
+                obj.ChangeHp(7);
                 WM.AddScore(100);
                 WM.AddBreakEnemy();
                 WM.DecEnemy();
