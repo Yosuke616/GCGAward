@@ -64,7 +64,7 @@ public class CBow : MonoBehaviour
     private int nOldStep = 0;                   // 過去のチャージ段階数
     private bool isAdjust;                  // 使用するHPを調整したかどうか
     private int nCurrentAtkStep;            // 現在の威力段階数
-    private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
+    [SerializeField]private int nCurrentArrowSetNum = 0;    // 現在構えている矢の番号
     //private int nUseHP = 0;                 // 矢を撃つのに使用するHP
     private bool isShot = false;            // 矢を撃ったかどうか
     private AudioSource audioSource;
@@ -442,10 +442,13 @@ public class CBow : MonoBehaviour
             {
                 // 矢を武器の子オブジェクトとして出す
                 objArrow[i] = Instantiate(PrefabArrow, spawner.transform.position, Quaternion.identity);
+                //objArrow[i].GetComponent<CArrow>().setNum(i);
+
                 objArrow[i].transform.parent = this.transform;
                 objArrow[i].transform.localRotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
                 objArrow[i].transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
                 nCurrentArrowSetNum = i;
+                
                 i = nMaxArrow;
             }
         }
@@ -576,6 +579,15 @@ public class CBow : MonoBehaviour
     public bool GetCoolDownFlg()
     {
         return g_state == STATE_BOW.BOW_COLLDOWN;
+    }
+    public bool GetChargeFlg()
+    {
+        
+        return (g_state == STATE_BOW.BOW_CHARGE || g_state == STATE_BOW.BOW_CHARGEMAX);
+    }
+    public int GetCurrentArrowNum()
+    {
+        return nCurrentArrowSetNum;
     }
     #endregion
 
