@@ -187,7 +187,7 @@ public class CSenaPlayer : CCharactorManager
     #region destroy player
     private IEnumerator DestroyPlayer()
     {
-        Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
+        Kesu elf = GameObject.Find("idle beushup").GetComponent<Kesu>();
         elf.SetDeathAnim();
         yield return new WaitForSeconds(5.0f);
         Destroy(gameObject);
@@ -211,7 +211,7 @@ public class CSenaPlayer : CCharactorManager
     {
         if (collision.gameObject.tag == ("Bullet"))
         {
-            Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
+            Kesu elf = GameObject.Find("idle beushup").GetComponent<Kesu>();
             elf.SetDamageAnim();
 
             ChangeHPFront(-10);
