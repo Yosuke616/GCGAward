@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KesuDeath : MonoBehaviour
 {
-    private int i = 90;
+    private int i = 20;
 
     // Start is called before the first frame update
     void Start()

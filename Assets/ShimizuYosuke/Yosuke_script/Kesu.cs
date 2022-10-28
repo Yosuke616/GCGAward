@@ -285,13 +285,13 @@ public class Kesu : MonoBehaviour
     }
 
     public void KEMURI_R() {
-        GameObject unity = GameObject.Find("IdlePlayer");
+        GameObject unity = GameObject.Find("idle beushup");
 
         GameObject obj =  Instantiate(kemuri,new Vector3(0,0,0),Quaternion.identity);
 
         obj.transform.position = unity.transform.position;
-        obj.transform.position -= this.transform.up * 0.15f;
-        obj.transform.position -= this.transform.forward * 0.25f;
+        obj.transform.position -= this.transform.up * 0.1f;
+        obj.transform.position += this.transform.forward * 1.0f;
         obj.transform.position += this.transform.right * 0.15f;
 
         obj.transform.localScale = new Vector3(0.03f,0.03f,0.03f);
@@ -300,13 +300,13 @@ public class Kesu : MonoBehaviour
 
     public void KEMURI_L()
     {
-        GameObject unity = GameObject.Find("IdlePlayer");
+        GameObject unity = GameObject.Find("idle beushup");
 
         GameObject obj = Instantiate(kemuri, new Vector3(0, 0, 0), Quaternion.identity);
 
         obj.transform.position = unity.transform.position;
-        obj.transform.position -= this.transform.up * 0.15f;
-        obj.transform.position -= this.transform.forward * 0.25f;
+        obj.transform.position -= this.transform.up * 0.1f;
+        obj.transform.position += this.transform.forward * 1.0f;
         obj.transform.position -= this.transform.right * 0.15f;
 
         obj.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
