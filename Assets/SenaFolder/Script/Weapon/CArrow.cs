@@ -6,10 +6,11 @@ using Effekseer;
 public class CArrow : MonoBehaviour
 {
     #region variable
+    
     private Rigidbody rb;           // 矢の剛体
     private float arrowForce = 0.0f;     // 矢を放つ力
     private GameObject objBow;
-    private int nArrowNum;          // 何番目の矢か
+    public int nArrowNum;          // 何番目の矢か
     private int nArrowAtk;          // 攻撃力
     private int nOldStep = 0;
     private BoxCollider boxCollision;
@@ -37,7 +38,10 @@ public class CArrow : MonoBehaviour
     void Update()
     {
         int nStep = objBow.GetComponent<CBow>().GetChargeStep();      // 弓のチャージ段階数を取得する
-
+        if(objBow.GetComponent<CBow>().GetChargeFlg())
+        {
+            nArrowNum = objBow.GetComponent<CBow>().GetCurrentArrowNum();
+        }
         // 段階が変わっていたらエフェクトの色を変更する
         if (nStep != nOldStep)
         {
@@ -71,7 +75,7 @@ public class CArrow : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // 地面に衝突したら矢を消滅させる
-        if(collision.gameObject.tag == "Ground")
+        if(collision.gameObject.tag == "Ground"|| collision.gameObject.tag == "Ground_Spawn" || collision.gameObject.tag == "Slope")
         {
             Destroy(gameObject);
         }
@@ -88,7 +92,10 @@ public class CArrow : MonoBehaviour
         nArrowNum = index;
     }
     #endregion
-
+    public int GetNum()
+    {
+        return nArrowNum;
+    }
     /*
      * @brief 攻撃力を伝える
      * @return int 攻撃力
