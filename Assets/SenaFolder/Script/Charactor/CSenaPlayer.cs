@@ -10,14 +10,14 @@ using UnityEditor;
 public class CSenaPlayer : CCharactorManager
 {
     #region serialize field
-    //[SerializeField] private GameObject prefabHPBar;        // HPƒo[‚ÌƒvƒŒƒnƒu
+    //[SerializeField] private GameObject prefabHPBar;        // HPãƒãƒ¼ã®ãƒ—ãƒ¬ãƒãƒ–
     [SerializeField] private GameObject DeadEffect;
-    [SerializeField] private GameObject objWeapon;              // •ŠíƒIƒuƒWƒFƒNƒg
+    [SerializeField] private GameObject objWeapon;              // æ­¦å™¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     [SerializeField] private GameObject GameOverUI;
-    [SerializeField] private GameObject HPNumUI;                // HPƒo[‚Ì”š•\‹LUI
+    [SerializeField] private GameObject HPNumUI;                // HPãƒãƒ¼ã®æ•°å­—è¡¨è¨˜UI
     #endregion
 
-    // •Ï”éŒ¾
+    // å¤‰æ•°å®£è¨€
     #region variable
     private CHARACTORSTATE playerState;
     private CHPText hpText;
@@ -28,12 +28,12 @@ public class CSenaPlayer : CCharactorManager
     #region init
     void Start()
     {
-        InitHP();      // HP‚Ì‰Šú‰»
-        //InitAtk();      // UŒ‚—Í‚Ì‰Šú‰»
-        playerState = CHARACTORSTATE.CHARACTOR_ALIVE;     // ¶‘¶ó‘Ô‚Éİ’è‚·‚é
-        //SetHPBar();     // HPƒo[UI‚Ìî•ñ‚ğæ“¾‚·‚é
+        InitHP();      // HPã®åˆæœŸåŒ–
+        //InitAtk();      // æ”»æ’ƒåŠ›ã®åˆæœŸåŒ–
+        playerState = CHARACTORSTATE.CHARACTOR_ALIVE;     // ç”Ÿå­˜çŠ¶æ…‹ã«è¨­å®šã™ã‚‹
+        //SetHPBar();     // HPãƒãƒ¼UIã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 
-        // HP‚Ì”š•\¦UIƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+        // HPã®æ•°å­—è¡¨ç¤ºUIã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
         var children = new GameObject[HPNumUI.transform.childCount];
         for(int i = 0; i < children.Length; ++i)
             children[i] = HPNumUI.transform.GetChild(i).gameObject;
@@ -57,19 +57,19 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     /*
-    * @brief ó‘Ô‚ÌXV(–ˆƒtƒŒ[ƒ€Às‚³‚ê‚é)
-    * @param CHARACTORSTATE ƒvƒŒƒCƒ„[‚Ìó‘Ô
+    * @brief çŠ¶æ…‹ã®æ›´æ–°(æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å®Ÿè¡Œã•ã‚Œã‚‹)
+    * @param CHARACTORSTATE ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹
     * @sa CPlayer::Update
-    * @details ƒvƒŒƒCƒ„[‚Ìó‘Ô‚ğæ“¾‚µAó‘Ô‚É‡‚í‚¹‚½XVˆ—‚ğÀs‚·‚é
-  @*/
+    * @details ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã—ã€çŠ¶æ…‹ã«åˆã‚ã›ãŸæ›´æ–°å‡¦ç†ã‚’å®Ÿè¡Œã™ã‚‹
+  ã€€*/
     #region update state
     private void UpdateState(CHARACTORSTATE state)
     {
         switch (state)
         {
-            // ¶‘¶ó‘Ô‚Ì
+            // ç”Ÿå­˜çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_ALIVE:
-                // ZƒL[¨HP‚ğŒ¸‚ç‚·(ƒfƒoƒbƒO—p)
+                // Zã‚­ãƒ¼â†’HPã‚’æ¸›ã‚‰ã™(ãƒ‡ãƒãƒƒã‚°ç”¨)
                 #region debug dec hp
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
@@ -78,20 +78,20 @@ public class CSenaPlayer : CCharactorManager
                 #endregion
 
                 //CalcFrontBarNum();
-                // HP‚ª•ÏX‚³‚ê‚½ê‡AHP”š•\¦UI‚ğ•ÏX‚·‚é
+                // HPãŒå¤‰æ›´ã•ã‚ŒãŸå ´åˆã€HPæ•°å­—è¡¨ç¤ºUIã‚’å¤‰æ›´ã™ã‚‹
                 if (nCurrentHp != nOldHp)
                    
-                // HP‚ª0‚É‚È‚Á‚½‚ç€–Só‘Ô‚É•ÏX‚·‚é
+                // HPãŒ0ã«ãªã£ãŸã‚‰æ­»äº¡çŠ¶æ…‹ã«å¤‰æ›´ã™ã‚‹
                 if (nCurrentHp <= 0)
                     ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
 
-                // ãŒÀ’l
+                // ä¸Šé™å€¤
                 if (nCurrentHp > 100)
                     nCurrentHp = 100;
                 break;
-            // €–Só‘Ô‚Ì
+            // æ­»äº¡çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_DEAD:
-                //@€‚ñ‚¾‚Æ‚«‚ÉHP‚ªŒ¸‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+                //ã€€æ­»ã‚“ã ã¨ãã«HPãŒæ¸›ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
                 nCurrentHp = 0;
                 break;
         }
@@ -100,22 +100,22 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     /*
-    * @brief ó‘Ô‚ÌXV(ó‘Ô‚ª•ÏX‚³‚ê‚½‚Æ‚«‚É1“x‚¾‚¯Às‚³‚ê‚é)
-    * @param CHARACTORSTATE •ÏXæ‚Ìó‘Ô
+    * @brief çŠ¶æ…‹ã®æ›´æ–°(çŠ¶æ…‹ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«1åº¦ã ã‘å®Ÿè¡Œã•ã‚Œã‚‹)
+    * @param CHARACTORSTATE å¤‰æ›´å…ˆã®çŠ¶æ…‹
     * @sa CPlayer::UpdateState
-    * @details ƒvƒŒƒCƒ„[‚Ìó‘Ô‚ğæ“¾‚µAó‘Ô‚É‡‚í‚¹‚½ˆ—‚ğÀs‚·‚é
-  @*/
+    * @details ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã—ã€çŠ¶æ…‹ã«åˆã‚ã›ãŸå‡¦ç†ã‚’å®Ÿè¡Œã™ã‚‹
+  ã€€*/
     #region change state
     private void ChangeState(CHARACTORSTATE state)
     {
         switch (state)
         {
-            // ¶‘¶ó‘Ô‚É•ÏX‚·‚é
+            // ç”Ÿå­˜çŠ¶æ…‹ã«å¤‰æ›´ã™ã‚‹æ™‚
             case CHARACTORSTATE.CHARACTOR_ALIVE:
-                // “Á‚É‰½‚à‚µ‚È‚¢(•œŠˆ‚Æ‚©‚»‚¤‚¢‚¤d—l‚ª‚ ‚Á‚½‚ç’Ç‰Á‚·‚é)
+                // ç‰¹ã«ä½•ã‚‚ã—ãªã„(å¾©æ´»ã¨ã‹ãã†ã„ã†ä»•æ§˜ãŒã‚ã£ãŸã‚‰è¿½åŠ ã™ã‚‹)
                 playerState = CHARACTORSTATE.CHARACTOR_ALIVE;
                 break;
-            // €–Só‘Ô‚Ì
+            // æ­»äº¡çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_DEAD:
                 playerState = CHARACTORSTATE.CHARACTOR_DEAD;
                 Instantiate(DeadEffect, transform.position, Quaternion.identity);
@@ -128,11 +128,11 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     /*
-     * @brief ‘O–Ê‚ÌHPƒo[‚ğ•ÏX‚·‚é
-     * @param num •ÏX‚·‚é—Ê
-     * @sa ‹|‚ªƒ`ƒƒ[ƒW‚³‚ê‚½‚Æ‚«
-     * @details Á”ï‚³‚ê‚éHP‚É‰‚¶‚ÄFrontHPBar‚ÌnChangeBGHPBar”Ô–Ú‚Ì”’l‚ğ•ÏX‚·‚é
-@  */
+     * @brief å‰é¢ã®HPãƒãƒ¼ã‚’å¤‰æ›´ã™ã‚‹
+     * @param num å¤‰æ›´ã™ã‚‹é‡
+     * @sa å¼“ãŒãƒãƒ£ãƒ¼ã‚¸ã•ã‚ŒãŸã¨ã
+     * @details æ¶ˆè²»ã•ã‚Œã‚‹HPã«å¿œã˜ã¦FrontHPBarã®nChangeBGHPBarç•ªç›®ã®æ•°å€¤ã‚’å¤‰æ›´ã™ã‚‹
+ã€€  */
     #region dec front hp bar
     public void DecFrontHPBar(int num)
     {
@@ -141,11 +141,11 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     /*
-     * @brief ”w–Ê‚ÌHPƒo[‚ğ•ÏX‚·‚é
-     * @param num •ÏX‚·‚é—Ê
-     * @sa ‹|‚ªƒ`ƒƒ[ƒW‚³‚ê‚½‚Æ‚«
-     * @details Á”ï‚³‚ê‚éHP‚É‰‚¶‚ÄBGHPBar‚ÌnChangeBGHPBar”Ô–Ú‚Ì”’l‚ğ•ÏX‚·‚é
-@  */
+     * @brief èƒŒé¢ã®HPãƒãƒ¼ã‚’å¤‰æ›´ã™ã‚‹
+     * @param num å¤‰æ›´ã™ã‚‹é‡
+     * @sa å¼“ãŒãƒãƒ£ãƒ¼ã‚¸ã•ã‚ŒãŸã¨ã
+     * @details æ¶ˆè²»ã•ã‚Œã‚‹HPã«å¿œã˜ã¦BGHPBarã®nChangeBGHPBarç•ªç›®ã®æ•°å€¤ã‚’å¤‰æ›´ã™ã‚‹
+ã€€  */
     #region dec bg hp bar
     public void DecBGHPBar(int num)
     {
@@ -154,11 +154,11 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     /*
-     * @brief HPƒo[‚ÌƒŠƒZƒbƒg
-     * @param num HP‚Ì‰ÁZ—Ê
-     * @sa ƒ_ƒ[ƒW‚ğ‚­‚ç‚Á‚½‚Æ‚«
-     * @details HP‚Énum‚ğ‰ÁZ‚·‚é
-  @*/
+     * @brief HPãƒãƒ¼ã®ãƒªã‚»ãƒƒãƒˆ
+     * @param num HPã®åŠ ç®—é‡
+     * @sa ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ãã‚‰ã£ãŸã¨ã
+     * @details HPã«numã‚’åŠ ç®—ã™ã‚‹
+  ã€€*/
     #region reset hp bar
     //public void ResetHPBar()
     //{
@@ -167,9 +167,9 @@ public class CSenaPlayer : CCharactorManager
     #endregion
 
     /*
-     * @brief HP‚Ìæ“¾
-     * @return int ƒvƒŒƒCƒ„[‚ÌHP
- @  */
+     * @brief HPã®å–å¾—
+     * @return int ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP
+ ã€€  */
     #region get hp
     public int GetHp()
     {
@@ -187,7 +187,7 @@ public class CSenaPlayer : CCharactorManager
     #region destroy player
     private IEnumerator DestroyPlayer()
     {
-        Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
+        Kesu elf = GameObject.Find("idle beushup").GetComponent<Kesu>();
         elf.SetDeathAnim();
         yield return new WaitForSeconds(5.0f);
         Destroy(gameObject);
@@ -213,6 +213,7 @@ public class CSenaPlayer : CCharactorManager
         {
             Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
             Destroy(collision.gameObject);
+
             elf.SetDamageAnim();
 
             ChangeHPFront(-10);
