@@ -19,6 +19,7 @@ public class CHPBarBackGround : MonoBehaviour
     private GameObject objParent;           // プレイヤーのオブジェクト
     private Slider slider;
     private bool isMove;                    // スライダーが動いているかどうか
+    private bool isValueDec;                // 数値を減らすのか増やすのか
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -45,13 +46,29 @@ public class CHPBarBackGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(isMove);
         if (isMove)
         {
-            slider.value -= fPerChangeValue * Time.deltaTime;
-
-            if (slider.value <= fChangeValue)
-                isMove = false;
+            // 値を減らすとき
+            if (isValueDec)
+            {
+                slider.value -= fPerChangeValue * Time.deltaTime;
+                if (slider.value <= fChangeValue)
+                    isMove = false;
+            }
+            // 値を増やすとき
+            else 
+            {
+                slider.value += fPerChangeValue * Time.deltaTime;
+                if (slider.value >= fChangeValue)
+                    isMove = false;
+            }
         }
+        else
+        {
+            slider.value = objParent.GetComponent<CCharactorManager>().nCurrentHp;
+        }
+        
     }
 
     /*
@@ -64,6 +81,12 @@ public class CHPBarBackGround : MonoBehaviour
     {
         // プレイヤーのHPを減らす場合
         //if (num < 0)
+        // スライダーが動いている最中であれば、最終の値に変更する
+        if(isMove)
+        {
+            slider.value = fChangeValue;
+        }
+        isValueDec = num < 0;
         // 変更先の値を格納する
         fChangeValue = slider.value + num;
         //Debug.Log("バーが動きます");

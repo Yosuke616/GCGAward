@@ -9,6 +9,7 @@ public class CHPBarFront : MonoBehaviour
     private int nMaxHp;               // プレイヤーの最大HP
     private GameObject objParent;           // プレイヤーのオブジェクト
     private Slider slider;
+    private bool isMove;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,8 @@ public class CHPBarFront : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!isMove)
+            slider.value = objParent.GetComponent<CCharactorManager>().nCurrentHp;
     }
 
     /*
@@ -39,9 +42,15 @@ public class CHPBarFront : MonoBehaviour
     #region move bar
     public void MoveBar(int num)
     {
+        isMove = true;
         slider.value += num;
     }
     #endregion 
 
-    
+    public void ResetBar()
+    {
+        isMove = false;
+    }
+
+
 }
