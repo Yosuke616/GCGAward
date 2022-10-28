@@ -781,6 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet_Speed: 20
   BULLET_DELTTIME: 300
+  bulletPrefab: {fileID: 3909402266321932956, guid: eaf640ceed481534581a8bd9fa0e2541, type: 3}
   bChase: 1
   ACTTIME: 180
 --- !u!114 &9105747731362380708

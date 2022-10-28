@@ -4,101 +4,102 @@ using UnityEngine;
 
 public class EighteenRot : MonoBehaviour
 {
-    //ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒtƒ‰ƒOŠÇ—
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ•ãƒ©ã‚°ç®¡ç†
     private const string key_isRot = "isRot";
     private const string key_isRun = "isRun";
     private const string key_isAttack = "isAttack";
     private Animator animator;
 
-    //’Ç‚¢‚©‚¯‚é‘ÎÛ
+    //è¿½ã„ã‹ã‘ã‚‹å¯¾è±¡
     private GameObject player;
 
-    //’e‚ğŒ‚‚ÂêŠ
+    //å¼¾ã‚’æ’ƒã¤å ´æ‰€
     private GameObject firePoint;
-    //’e‚ğŒ‚‚ÂƒXƒs[ƒh
-    [Header("’e‚ÌƒXƒs[ƒh")]
+    //å¼¾ã‚’æ’ƒã¤ã‚¹ãƒ”ãƒ¼ãƒ‰
+    [Header("å¼¾ã®ã‚¹ãƒ”ãƒ¼ãƒ‰")]
     [SerializeField] private float bullet_Speed = 20.0f;
-    [Header("ŸŒ‚‚Â‚Ü‚Å‚ÌŠÔ")]
-    [SerializeField] private int BULLET_DELTTIME = 180;
+    [Header("æ¬¡æ’ƒã¤ã¾ã§ã®æ™‚é–“")]
+    [SerializeField] private int BULLET_DELTTIME = 300;
+    [SerializeField] private GameObject bulletPrefab;
     int nBullet_Time;
-    //’eƒIƒuƒWƒFƒNƒg‚Ìæ“¾
+    //å¼¾ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å–å¾—
     private GameObject bullet;
 
-    //’Ç‚¢‚©‚¯‚é‚©‚Ç‚¤‚©
-    [Header("’Ç‚¢‚©‚¯‚é‚©‚Ç‚¤‚©")]
+    //è¿½ã„ã‹ã‘ã‚‹ã‹ã©ã†ã‹
+    [Header("è¿½ã„ã‹ã‘ã‚‹ã‹ã©ã†ã‹")]
     [SerializeField] private bool bChase;
 
-    //ƒŒƒC‚ğ§Œä‚·‚é
+    //ãƒ¬ã‚¤ã‚’åˆ¶å¾¡ã™ã‚‹
     private RaycastHit rayCastHit;
 
-    //Ÿ‚Ìs“®‚É‰½•b‚ÅˆÚ‚é‚©
-    [Header("Ÿ‚Ìs“®‚Ü‚Å‚ÌŠÔ")]
+    //æ¬¡ã®è¡Œå‹•ã«ä½•ç§’ã§ç§»ã‚‹ã‹
+    [Header("æ¬¡ã®è¡Œå‹•ã¾ã§ã®æ™‚é–“")]
     [SerializeField] private int ACTTIME = 180;
     private int nActTime;
     private bool bAct;
 
-    //ˆÚ“®—Ê•Û‘¶‚Ì‚½‚ß‚Ì•Ï”
+    //ç§»å‹•é‡ä¿å­˜ã®ãŸã‚ã®å¤‰æ•°
     private Vector3 trans;
-    //‚Ç‚ê‚­‚ç‚¢”’l‚ğ•ÏX‚³‚¹‚½‚©
+    //ã©ã‚Œãã‚‰ã„æ•°å€¤ã‚’å¤‰æ›´ã•ã›ãŸã‹
     private int Act_Num;
 
-    //ƒfƒtƒHƒ‹ƒg‚Ì“®‚«‚ğ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å‹•ãã‚’ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
     private bool DefaultMove;
-    //Œ³‚ÌêŠ‚É–ß‚éƒtƒ‰ƒO
+    //å…ƒã®å ´æ‰€ã«æˆ»ã‚‹ãƒ•ãƒ©ã‚°
     private bool ComeBackFlg;
 
-    //ƒXƒNƒŠƒvƒg‚Ìî•ñ‚ğ•Û‘¶‚·‚é
+    //ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®æƒ…å ±ã‚’ä¿å­˜ã™ã‚‹
     private BoxCollider BC;
-    //ƒXƒ^[ƒg’n“_‚ğ•Û‘¶‚µ‚Ä‚¨‚­•Ï”
+    //ã‚¹ã‚¿ãƒ¼ãƒˆåœ°ç‚¹ã‚’ä¿å­˜ã—ã¦ãŠãå¤‰æ•°
     private Vector3 Start_Pos;
-    //ƒXƒ^[ƒg“_‚Å‚ÌŒü‚«‚ğ•Û‘¶‚µ‚Ä‚¨‚­•Ï”
+    //ã‚¹ã‚¿ãƒ¼ãƒˆæ™‚ç‚¹ã§ã®å‘ãã‚’ä¿å­˜ã—ã¦ãŠãå¤‰æ•°
     private Vector3 Start_Rot;
-    //Œü‚«‚ğŒ³‚É–ß‚·‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+    //å‘ãã‚’å…ƒã«æˆ»ã™ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
     private bool Change_Rot;
 
-    //ƒ`ƒFƒCƒXƒtƒ‰ƒO
+    //ãƒã‚§ã‚¤ã‚¹ãƒ•ãƒ©ã‚°
     private bool Chase;
 
-    //“ª
+    //é ­
     private GameObject head;
 
-    //ƒEƒF[ƒuƒ}ƒl[ƒWƒƒ[æ“¾
+    //ã‚¦ã‚§ãƒ¼ãƒ–ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼å–å¾—
     private WaveManager WM;
 
     // Start is called before the first frame update
     void Start()
     {
-        //ƒvƒŒƒCƒ„[‚Ìƒ^ƒO‚ğ‚Á‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚ğæ“¾
+        //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¿ã‚°ã‚’æŒã£ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
         player = GameObject.FindGameObjectWithTag("Player");
-        //’e‚Ìƒ^ƒO‚ğ‚Á‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚ğæ“¾
+        //å¼¾ã®ã‚¿ã‚°ã‚’æŒã£ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
         bullet = GameObject.FindGameObjectWithTag("Bullet");
-        //’e‚ğŒ‚‚Ä‚é‚©‚Ç‚¤‚©‚Ì‰Šú‰»
+        //å¼¾ã‚’æ’ƒã¦ã‚‹ã‹ã©ã†ã‹ã®åˆæœŸåŒ–
         nBullet_Time = 0;
-        //s“®‚·‚é‚©‚Ç‚¤‚©‚ÌŠÔ‚ğ0‚É‚·‚é
+        //è¡Œå‹•ã™ã‚‹ã‹ã©ã†ã‹ã®æ™‚é–“ã‚’0ã«ã™ã‚‹
         nActTime = 0;
-        //false‚Ås“®‚µ‚È‚¢true‚Ås“®‚·‚é
+        //falseã§è¡Œå‹•ã—ãªã„trueã§è¡Œå‹•ã™ã‚‹
         bAct = false;
-        //‰ñ“]‚Í0‚É‚·‚é
+        //å›è»¢ã¯0ã«ã™ã‚‹
         Act_Num = 0;
-        //ƒfƒtƒHƒ‹ƒg‚Ì“®‚«‚ğ‚·‚é‚©‚Ç‚¤‚©
+        //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å‹•ãã‚’ã™ã‚‹ã‹ã©ã†ã‹
         DefaultMove = false;
-        //‰ñ‹Aƒtƒ‰ƒO‚ÍƒIƒt‚É‚µ‚Ä‚¨‚­
+        //å›å¸°ãƒ•ãƒ©ã‚°ã¯ã‚ªãƒ•ã«ã—ã¦ãŠã
         ComeBackFlg = false;
-        //ƒXƒ^[ƒg’n“_
+        //ã‚¹ã‚¿ãƒ¼ãƒˆåœ°ç‚¹
         Start_Pos = this.transform.position;
-        //ƒXƒ^[ƒg’n“_‚Ì‰ñ“]‚Ì’l‚ğ•Û‘¶‚µ‚Ä‚¨‚­
+        //ã‚¹ã‚¿ãƒ¼ãƒˆåœ°ç‚¹ã®å›è»¢ã®å€¤ã‚’ä¿å­˜ã—ã¦ãŠã
         Start_Rot = this.transform.eulerAngles;
-        //ƒ`ƒFƒCƒXƒtƒ‰ƒO‚ÍƒIƒt‚É‚µ‚Ä‚¨‚­
+        //ãƒã‚§ã‚¤ã‚¹ãƒ•ãƒ©ã‚°ã¯ã‚ªãƒ•ã«ã—ã¦ãŠã
         Chase = false;
-        //Œ³‚É–ß‚·ƒtƒ‰ƒO‚ÍƒIƒt‚É‚µ‚Ä‚¨‚­
+        //å…ƒã«æˆ»ã™ãƒ•ãƒ©ã‚°ã¯ã‚ªãƒ•ã«ã—ã¦ãŠã
         Change_Rot = false;
-        //“ª‚Ìİ’è
+        //é ­ã®è¨­å®š
         head = this.transform.GetChild(0).gameObject;
-        //’e‚ğŒ‚‚ÂêŠ‚Ìİ’è
+        //å¼¾ã‚’æ’ƒã¤å ´æ‰€ã®è¨­å®š
         firePoint = this.transform.GetChild(1).gameObject;
         bChase = true;
 
-        //ƒQ[ƒ€ŠJn“_‚Å‚»‚ÌêŠ‚É“–‚½‚è”»’è‚ğ¶¬‚·‚é
+        //ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ç‚¹ã§ãã®å ´æ‰€ã«å½“ãŸã‚Šåˆ¤å®šã‚’ç”Ÿæˆã™ã‚‹
         var Obj = new GameObject("StartPos");
         Obj.transform.position = Start_Pos;
         Obj.AddComponent<SphereCollider>();
@@ -121,7 +122,7 @@ public class EighteenRot : MonoBehaviour
             return;
         }
 
-        //Œ³‚ÌŠp“x‚É–ß‚·
+        //å…ƒã®è§’åº¦ã«æˆ»ã™
         if (Change_Rot)
         {
             this.transform.eulerAngles = Start_Rot;
@@ -130,17 +131,17 @@ public class EighteenRot : MonoBehaviour
             {
                 DefaultMove = false;
                 Change_Rot = false;
-                //ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‘S‚ÄƒIƒt‚É
+                //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å…¨ã¦ã‚ªãƒ•ã«
                 this.animator.SetBool(key_isRot, false);
                 this.animator.SetBool(key_isRun, false);
                 this.animator.SetBool(key_isAttack, false);
             }
         }
 
-        //ˆê’èŠÔ‚Ås“®‚Å‚«‚é‚æ‚¤‚É‚·‚é
+        //ä¸€å®šæ™‚é–“ã§è¡Œå‹•ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
         if (!DefaultMove)
         {
-            //ˆê’èŠÔ‚Ås“®‚Å‚«‚é‚æ‚¤‚É‚·‚é
+            //ä¸€å®šæ™‚é–“ã§è¡Œå‹•ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
             if (!bAct)
             {
                 nActTime++;
@@ -156,13 +157,13 @@ public class EighteenRot : MonoBehaviour
             }
 
 
-            //ƒAƒNƒVƒ‡ƒ“ƒtƒ‰ƒO‚ªƒIƒ“‚¾‚Á‚½‚çs“®‚·‚é
+            //ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°ãŒã‚ªãƒ³ã ã£ãŸã‚‰è¡Œå‹•ã™ã‚‹
             if (bAct)
             {
-                //‰ñ“]ƒtƒ‰ƒO‚ğƒIƒ“‚É‚·‚é
+                //å›è»¢ãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ³ã«ã™ã‚‹
                 this.animator.SetBool(key_isRot, true);
 
-                //ˆê’èŠÔ‚²‚Æ‚É180“x‰ñ“]‚³‚¹‚é
+                //ä¸€å®šæ™‚é–“ã”ã¨ã«180åº¦å›è»¢ã•ã›ã‚‹
                 this.transform.Rotate(new Vector3(0, 1, 0));
                 Act_Num++;
                 if (Act_Num >= 180)
@@ -173,7 +174,7 @@ public class EighteenRot : MonoBehaviour
                 }
             }
             else {
-                //‰ñ“]ƒtƒ‰ƒO‚ğƒIƒ“‚É‚·‚é
+                //å›è»¢ãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ³ã«ã™ã‚‹
                 this.animator.SetBool(key_isRot, false);
             }
         }
@@ -181,24 +182,24 @@ public class EighteenRot : MonoBehaviour
         {
             if (!Chase)
             {
-                //‘–‚è‚ğ‰ğœ
-                //‘–‚Á‚Ä’Ç‚¢‚©‚¯‚Ä‚­‚é
+                //èµ°ã‚Šã‚’è§£é™¤
+                //èµ°ã£ã¦è¿½ã„ã‹ã‘ã¦ãã‚‹
                 this.animator.SetBool(key_isRun, false);
-                //•à‚¢‚Ä–ß‚·
+                //æ­©ã„ã¦æˆ»ã™
                 this.animator.SetBool(key_isRot, true);
 
-                //Œ³‚ÌêŠ‚É–ß‚·
+                //å…ƒã®å ´æ‰€ã«æˆ»ã™
                 ComeBackFlg = true;
-                //“à•”‚Ì“–‚½‚è”»’è‚ğƒAƒNƒeƒBƒu‚É‚·‚é
+                //å†…éƒ¨ã®å½“ãŸã‚Šåˆ¤å®šã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
                 BC.GetComponent<BoxCollider>().enabled = true;
 
-                //‰ñ“]‚à‚³‚¹‚é
+                //å›è»¢ã‚‚ã•ã›ã‚‹
                 Quaternion lookRotation = Quaternion.LookRotation(Start_Pos - this.transform.position, Vector3.up);
                 lookRotation.x = 0;
                 lookRotation.z = 0;
                 transform.rotation = Quaternion.Lerp(this.transform.rotation, lookRotation, 0.1f);
 
-                //Œ³‚ÌêŠ‚É–ß‚é“®‚­
+                //å…ƒã®å ´æ‰€ã«æˆ»ã‚‹å‹•ã
                 transform.position = Vector3.MoveTowards(this.transform.position, Start_Pos, Time.deltaTime);
             }
             else
@@ -214,13 +215,13 @@ public class EighteenRot : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player");
 
-            //ƒvƒŒƒCƒ„[‚Ì•ûŒü‚ÉŒü‚©‚Á‚Ä‚­‚é---------------------------------------------------------------------------------------
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ–¹å‘ã«å‘ã‹ã£ã¦ãã‚‹---------------------------------------------------------------------------------------
             Quaternion lookRotation = Quaternion.LookRotation(player.transform.position - this.transform.position, Vector3.up);
 
             lookRotation.z = 0;
             lookRotation.x = 0;
 
-            //‚±‚±‚©‚ç‰º‚ÉƒŒƒC‚ğg‚Á‚ÄƒIƒuƒWƒFƒNƒg‚â‹ŠE‚ğ§Œä‚·‚é
+            //ã“ã“ã‹ã‚‰ä¸‹ã«ãƒ¬ã‚¤ã‚’ä½¿ã£ã¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚„è¦–ç•Œã‚’åˆ¶å¾¡ã™ã‚‹
             Vector3 diffDis = this.transform.position - player.transform.position;
             Vector3 axis = Vector3.Cross(this.transform.forward, diffDis);
             float viewAngle = Vector3.Angle(transform.forward, diffDis) * (axis.y < 0 ? -1 : 1);
@@ -228,39 +229,39 @@ public class EighteenRot : MonoBehaviour
 
             if (viewAngle < 45 || viewAngle > 315)
             {
-                //ƒŒƒC‚ğ”ò‚Î‚·
+                //ãƒ¬ã‚¤ã‚’é£›ã°ã™
                 Vector3 diff = player.transform.position - transform.position;
                 float distance = diff.magnitude;
                 Vector3 direction = diff.normalized;
                 Vector3 eyeHeightPos = transform.position + new Vector3(0, 1, 0);
-                //13”Ô–Ú‚ÌƒŒƒCƒ„[‚Æ‚ÍÕ“Ë‚µ‚È‚¢ƒŒƒCƒ„[ƒ}ƒXƒN‚ğì¬
+                //13ç•ªç›®ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã¯è¡çªã—ãªã„ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒã‚¹ã‚¯ã‚’ä½œæˆ
                 int layerMask = ~(1 << 13);
                 RaycastHit[] hitsOb = Physics.RaycastAll(eyeHeightPos, direction, distance, layerMask);
-                //Õ“Ë‚µ‚½ƒIƒuƒWƒFƒNƒg‚ªˆêŒÂ‚Ì‚İ‚ÅƒvƒŒƒCƒ„[‚¾‚Á‚½ê‡Chaceƒ‚[ƒh‚É
+                //è¡çªã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒä¸€å€‹ã®ã¿ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã ã£ãŸå ´åˆChaceãƒ¢ãƒ¼ãƒ‰ã«
                 if (hitsOb.Length == 1)
                 {
                     if (hitsOb[0].transform.gameObject.CompareTag("Player"))
                     {
-                        //ƒ`ƒFƒCƒXƒtƒ‰ƒO
+                        //ãƒã‚§ã‚¤ã‚¹ãƒ•ãƒ©ã‚°
                         Player_Walk PW = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Walk>();
                         PW.SetChase(true);
                         WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
                         //WM.SetChange(false);
 
-                        //‘–‚Á‚Ä’Ç‚¢‚©‚¯‚Ä‚­‚é
+                        //èµ°ã£ã¦è¿½ã„ã‹ã‘ã¦ãã‚‹
                         this.animator.SetBool(key_isRun, true);
 
-                        //ƒfƒtƒHƒ‹ƒgƒ€[ƒu‚ğƒIƒ“‚É‚·‚é
+                        //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ ãƒ¼ãƒ–ã‚’ã‚ªãƒ³ã«ã™ã‚‹
                         DefaultMove = true;
-                        //ƒ`ƒFƒCƒXƒtƒ‰ƒO‚ğƒIƒ“‚É‚·‚é
+                        //ãƒã‚§ã‚¤ã‚¹ãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ³ã«ã™ã‚‹
                         Chase = true;
 
-                        //Œü‚«‚ğ•Ï‚¦‚é
+                        //å‘ãã‚’å¤‰ãˆã‚‹
                         transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.1f);
 
                         Vector3 p = new Vector3(0f, 0f, 0.05f);
 
-                        //ˆÚ“®‚³‚¹‚é
+                        //ç§»å‹•ã•ã›ã‚‹
                         if (bChase)
                         {
                             transform.Translate(p);
@@ -269,19 +270,19 @@ public class EighteenRot : MonoBehaviour
                         nBullet_Time--;
                         if (nBullet_Time < 0)
                         {
-                            //UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“
+                            //æ”»æ’ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
                             this.animator.SetBool(key_isAttack, true);
-                            //’e‚ğ”­Ë‚·‚é
+                            //å¼¾ã‚’ç™ºå°„ã™ã‚‹
                             Vector3 bulletPosition = firePoint.transform.position;
-                            //ã‚Åæ“¾‚µ‚½êŠ‚É’e‚ğoŒ»
-                            GameObject newBall = Instantiate(bullet, bulletPosition, this.transform.rotation);
-                            // oŒ»‚³‚¹‚½ƒ{[ƒ‹‚Ìforward(z²•ûŒü)
+                            //ä¸Šã§å–å¾—ã—ãŸå ´æ‰€ã«å¼¾ã‚’å‡ºç¾
+                            GameObject newBall = Instantiate(bulletPrefab, firePoint.transform.position, this.transform.rotation);
+                            // å‡ºç¾ã•ã›ãŸãƒœãƒ¼ãƒ«ã®forward(zè»¸æ–¹å‘)
                             Vector3 directions = newBall.transform.forward;
-                            // ’e‚Ì”­Ë•ûŒü‚ÉnewBall‚Ìz•ûŒü(ƒ[ƒJƒ‹À•W)‚ğ“ü‚êA’eƒIƒuƒWƒFƒNƒg‚Ìrigidbody‚ÉÕŒ‚—Í‚ğ‰Á‚¦‚é
+                            // å¼¾ã®ç™ºå°„æ–¹å‘ã«newBallã®zæ–¹å‘(ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™)ã‚’å…¥ã‚Œã€å¼¾ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®rigidbodyã«è¡æ’ƒåŠ›ã‚’åŠ ãˆã‚‹
                             newBall.GetComponent<Rigidbody>().AddForce(direction * bullet_Speed, ForceMode.Impulse);
-                            // oŒ»‚³‚¹‚½ƒ{[ƒ‹‚Ì–¼‘O‚ğ"bullet"‚É•ÏX
+                            // å‡ºç¾ã•ã›ãŸãƒœãƒ¼ãƒ«ã®åå‰ã‚’"bullet"ã«å¤‰æ›´
                             newBall.name = bullet.name;
-                            // oŒ»‚³‚¹‚½ƒ{[ƒ‹‚ğ0.8•bŒã‚ÉÁ‚·
+                            // å‡ºç¾ã•ã›ãŸãƒœãƒ¼ãƒ«ã‚’0.8ç§’å¾Œã«æ¶ˆã™
                             Destroy(newBall, 2.0f);
                             nBullet_Time = BULLET_DELTTIME;
 
@@ -304,7 +305,7 @@ public class EighteenRot : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Œ³‚ÌêŠ‚É–ß‚éƒtƒ‰ƒO
+        //å…ƒã®å ´æ‰€ã«æˆ»ã‚‹ãƒ•ãƒ©ã‚°
         if (ComeBackFlg)
         {
             if (collision.gameObject.tag == "Enemy_Start_Pos")
