@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: e701dbf41289a414183c6b986457bf1a, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: ddb6b1fe9f0fb964b932aef52f362f9b, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -54151,10 +54151,14 @@ PrefabInstance:
     - target: {fileID: 6047020559220683482, guid: dbe049f45de19de49ae3fc942cdfa6b6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 583215188}
+      objectReference: {fileID: 1863754154}
     - target: {fileID: 6047020559220683482, guid: dbe049f45de19de49ae3fc942cdfa6b6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047020559220683482, guid: dbe049f45de19de49ae3fc942cdfa6b6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
       objectReference: {fileID: 0}
     - target: {fileID: 6047020559220683483, guid: dbe049f45de19de49ae3fc942cdfa6b6, type: 3}
       propertyPath: m_Sprite
@@ -54271,6 +54275,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6047020559220683485, guid: dbe049f45de19de49ae3fc942cdfa6b6, type: 3}
   m_PrefabInstance: {fileID: 1863754152}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1863754154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6047020559220683460, guid: dbe049f45de19de49ae3fc942cdfa6b6, type: 3}
+  m_PrefabInstance: {fileID: 1863754152}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583215188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c5ff24749900f4c989bc50e2bc193a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1868680091
 PrefabInstance:
   m_ObjectHideFlags: 0
