@@ -11,7 +11,7 @@ public class FadeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        SceneIn();
     }
 
     // Update is called once per frame

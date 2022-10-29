@@ -17,12 +17,12 @@ public class CSceneTitle : MonoBehaviour
     }
     [SerializeField] GameObject[] UIObjects;
     [SerializeField] private FadeManager fadeManager;
-    [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] public AudioClip[] audioClips;
 
     private MODE mode;
     private MODE oldMode;
     private bool isMouse;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private bool useController;
     private float ControllerDeadZone = 0.5f;
     private bool dpadFlg;
@@ -39,7 +39,7 @@ public class CSceneTitle : MonoBehaviour
         {
             useController = true;
         }
-        fadeManager.SceneIn();
+        //fadeManager.SceneIn();
         mode = MODE.START;
         SetUI(mode, true);
         isMouse = false;
@@ -174,7 +174,7 @@ public class CSceneTitle : MonoBehaviour
 
     // ÉVÅ[ÉìïœçX
     #region change scene
-    private void ChangeScene(MODE selectMode)
+    public void ChangeScene(MODE selectMode)
     {
         switch (selectMode)
         {

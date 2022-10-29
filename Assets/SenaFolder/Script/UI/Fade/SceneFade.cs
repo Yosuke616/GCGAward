@@ -15,15 +15,18 @@ public class SceneFade : MonoBehaviour
         FADE_FIN,
         FADE_MAX,
     }
+    [SerializeField] private GameObject LoadUI;
     private Image image;            // 画像の情報
     private float fTimer;           // 経過時間
     private STATE_FADE fadeState;   // フェードしているかどうか
     private float fMaxTime;        // フェードにかける時間
     private string szScene = null;
+    private AsyncOperation async;
 
     // Start is called before the first frame update
     void Start()
     {
+        LoadUI.SetActive(false);
         image = GetComponent<Image>();
     }
 
@@ -50,7 +53,8 @@ public class SceneFade : MonoBehaviour
                     Debug.Log("FadeFin");
                     fadeState = STATE_FADE.FADE_FIN;
                     Debug.Log("ChangeScene");
-                    SceneManager.LoadScene(szScene);
+                    LoadUI.SetActive(true);
+                    StartCoroutine("LoadData");
                 }
                 alpha = fTimer / fMaxTime;
                 image.color = new Color(0, 0, 0, alpha);
@@ -83,5 +87,15 @@ public class SceneFade : MonoBehaviour
         fTimer += Time.deltaTime;
         // 一定時間を経過しているかを返す
         return fTimer > fMaxTime;
+    }
+
+    private IEnumerator LoadData()
+    {
+        async = SceneManager.LoadSceneAsync(szScene);
+
+        while (!async.isDone)
+        {
+            yield return null;
+        }
     }
 }
