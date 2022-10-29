@@ -48,7 +48,11 @@ public class CTitleButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
         }
         else 
         {
-            SceneManager.LoadScene(szSceneName.ToString());
+            cScene.audioSource.PlayOneShot(cScene.audioClips[1]);
+            if(szSceneName == "GameScene")
+                cScene.ChangeScene(CSceneTitle.MODE.START);
+            else if(szSceneName == "TutorialScene")
+                cScene.ChangeScene(CSceneTitle.MODE.TUTORIAL);
         }
     }
 
