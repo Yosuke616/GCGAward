@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArrowPos : MonoBehaviour
 {
     public GameObject parent;
+    private Vector3 SetPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,10 @@ public class ArrowPos : MonoBehaviour
                 {
                     if (parent.GetComponent<CBow>().GetChargeFlg())
                     {
-                        this.transform.position = parent.transform.position;
+                        this.transform.localScale = parent.GetComponent<CBow>().GetArrowScale();
+                        
+                        SetPos = parent.GetComponent<CBow>().GetArrowPos();
+                        this.transform.position = parent.transform.position+SetPos;
                         this.transform.eulerAngles = new Vector3(parent.transform.eulerAngles.x-90, parent.transform.eulerAngles.y-2, parent.transform.eulerAngles.z);
                     }
                 }

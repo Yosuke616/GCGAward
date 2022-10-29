@@ -51,6 +51,11 @@ public class CBow : MonoBehaviour
     [SerializeField] private AudioClip seShot;
     [Header("クールダウンタイム")]
     [SerializeField] private float fDownTime;
+    [Header("生成する矢の位置")]
+    public Vector3 ArrowPos;
+    [Header("生成する矢の大きさ")]
+    public Vector3 ArrowScale;
+
     #endregion
 
     #region variable
@@ -590,5 +595,13 @@ public class CBow : MonoBehaviour
         return nCurrentArrowSetNum;
     }
     #endregion
+    public Vector3 GetArrowPos()
+    {
+        return ArrowPos;
+    }
+    public Vector3 GetArrowScale()
+    {
 
+        return ArrowScale;
+    }
 }
