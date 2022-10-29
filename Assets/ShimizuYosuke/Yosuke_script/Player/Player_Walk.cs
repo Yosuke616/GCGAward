@@ -61,8 +61,6 @@ public class Player_Walk : MonoBehaviour
 
     //プレイヤーチェイスフラグ
     private bool bChase;
-
-    //[SerializeField] private FollowCamera refCamera;        // カメラの水平回転を参照する用
     private void Awake()
     {
         //60fps

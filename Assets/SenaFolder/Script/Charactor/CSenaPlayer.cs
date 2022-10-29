@@ -211,13 +211,16 @@ public class CSenaPlayer : CCharactorManager
     {
         if (collision.gameObject.tag == ("Bullet"))
         {
-            Kesu elf = GameObject.Find("ElfPlayer").GetComponent<Kesu>();
+            Kesu elf = GameObject.Find("idle beushup").GetComponent<Kesu>();
             Destroy(collision.gameObject);
 
             elf.SetDamageAnim();
 
-            ChangeHPFront(-10);
-            ChangeHPBG(-10);
+            WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+            int i = WM.GetWave();
+
+            ChangeHPFront(-(10+i));
+            ChangeHPBG(-(10 + i));
         }
     }
 

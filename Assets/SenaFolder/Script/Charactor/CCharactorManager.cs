@@ -49,6 +49,13 @@ public class CCharactorManager : MonoBehaviour
     #region init hp
     public void InitHP()
     {
+        //敵キャラクターだった場合さいだいHPを増幅させる
+        if (this.gameObject.tag == "Enemy") {
+            WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+            int i= WM.GetWave();
+            nMaxHp = nMaxHp + Random.Range(3,(i+3));
+        }
+
         nCurrentHp = nMaxHp;
         nOldHp = nCurrentHp;
         nCurrentFrontVal = nMaxHp;
