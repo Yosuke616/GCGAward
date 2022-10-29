@@ -31,19 +31,15 @@ public class CHPText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(nOldNum != nCurrentNum)
-        {
-            GUIText.text = nCurrentNum.ToString();
-        }
+        GUIText.text = objPlayer.GetComponent<CCharactorManager>().nCurrentHp.ToString();
     }
-
-    public void ChangeHPNum(int num)
-    {
-        nOldNum = nCurrentNum;
-        nCurrentNum += num;
-        if (nCurrentNum > 100)
-            nCurrentNum = 100;
-        if (nCurrentNum <= 0)
-            nCurrentNum = 0;
-    }
+    //public void ChangeHPNum(int num)
+    //{
+    //    nOldNum = nCurrentNum;
+    //    nCurrentNum += num;
+    //    if (nCurrentNum > 100)
+    //        nCurrentNum = 100;
+    //    if (nCurrentNum <= 0)
+    //        nCurrentNum = 0;
+    //}
 }

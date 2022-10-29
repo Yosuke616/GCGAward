@@ -48,9 +48,6 @@ public class CSenaPlayer : CCharactorManager
         UpdateState(playerState);
         //Debug.Log(nCurrentHp);
 
-        if (Input.GetKeyDown(KeyCode.K))
-            nCurrentHp = 0;
-
         //Debug.Log("HP" + nCurrentHp);
         //Debug.Log("PlayerAtk" + nCurrentAtk);
     }
@@ -72,9 +69,11 @@ public class CSenaPlayer : CCharactorManager
                 // Zキー→HPを減らす(デバッグ用)
                 #region debug dec hp
                 if (Input.GetKeyDown(KeyCode.Z))
-                {
                     nCurrentHp = 0;
-                }
+                if (Input.GetKeyDown(KeyCode.K))
+                    nCurrentHp = nCurrentHp / 10;
+                if(Input.GetKeyDown(KeyCode.P))
+                    nCurrentHp = nCurrentHp / 2;
                 #endregion
 
                 //CalcFrontBarNum();
@@ -200,10 +199,10 @@ public class CSenaPlayer : CCharactorManager
     public override void ChangeHPFront(int num)
     {
         //nCurrentHp += num;
-        for(int i = 0; i < objHPTexts.Length; ++i)
-        {
-            objHPTexts[i].GetComponent<CHPText>().ChangeHPNum(num);
-        }
+        //for(int i = 0; i < objHPTexts.Length; ++i)
+        //{
+        //    objHPTexts[i].GetComponent<CHPText>().ChangeHPNum(num);
+        //}
         HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
     }
 
