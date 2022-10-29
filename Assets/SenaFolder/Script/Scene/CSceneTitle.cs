@@ -39,7 +39,7 @@ public class CSceneTitle : MonoBehaviour
         {
             useController = true;
         }
-        fadeManager.SceneIn();
+        //fadeManager.SceneIn();
         mode = MODE.START;
         SetUI(mode, true);
         isMouse = false;
