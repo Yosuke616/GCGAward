@@ -17,7 +17,7 @@ public class WalkEnemy : MonoBehaviour
     private GameObject firePoint;
     //弾を撃つスピード
     [Header("弾のスピード")]
-    [SerializeField] private float bullet_Speed = 20.0f;
+    [SerializeField] private float bullet_Speed = 100.0f;
     [Header("次撃つまでの時間")]
     [SerializeField] private int BULLET_DELTTIME = 180;
     int nBullet_Time;

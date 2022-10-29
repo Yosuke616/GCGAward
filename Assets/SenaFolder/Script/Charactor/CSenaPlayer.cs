@@ -215,8 +215,11 @@ public class CSenaPlayer : CCharactorManager
 
             elf.SetDamageAnim();
 
-            ChangeHPFront(-10);
-            ChangeHPBG(-10);
+            WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+            int i = WM.GetWave();
+
+            ChangeHPFront(-(10+i));
+            ChangeHPBG(-(10 + i));
         }
     }
 

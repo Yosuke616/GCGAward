@@ -8,14 +8,6 @@ public class WaveManager : MonoBehaviour
 {
     //スコアを管理する変数
     private int nScore;
-    //スコアを表示するためのテキスト変数
-    //private Text scoreText;
-    //敵の数を表示するためのテキスト変数
-    //private Text enemyText;
-    //ウェーブ数を表示する
-    //private Text waveText;
-    //MAX敵数
-    //private Text MaxEnemy;
 
     //敵の数を管理する変数
     private int nEnemyNum;
@@ -55,13 +47,6 @@ public class WaveManager : MonoBehaviour
     {
         //スコアを0にする
         nScore = 0;
-        //スコアのテキストを紐づける
-
-        //GameObject obj = transform.Find("Canvas").gameObject;
-        //scoreText = obj.transform.Find("Score").gameObject.GetComponent<Text>();
-        //enemyText = obj.transform.Find("Enemy").gameObject.GetComponent<Text>();
-        //waveText = obj.transform.Find("Wave").gameObject.GetComponent<Text>();
-        //MaxEnemy = obj.transform.Find("Max").gameObject.GetComponent<Text>();
 
         //敵の数は初期数は3
         nMaxEnemy = nEnemyNum = 0;
