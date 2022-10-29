@@ -36597,6 +36597,9 @@ MonoBehaviour:
   - {fileID: 1723512802}
   - {fileID: 593427762}
   fadeManager: {fileID: 1277175029}
+  audioClips:
+  - {fileID: 8300000, guid: 44a0f1fd9e8d4264295e35f7c6646f06, type: 3}
+  - {fileID: 8300000, guid: 3bebeb4cc9144f749bde26c6083476c6, type: 3}
 --- !u!114 &1277175029
 MonoBehaviour:
   m_ObjectHideFlags: 0

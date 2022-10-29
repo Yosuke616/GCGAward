@@ -17,6 +17,7 @@ public class CSceneTitle : MonoBehaviour
     }
     [SerializeField] GameObject[] UIObjects;
     [SerializeField] private FadeManager fadeManager;
+    [SerializeField] private AudioClip[] audioClips;
 
     private MODE mode;
     private MODE oldMode;
@@ -42,6 +43,7 @@ public class CSceneTitle : MonoBehaviour
         mode = MODE.START;
         SetUI(mode, true);
         isMouse = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -70,6 +72,8 @@ public class CSceneTitle : MonoBehaviour
         // 選択が変更されている場合ボタンのテクスチャを変更する
         if (mode != oldMode)
         {
+            // 効果音再生
+            audioSource.PlayOneShot(audioClips[0]);
             // UI更新処理
             SetUI(oldMode, false);      // 過去のUIをリセットする
             SetUI(mode, true);          // 現在のUIを更新する
@@ -114,6 +118,8 @@ public class CSceneTitle : MonoBehaviour
         // Enterキー→決定
         if(Input.GetKeyDown(KeyCode.Return))
         {
+            // 効果音再生
+            audioSource.PlayOneShot(audioClips[1]);
             // シーン遷移
             ChangeScene(mode);
         }
@@ -149,6 +155,8 @@ public class CSceneTitle : MonoBehaviour
             // Enterキー→決定
             if (Gamepad.current.aButton.isPressed)
             {
+                // 効果音再生
+                audioSource.PlayOneShot(audioClips[1]);
                 // シーン遷移
                 ChangeScene(mode);
             }
