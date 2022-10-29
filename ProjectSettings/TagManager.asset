@@ -18,6 +18,8 @@ TagManager:
   - Cursur
   - Ground_Spawn
   - DeadZone
+  - FxTemporaire
+  - Manager
   layers:
   - Default
   - TransparentFX
