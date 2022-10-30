@@ -11,6 +11,8 @@ public class CSenaEnemy : CCharactorManager
     [SerializeField] private GameObject objHitEffect;
     [Header("敵の消滅時間")]
     [SerializeField] private float fDestroyTime;
+    [Header("敵の回復量")]
+    [SerializeField] private int nUpHP;
     #endregion
 
     // 変数宣言
@@ -69,7 +71,7 @@ public class CSenaEnemy : CCharactorManager
                 //HPの回復
                 CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
                 //obj.ChangeHPFront(10);
-                obj.ChangeHp(7);
+                obj.ChangeHp(nUpHP);
                 WM.AddScore(100);
                 WM.AddBreakEnemy();
                 WM.DecEnemy();
@@ -150,7 +152,8 @@ public class CSenaEnemy : CCharactorManager
             //if(nCurrentHp > 0)
             //objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
             // ヒットカーソルの再生
-            GetComponent<CEnemyDamage>().ArrowHit();
+            if(nCurrentHp > 0)
+                GetComponent<CEnemyDamage>().ArrowHit();
 
         }
         else {
