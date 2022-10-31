@@ -50,6 +50,7 @@ public class CSenaEnemy : CCharactorManager
     #region update
     void Update()
     {
+        this.animator.SetBool(key_isDamage, false);
         UpdateState(state);
         //Debug.Log("EnemyAtk" + nCurrentAtk);
         
@@ -165,6 +166,24 @@ public class CSenaEnemy : CCharactorManager
         else {
             this.animator.SetBool(key_isDamage, false);
         }
+    }
+    #endregion
+
+    #region head_shot
+    public void CollHead(Collision collision) {
+        //アニメーションを流す
+        this.animator.SetBool(key_isDamage, true);
+        // 当たった矢のダメージ数を取得する
+        int DamageNum = collision.gameObject.GetComponent<CArrow>().GetArrowAtk();
+        // ヒットエフェクト再生
+        hitEffect = Instantiate(objHitEffect);
+        // ダメージ通知
+        ChangeHp(-1 * DamageNum * 5);
+        // ヒットカーソルの再生
+        if (nCurrentHp > 0)
+            GetComponent<CEnemyDamage>().ArrowHit();
+        WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        WM.AddHeadShot();
     }
     #endregion
 }

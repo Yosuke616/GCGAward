@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 
 public class Kesu : MonoBehaviour
 {
-    [Header("���̎��")]
+    [Header("‰¹‚ÌŽí—Þ")]
     [SerializeField] private AudioClip walk;
     [SerializeField] private AudioClip run;
 
     private AudioSource AS;
 
-    [Header("�s�b�`�̕ύX")]
+    [Header("ƒsƒbƒ`‚Ì•ÏX")]
     [SerializeField] private float pitchRange = 0.1f;
 
     [SerializeField] private GameObject kemuri; 
