@@ -4,47 +4,24 @@ using UnityEngine;
 
 public class HeadShot : MonoBehaviour
 {
-    //敵オブジェクト
-    [SerializeField] private GameObject enemy; 
 
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 pos = this.transform.position;
-        pos = enemy.transform.position;
-        pos.y = enemy.transform.position.y + 1;
-        this.transform.position = pos;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //消す
-        if (enemy == null) {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        //常に敵に追従させる
-        Vector3 pos = this.transform.position;
-        pos = enemy.transform.position;
-        pos.y = enemy.transform.position.y + 1;
-        this.transform.position = pos;
-
-
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.tag == "Arrow") {
-            //スコアを加算させる
-            WaveManager WM = GameObject.Find("Wavemanager").GetComponent<WaveManager>();
-            WM.AddScore(1000);
-
-            //オブジェクトを消滅させる
-            Destroy(collision.gameObject);      // 矢を消滅させる
-            Destroy(this.gameObject);      // 自身を消滅させる
+            //親のスクリプトを持ってくる
+            CSenaEnemy obj = this.transform.parent.gameObject.GetComponent<CSenaEnemy>();
+            obj.CollHead(collision);
         }
     }
 }
