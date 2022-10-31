@@ -17,8 +17,7 @@ public class CEnemyDamage : MonoBehaviour
     void Start()
     {
         objCursurUI = GameObject.FindWithTag("Cursur");
-        objHitCursur = objCursurUI.transform.Find("HitCursur").gameObject;
-        objHitCursur.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,8 +32,8 @@ public class CEnemyDamage : MonoBehaviour
   Å@*/
     public void ArrowHit()
     {
-        objHitCursur.SetActive(true);
-        StartCoroutine("DisabledHitCursur", objHitCursur);
+        transform.GetChild(0).gameObject.SetActive(true);
+        StartCoroutine("DisabledHitCursur", transform.GetChild(0).gameObject);
     }
 
     private IEnumerator DisabledHitCursur(GameObject cursur)

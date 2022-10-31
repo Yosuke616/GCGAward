@@ -62,10 +62,10 @@ public class PlayerSettings : MonoBehaviour
         FPSCameraTarget2.SetFPSSetting(new Vector2(FPSMouseSensiX/5, FPSMouseSensiY/5), new Vector2(FPSControllerSensiX/5, FPSControllerSensiY/5), StickDeadZone);
         PlayerInputTest.SetTriggerDeadZone(TriggerDeadZone);
         TPSCameraTargetMove.SetTPSSetting(new Vector2(TPSMouseSensiX/5, TPSMouseSensiY/5), new Vector2(TPSControllerSensiX/5, TPSControllerSensiY/5), StickDeadZone);
-        if(Input.GetKeyDown("v"))
-        {
-            CursorLock = !CursorLock;
-        }
+        //if(Input.GetKeyDown("v"))
+        //{
+        //    CursorLock = !CursorLock;
+        //}
         if(ChangeCursorView)
         {
             ChangeCursorView = false;

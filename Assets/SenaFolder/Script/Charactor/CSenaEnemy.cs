@@ -9,15 +9,15 @@ public class CSenaEnemy : CCharactorManager
     //[SerializeField] private int nAddScore;
     [SerializeField] private GameObject objDamageUI;
     [SerializeField] private GameObject objHitEffect;
-    [Header("“G‚ÌÁ–ÅŠÔ")]
+    [Header("æ•µã®æ¶ˆæ»…æ™‚é–“")]
     [SerializeField] private float fDestroyTime;
-    [Header("“G‚Ì‰ñ•œ—Ê")]
+    [Header("æ•µã®å›å¾©é‡")]
     [SerializeField] private int nUpHP;
     #endregion
 
-    // •Ï”éŒ¾
+    // å¤‰æ•°å®£è¨€
     #region variable
-    private CScore scScore;     // ƒXƒRƒA‚Ìî•ñŠi”[—p
+    private CScore scScore;     // ã‚¹ã‚³ã‚¢ã®æƒ…å ±æ ¼ç´ç”¨
     private GameObject objPlayer;
     private CHARACTORSTATE state;
     private GameObject hitEffect;
@@ -27,21 +27,22 @@ public class CSenaEnemy : CCharactorManager
     private Animator animator;
 
     private WaveManager WM;
-
+    private CEnemyDamage cEnemyDamage;
     #endregion
     // Start is called before the first frame update
     #region init
     void Start()
     {
-        InitHP();       // HP‚Ì‰Šú‰»
-        InitAtk();      // UŒ‚—Í‚Ì‰Šú‰»
+        InitHP();       // HPã®åˆæœŸåŒ–
+        InitAtk();      // æ”»æ’ƒåŠ›ã®åˆæœŸåŒ–
         //SetHPBar();
         objPlayer = GameObject.FindWithTag("Player");
-        //scScore = sceneManager.GetComponent<CScore>();      // ƒXƒRƒA‚Ìî•ñ‚ğæ“¾‚·‚é
+        //scScore = sceneManager.GetComponent<CScore>();      // ã‚¹ã‚³ã‚¢ã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 
         this.animator = GetComponent<Animator>();
 
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        cEnemyDamage = GameObject.FindWithTag("HitCursur").GetComponent<CEnemyDamage>();
     }
     #endregion
 
@@ -60,43 +61,53 @@ public class CSenaEnemy : CCharactorManager
     {
         switch(state)
         {
-            // ¶‘¶ó‘Ô‚Ì
+            // ç”Ÿå­˜çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_ALIVE:
                 break;
 
-            // €–Só‘Ô‚Ì
+            // æ­»äº¡çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_DEAD:
                 //float fLifeTime = objDamageUI.GetComponent<CDamageUI>().fLifeTime;
-                //StartCoroutine("DestroyHitEffect",(objHitEffect,fLifeTime));        // 1•bŒã‚É
-                //HP‚Ì‰ñ•œ
-                CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
+                //StartCoroutine("DestroyHitEffect",(objHitEffect,fLifeTime));        // 1ç§’å¾Œã«
+                //HPã®å›å¾©
                 //obj.ChangeHPFront(10);
+                //obj.ChangeHp(nUpHP);
+                CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
                 obj.ChangeHp(nUpHP);
+
+                //StartCoroutine("PlayerHPUp");
                 WM.AddScore(100);
                 WM.AddBreakEnemy();
                 WM.DecEnemy();
-                StartCoroutine("DestroyEnemy", fDestroyTime);
+                StartCoroutine("DestroyEnemy");
                 break;
         }
     }
     #endregion
 
-    // –ˆƒtƒŒ[ƒ€Às‚³‚ê‚é
+    private IEnumerator PlayerHPUp()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
+        obj.ChangeHp(nUpHP);
+    }
+
+    // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å®Ÿè¡Œã•ã‚Œã‚‹
     #region update state
     private void UpdateState(CHARACTORSTATE state)
     {
         switch (state)
         {
-            // ¶‘¶ó‘Ô‚Ì
+            // ç”Ÿå­˜çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_ALIVE:
                 //Debug.Log("arrive");
-                //Debug.Log("Œ»İ‚ÌHP:" + nCurrentHp);
-                // HP‚ª0‚É‚È‚Á‚½‚Æ‚«‚É€–Só‘Ô‚É‚·‚é
+                //Debug.Log("ç¾åœ¨ã®HP:" + nCurrentHp);
+                // HPãŒ0ã«ãªã£ãŸã¨ãã«æ­»äº¡çŠ¶æ…‹ã«ã™ã‚‹
                 if (nCurrentHp <= 0)
                     ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
                 break;
             
-            // €–Só‘Ô‚Ì
+            // æ­»äº¡çŠ¶æ…‹ã®æ™‚
             case CHARACTORSTATE.CHARACTOR_DEAD:
                 break;
 
@@ -105,10 +116,10 @@ public class CSenaEnemy : CCharactorManager
     #endregion
 
     /*
-    * @brief ƒqƒbƒgƒGƒtƒFƒNƒg‚Ìíœ
-    * @param GameObject ƒqƒbƒgƒGƒtƒFƒNƒg‚ÌƒIƒuƒWƒFƒNƒg
-    * @details ƒqƒbƒgƒGƒtƒFƒNƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğæ“¾‚µ‚ÄÁ–Å‚³‚¹‚é
-  @*/
+    * @brief ãƒ’ãƒƒãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å‰Šé™¤
+    * @param GameObject ãƒ’ãƒƒãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    * @details ãƒ’ãƒƒãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã—ã¦æ¶ˆæ»…ã•ã›ã‚‹
+  ã€€*/
     //#region destroy hit effect
     //private IEnumerator DestroyHitEffect(GameObject effect, float lifeTime)
     //{
@@ -118,43 +129,45 @@ public class CSenaEnemy : CCharactorManager
     //#endregion
 
     /*
-     * @brief “GƒIƒuƒWƒFƒNƒg‚ÌÁ–Å
-     * @param float Á–Å‚Ü‚Å‚ÌŠÔ
-     * @details fTime•bŒã‚É“GƒIƒuƒWƒFƒNƒg‚ğÁ–Å‚³‚¹‚é
-@   */
+     * @brief æ•µã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¶ˆæ»…
+     * @param float æ¶ˆæ»…ã¾ã§ã®æ™‚é–“
+     * @details fTimeç§’å¾Œã«æ•µã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¶ˆæ»…ã•ã›ã‚‹
+ã€€   */
     #region destroy enemy
-    private IEnumerator DestroyEnemy(float fTime)
+    private IEnumerator DestroyEnemy()
     {
-        //€–SƒAƒjƒ[ƒVƒ‡ƒ“‚ğ—¬‚·
+        //æ­»äº¡ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æµã™
         this.animator.SetBool(key_isDeath, true);
         yield return new WaitForSeconds(fTime);
         Destroy(this.gameObject);
+
     }
     #endregion
 
     #region collision
     private void OnCollisionEnter(Collision collision)
     {
-        // –î‚ª“–‚½‚Á‚½ê‡A©g‚Æ–î‚ğÁ–Å‚³‚¹‚é
+        // çŸ¢ãŒå½“ãŸã£ãŸå ´åˆã€è‡ªèº«ã¨çŸ¢ã‚’æ¶ˆæ»…ã•ã›ã‚‹
         if (collision.gameObject.tag == "Arrow")
         {
-            //ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ—¬‚·
+            //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æµã™
             this.animator.SetBool(key_isDamage, true);
             //Debug.Log("<color=green>EnemyHit</color>");
-            //scScore.addScore(nAddScore);        // ƒXƒRƒA‚ğ‰ÁZ‚·‚é
-            Destroy(collision.gameObject);      // –î‚ğÁ–Å‚³‚¹‚é
-            // “–‚½‚Á‚½–î‚Ìƒ_ƒ[ƒW”‚ğæ“¾‚·‚é
+            //scScore.addScore(nAddScore);        // ã‚¹ã‚³ã‚¢ã‚’åŠ ç®—ã™ã‚‹
+            Destroy(collision.gameObject);      // çŸ¢ã‚’æ¶ˆæ»…ã•ã›ã‚‹
+            // å½“ãŸã£ãŸçŸ¢ã®ãƒ€ãƒ¡ãƒ¼ã‚¸æ•°ã‚’å–å¾—ã™ã‚‹
             int DamageNum = collision.gameObject.GetComponent<CArrow>().GetArrowAtk();
-            // ƒqƒbƒgƒGƒtƒFƒNƒgÄ¶
-            hitEffect = Instantiate(objHitEffect);
-            // ƒ_ƒ[ƒW’Ê’m
+            // ãƒ’ãƒƒãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆå†ç”Ÿ
+            hitEffect = Instantiate(objHitEffect, transform.position, Quaternion.Euler(0.0f, 90.0f, 0.0f));
+            // ãƒ€ãƒ¡ãƒ¼ã‚¸é€šçŸ¥
             ChangeHp(-1 * DamageNum);
             //if(nCurrentHp > 0)
             //objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
-            // ƒqƒbƒgƒJ[ƒ\ƒ‹‚ÌÄ¶
+            // ãƒ’ãƒƒãƒˆã‚«ãƒ¼ã‚½ãƒ«ã®å†ç”Ÿ
             if(nCurrentHp > 0)
                 GetComponent<CEnemyDamage>().ArrowHit();
-            Debug.Log("“–‚½‚Á‚½‚æ");
+            Debug.Log("å½“ãŸã£ãŸã‚ˆ");
+            cEnemyDamage.ArrowHit();
         }
         else {
             this.animator.SetBool(key_isDamage, false);
@@ -164,15 +177,15 @@ public class CSenaEnemy : CCharactorManager
 
     #region head_shot
     public void CollHead(Collision collision) {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ—¬‚·
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æµã™
         this.animator.SetBool(key_isDamage, true);
-        // “–‚½‚Á‚½–î‚Ìƒ_ƒ[ƒW”‚ğæ“¾‚·‚é
+        // å½“ãŸã£ãŸçŸ¢ã®ãƒ€ãƒ¡ãƒ¼ã‚¸æ•°ã‚’å–å¾—ã™ã‚‹
         int DamageNum = collision.gameObject.GetComponent<CArrow>().GetArrowAtk();
-        // ƒqƒbƒgƒGƒtƒFƒNƒgÄ¶
+        // ãƒ’ãƒƒãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆå†ç”Ÿ
         hitEffect = Instantiate(objHitEffect);
-        // ƒ_ƒ[ƒW’Ê’m
+        // ãƒ€ãƒ¡ãƒ¼ã‚¸é€šçŸ¥
         ChangeHp(-1 * DamageNum * 5);
-        // ƒqƒbƒgƒJ[ƒ\ƒ‹‚ÌÄ¶
+        // ãƒ’ãƒƒãƒˆã‚«ãƒ¼ã‚½ãƒ«ã®å†ç”Ÿ
         if (nCurrentHp > 0)
             GetComponent<CEnemyDamage>().ArrowHit();
         WaveManager WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();

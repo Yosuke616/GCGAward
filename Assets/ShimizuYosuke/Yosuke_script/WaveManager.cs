@@ -73,9 +73,9 @@ public class WaveManager : MonoBehaviour
         //MaxEnemy.text = string.Format("{0}",nMaxEnemy);
 
         //ボタンでエネミーをぶち殺す
-        if (Input.GetKeyUp(KeyCode.F12)) {
-            BreakTheEnemy();
-        }
+        //if (Input.GetKeyUp(KeyCode.F12)) {
+        //    BreakTheEnemy();
+        //}
 
         //敵の数が0になったら初期化をする
         if (nEnemyNum <= 0) {
@@ -84,6 +84,9 @@ public class WaveManager : MonoBehaviour
 
         //実際の敵の数と数値が違っていたら消す
         GameObject[] tags = GameObject.FindGameObjectsWithTag("Enemy");
+
+        //Debug.Log(tags.Length);
+        //Debug.Log(nEnemyNum);
 
         if (tags.Length > nEnemyNum) {
             GameObject obj = GameObject.FindGameObjectWithTag("Enemy");

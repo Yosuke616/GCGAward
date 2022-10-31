@@ -22,8 +22,8 @@ public class CEnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-            CreateEnemy(objEnemy, fPos);
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    CreateEnemy(objEnemy, fPos);
     }
 
     private void CreateEnemy(GameObject obj, Vector3 pos)

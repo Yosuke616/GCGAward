@@ -11,6 +11,7 @@ public class CHPText : MonoBehaviour
     private int nOldNum;
     private int nMaxNum;
     private GameObject objPlayer;
+    private bool isMove;
     #endregion 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class CHPText : MonoBehaviour
         // プレイヤー情報を取得する
         objPlayer = GameObject.FindWithTag("Player").gameObject;
         nMaxNum = objPlayer.GetComponent<CCharactorManager>().nMaxHp;
-        
+        isMove = false;
         // テキスト情報を取得する
         GUIText = GetComponent<TextMeshProUGUI>();
 
@@ -31,15 +32,26 @@ public class CHPText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //GUIText.text = objPlayer.GetComponent<CCharactorManager>().nCurrentHp.ToString();
+        GUIText.text = nCurrentNum.ToString();
+
+        if (!isMove)
+            ResetBar();
+    }
+    public void ChangeHPNum(int num)
+    {
+        nOldNum = nCurrentNum;
+        nCurrentNum += num;
+        if (nCurrentNum > 100)
+            nCurrentNum = 100;
+        if (nCurrentNum <= 0)
+            nCurrentNum = 0;
+        isMove = true;
+    }
+
+    public void ResetBar()
+    {
+        isMove = false;
         GUIText.text = objPlayer.GetComponent<CCharactorManager>().nCurrentHp.ToString();
     }
-    //public void ChangeHPNum(int num)
-    //{
-    //    nOldNum = nCurrentNum;
-    //    nCurrentNum += num;
-    //    if (nCurrentNum > 100)
-    //        nCurrentNum = 100;
-    //    if (nCurrentNum <= 0)
-    //        nCurrentNum = 0;
-    //}
 }

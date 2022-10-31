@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a51395e585676f4c934ad534e69a3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nArrowNum: 0
   fFlyDistance: 30
   objEff:
   - {fileID: 4784094812260487402}
@@ -109,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18eb3ca307a471c44b3db489d808c10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &6321279823634528445
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 816270874118961350, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.73
+      value: 10.48
       objectReference: {fileID: 0}
     - target: {fileID: 816270874118961350, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalPosition.y
@@ -278,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1612862743387340902, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1612862743387340903, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_Name
@@ -290,19 +292,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645498, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645498, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645498, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645498, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 12.09
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645498, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalPosition.y
@@ -314,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645498, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2490707855955645499, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_Enabled
@@ -327,6 +329,10 @@ PrefabInstance:
     - target: {fileID: 7733329290118210825, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_Name
       value: eff_charge_side_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733329290118210825, guid: 490384402c5195e46adcfb35db754409, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7733329290118210830, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: isLooping
@@ -377,7 +383,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7733329290118210831, guid: 490384402c5195e46adcfb35db754409, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733329290118210831, guid: 490384402c5195e46adcfb35db754409, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733329290118210831, guid: 490384402c5195e46adcfb35db754409, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7733329290118210831, guid: 490384402c5195e46adcfb35db754409, type: 3}
@@ -428,7 +442,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: eff_arrowObj_player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2716915594730760634, guid: 490384402c5195e46adcfb35db754409, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 490384402c5195e46adcfb35db754409, type: 3}
 --- !u!114 &839375418779705816 stripped
 MonoBehaviour:

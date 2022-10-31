@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1720851985656600424
 Transform:
   m_ObjectHideFlags: 0
@@ -153,6 +153,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: af186b68d079fe444ac1d1225f41d6c3, type: 3}
   seShot: {fileID: 8300000, guid: 450116fa6ed84e4499d99419d1444860, type: 3}
   fDownTime: 0
+  ArrowPos: {x: 0, y: 0, z: 0}
+  ArrowScale: {x: 0, y: 0, z: 0}
   nCurrentArrowSetNum: 0
 --- !u!82 &2408407233654233714
 AudioSource:
