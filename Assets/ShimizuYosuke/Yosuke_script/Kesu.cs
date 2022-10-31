@@ -268,11 +268,10 @@ public class Kesu : MonoBehaviour
 
             }
         }
-        
 
-        if (Input.GetKey(KeyCode.F2)) {
-            this.animator.SetBool(key_isDeath, true);
-        }
+        //if (Input.GetKey(KeyCode.F2)) {
+        //    this.animator.SetBool(key_isDeath, true);
+        //}
     }
 
     public void SetDamageAnim() {

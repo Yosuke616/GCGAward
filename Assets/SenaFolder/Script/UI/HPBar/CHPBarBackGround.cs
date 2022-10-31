@@ -46,7 +46,7 @@ public class CHPBarBackGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isMove);
+        //Debug.Log(isMove);
         if (isMove)
         {
             // ’l‚ðŒ¸‚ç‚·‚Æ‚«
@@ -66,7 +66,7 @@ public class CHPBarBackGround : MonoBehaviour
         }
         else
         {
-            slider.value = objParent.GetComponent<CCharactorManager>().nCurrentHp;
+            //slider.value = objParent.GetComponent<CCharactorManager>().nCurrentHp;
         }
         
     }

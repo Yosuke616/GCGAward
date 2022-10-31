@@ -27,7 +27,7 @@ public class CSenaEnemy : CCharactorManager
     private Animator animator;
 
     private WaveManager WM;
-
+    private CEnemyDamage cEnemyDamage;
     #endregion
     // Start is called before the first frame update
     #region init
@@ -42,6 +42,7 @@ public class CSenaEnemy : CCharactorManager
         this.animator = GetComponent<Animator>();
 
         WM = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        cEnemyDamage = GameObject.FindWithTag("HitCursur").GetComponent<CEnemyDamage>();
     }
     #endregion
 
@@ -69,17 +70,27 @@ public class CSenaEnemy : CCharactorManager
                 //float fLifeTime = objDamageUI.GetComponent<CDamageUI>().fLifeTime;
                 //StartCoroutine("DestroyHitEffect",(objHitEffect,fLifeTime));        // 1秒後に
                 //HPの回復
-                CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
                 //obj.ChangeHPFront(10);
+                //obj.ChangeHp(nUpHP);
+                CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
                 obj.ChangeHp(nUpHP);
+
+                //StartCoroutine("PlayerHPUp");
                 WM.AddScore(100);
                 WM.AddBreakEnemy();
                 WM.DecEnemy();
-                StartCoroutine("DestroyEnemy", fDestroyTime);
+                StartCoroutine("DestroyEnemy");
                 break;
         }
     }
     #endregion
+
+    private IEnumerator PlayerHPUp()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CSenaPlayer obj = GameObject.FindGameObjectWithTag("Player").GetComponent<CSenaPlayer>();
+        obj.ChangeHp(nUpHP);
+    }
 
     // 毎フレーム実行される
     #region update state
@@ -123,11 +134,11 @@ public class CSenaEnemy : CCharactorManager
      * @details fTime秒後に敵オブジェクトを消滅させる
 　   */
     #region destroy enemy
-    private IEnumerator DestroyEnemy(float fTime)
+    private IEnumerator DestroyEnemy()
     {
         //死亡アニメーションを流す
         this.animator.SetBool(key_isDeath, true);
-        yield return new WaitForSeconds(fTime);
+        yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
     }
     #endregion
@@ -146,15 +157,10 @@ public class CSenaEnemy : CCharactorManager
             // 当たった矢のダメージ数を取得する
             int DamageNum = collision.gameObject.GetComponent<CArrow>().GetArrowAtk();
             // ヒットエフェクト再生
-            hitEffect = Instantiate(objHitEffect);
+            hitEffect = Instantiate(objHitEffect, transform.position, Quaternion.Euler(0.0f, 90.0f, 0.0f));
             // ダメージ通知
             ChangeHp(-1 * DamageNum);
-            //if(nCurrentHp > 0)
-            //objDamageUI.GetComponent<CDamageUI>().TellDamaged(DamageNum);
-            // ヒットカーソルの再生
-            if(nCurrentHp > 0)
-                GetComponent<CEnemyDamage>().ArrowHit();
-
+            cEnemyDamage.ArrowHit();
         }
         else {
             this.animator.SetBool(key_isDamage, false);

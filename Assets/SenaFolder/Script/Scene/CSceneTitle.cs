@@ -193,6 +193,10 @@ public class CSceneTitle : MonoBehaviour
 
             // ゲーム終了 → ゲーム終了
             case MODE.QUIT:
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
+                Application.Quit();
                 break;
         }
     }
