@@ -85,9 +85,6 @@ public class WaveManager : MonoBehaviour
         //実際の敵の数と数値が違っていたら消す
         GameObject[] tags = GameObject.FindGameObjectsWithTag("Enemy");
 
-        Debug.Log(tags.Length);
-        Debug.Log(nEnemyNum);
-
         if (tags.Length > nEnemyNum) {
             GameObject obj = GameObject.FindGameObjectWithTag("Enemy");
             Destroy(obj);

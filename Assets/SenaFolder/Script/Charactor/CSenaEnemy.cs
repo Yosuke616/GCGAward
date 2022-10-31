@@ -49,10 +49,9 @@ public class CSenaEnemy : CCharactorManager
     #region update
     void Update()
     {
-        this.animator.SetBool(key_isDamage, false);
+        Debug.Log(nCurrentHp);
         UpdateState(state);
         //Debug.Log("EnemyAtk" + nCurrentAtk);
-        
     }
     #endregion
 
@@ -129,7 +128,7 @@ public class CSenaEnemy : CCharactorManager
         //死亡アニメーションを流す
         this.animator.SetBool(key_isDeath, true);
         yield return new WaitForSeconds(fTime);
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
     #endregion
 
@@ -155,7 +154,7 @@ public class CSenaEnemy : CCharactorManager
             // ヒットカーソルの再生
             if(nCurrentHp > 0)
                 GetComponent<CEnemyDamage>().ArrowHit();
-
+            Debug.Log("当たったよ");
         }
         else {
             this.animator.SetBool(key_isDamage, false);

@@ -815,7 +815,7 @@ MonoBehaviour:
   nValNum: 1
   objDamageUI: {fileID: 9105747732129505315}
   objHitEffect: {fileID: 5432626011110207703, guid: 7aa81aa806d995c43adbb26063affd88, type: 3}
-  fDestroyTime: 0
+  fDestroyTime: 2
   nUpHP: 0
 --- !u!114 &25945423899470276
 MonoBehaviour:
