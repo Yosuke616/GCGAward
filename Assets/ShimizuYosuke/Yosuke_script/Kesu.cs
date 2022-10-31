@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 
 public class Kesu : MonoBehaviour
 {
-    [Header("���̎��")]
+    [Header("‰¹‚ÌŽí—Þ")]
     [SerializeField] private AudioClip walk;
     [SerializeField] private AudioClip run;
 
     private AudioSource AS;
 
-    [Header("�s�b�`�̕ύX")]
+    [Header("ƒsƒbƒ`‚Ì•ÏX")]
     [SerializeField] private float pitchRange = 0.1f;
 
     [SerializeField] private GameObject kemuri; 
@@ -268,17 +268,10 @@ public class Kesu : MonoBehaviour
 
             }
         }
-        
 
-        if (Input.GetKey(KeyCode.F2)) {
-            this.animator.SetBool(key_isDeath, true);
-        }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-            this.animator.SetBool(key_isCharge, true);
-        }
-
+        //if (Input.GetKey(KeyCode.F2)) {
+        //    this.animator.SetBool(key_isDeath, true);
+        //}
     }
 
     public void SetDamageAnim() {

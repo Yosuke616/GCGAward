@@ -42,9 +42,17 @@ public class CTitleButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
     // ボタンが押されたときシーン遷移する
     public void OnClick()
     {
-        if(szSceneName == "Option" || szSceneName == "Quit")
+        if(szSceneName == "Option")
+        {
+
+        }
+        else if(szSceneName == "Quit")
         {
             // オプション処理orゲーム終了処理
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            Application.Quit();
         }
         else 
         {

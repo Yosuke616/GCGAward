@@ -47,8 +47,11 @@ public class CSenaPlayer : CCharactorManager
     {
         UpdateState(playerState);
         //Debug.Log(nCurrentHp);
-
-        //Debug.Log("HP" + nCurrentHp);
+        if(nCurrentHp < 0)
+            nCurrentHp = 0;
+        if (nCurrentHp > 100)
+            nCurrentHp = 100;
+        Debug.Log("HP" + nCurrentHp);
         //Debug.Log("PlayerAtk" + nCurrentAtk);
     }
     #endregion
@@ -67,22 +70,20 @@ public class CSenaPlayer : CCharactorManager
             // 生存状態の時
             case CHARACTORSTATE.CHARACTOR_ALIVE:
                 // Zキー→HPを減らす(デバッグ用)
-                #region debug dec hp
-                if (Input.GetKeyDown(KeyCode.Z))
-                    nCurrentHp = 0;
-                if (Input.GetKeyDown(KeyCode.K))
-                    nCurrentHp = nCurrentHp / 10;
-                if(Input.GetKeyDown(KeyCode.P))
-                    nCurrentHp = nCurrentHp / 2;
-                #endregion
+                //#region debug dec hp
+                //if (Input.GetKeyDown(KeyCode.Z))
+                //    nCurrentHp = 0;
+                //if (Input.GetKeyDown(KeyCode.K))
+                //    nCurrentHp = nCurrentHp / 10;
+                //if(Input.GetKeyDown(KeyCode.P))
+                //    nCurrentHp = nCurrentHp / 2;
+                //#endregion
 
                 //CalcFrontBarNum();
                 // HPが変更された場合、HP数字表示UIを変更する
-                if (nCurrentHp != nOldHp)
-                   
                 // HPが0になったら死亡状態に変更する
                 if (nCurrentHp <= 0)
-                    ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
+                    StartCoroutine("PlayerKill");
 
                 // 上限値
                 if (nCurrentHp > 100)
@@ -117,7 +118,7 @@ public class CSenaPlayer : CCharactorManager
             // 死亡状態の時
             case CHARACTORSTATE.CHARACTOR_DEAD:
                 playerState = CHARACTORSTATE.CHARACTOR_DEAD;
-                Instantiate(DeadEffect, transform.position, Quaternion.identity);
+                //Instantiate(DeadEffect, transform.position, Quaternion.identity);
                 StartCoroutine("DestroyPlayer");
                 Debug.Log("<color=red>GAMEOVER</color>");
                 break;
@@ -199,10 +200,10 @@ public class CSenaPlayer : CCharactorManager
     public override void ChangeHPFront(int num)
     {
         //nCurrentHp += num;
-        //for(int i = 0; i < objHPTexts.Length; ++i)
-        //{
-        //    objHPTexts[i].GetComponent<CHPText>().ChangeHPNum(num);
-        //}
+        for (int i = 0; i < objHPTexts.Length; ++i)
+        {
+            objHPTexts[i].GetComponent<CHPText>().ChangeHPNum(num);
+        }
         HPFrontBar.GetComponent<CHPBarFront>().MoveBar(num);
     }
 
@@ -221,6 +222,13 @@ public class CSenaPlayer : CCharactorManager
             ChangeHPFront(-(10+i));
             ChangeHPBG(-(10 + i));
         }
+    }
+
+    private IEnumerator PlayerKill()
+    {
+        yield return new WaitForSeconds(1.0f);
+        if(nCurrentHp <= 0)
+          ChangeState(CHARACTORSTATE.CHARACTOR_DEAD);
     }
 
 }

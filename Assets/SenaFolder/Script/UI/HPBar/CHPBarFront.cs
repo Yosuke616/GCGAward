@@ -50,6 +50,7 @@ public class CHPBarFront : MonoBehaviour
     public void ResetBar()
     {
         isMove = false;
+        slider.value = objParent.GetComponent<CCharactorManager>().nCurrentHp;
     }
 
 

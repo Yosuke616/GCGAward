@@ -146,8 +146,6 @@ public class CBow : MonoBehaviour
                 {
                   //  RT = false;
                     ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
-                                                            //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
-                                                            //ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
                     Destroy(objArrow[nCurrentArrowSetNum].gameObject);
                 }
             }
@@ -157,8 +155,6 @@ public class CBow : MonoBehaviour
                 if (Input.GetMouseButtonDown(1))
                 {
                     ChangeState(STATE_BOW.BOW_RESET);       // チャージをリセットする
-                                                            //ChangeState(STATE_BOW.BOW_COLLDOWN);    // クールダウンタイム状態に遷移する
-                                                            //ChangeState(STATE_BOW.BOW_NORMAL);      // 通常状態に変更する
                     Destroy(objArrow[nCurrentArrowSetNum].gameObject);
                 }
             }
